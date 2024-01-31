@@ -13,14 +13,7 @@ module.exports = {
     "prettier",
   ],
   ignorePatterns: ["dist", ".eslintrc.cjs"],
-  overrides: [
-    {
-      files: ["eslintrc.{js, cjf}"],
-      parserOptions: {
-        sourceType: "script",
-      },
-    },
-  ],
+  overrides: [],
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
@@ -43,6 +36,12 @@ module.exports = {
     "no-param-reassign": 0,
     "no-underscore-dangle": "off",
   },
+  "prettier/prettier": [
+    "error",
+    {
+      endOfLine: "auto",
+    },
+  ],
   settings: {
     react: {
       version: "detect",
