@@ -1,5 +1,6 @@
 import { PointerLockControls, Sky } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
+import Sphere from "../models/Sphere";
 
 import TutorialSign from "../TutorialSign";
 
@@ -13,10 +14,7 @@ function Tutorial() {
       <ambientLight intensity={1} />
       <TutorialBackground />
       <TutorialSign />
-      <mesh position={[8, 3, -7]}>
-        <sphereGeometry args={[3]} />
-        <meshStandardMaterial attach="material" color="red" />
-      </mesh>
+      <Sphere />
       <mesh position={[-2, 2, 8]} rotation-x={-Math.PI / 2}>
         <planeGeometry args={[8, 8]} />
         <meshStandardMaterial color="green" />
