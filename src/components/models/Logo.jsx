@@ -27,3 +27,9 @@ Logo.propTypes = {
   scale: PropTypes.arrayOf(PropTypes.number),
   rotation: PropTypes.arrayOf(PropTypes.number),
 }.isRequired;
+
+Logo.defaultProps = {
+  position: [0, 27, -10],
+  scale: [25, 15, 0],
+  rotation: [0, 0, 0],
+};
