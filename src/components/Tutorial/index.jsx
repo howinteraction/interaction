@@ -17,7 +17,7 @@ function Tutorial() {
         <sphereGeometry args={[3]} />
         <meshStandardMaterial attach="material" color="red" />
       </mesh>
-      <mesh position={[-2, 2, 8]} rotation-x={ -Math.PI / 2 }>
+      <mesh position={[-2, 2, 8]} rotation-x={-Math.PI / 2}>
         <planeGeometry args={[8, 8]} />
         <meshStandardMaterial color="green" />
       </mesh>
