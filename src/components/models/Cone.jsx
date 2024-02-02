@@ -12,4 +12,5 @@ export default function Cone({ position, args, color }) {
 Cone.propTypes = {
   position: PropTypes.arrayOf(PropTypes.number),
   args: PropTypes.arrayOf(PropTypes.number),
+  color: PropTypes.string,
 }.isRequired;

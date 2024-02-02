@@ -12,4 +12,5 @@ export default function Torus({ position, args, color }) {
 Torus.propTypes = {
   position: PropTypes.arrayOf(PropTypes.number),
   args: PropTypes.arrayOf(PropTypes.number),
+  color: PropTypes.string,
 }.isRequired;

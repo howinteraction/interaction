@@ -12,4 +12,5 @@ export default function Capsule({ position, args, color }) {
 Capsule.propTypes = {
   position: PropTypes.arrayOf(PropTypes.number),
   args: PropTypes.arrayOf(PropTypes.number),
+  color: PropTypes.string,
 }.isRequired;

@@ -12,4 +12,5 @@ export default function Sphere({ position, args, color }) {
 Sphere.propTypes = {
   position: PropTypes.arrayOf(PropTypes.number),
   args: PropTypes.arrayOf(PropTypes.number),
+  color: PropTypes.string,
 }.isRequired;
