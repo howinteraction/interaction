@@ -1,15 +1,15 @@
 import PropTypes from "prop-types";
 
-export default function Sphere({ position, args, color }) {
+export default function Cone({ position, args, color }) {
   return (
     <mesh position={position}>
-      <sphereGeometry args={args} />
+      <coneGeometry args={args} />
       <meshStandardMaterial attach="material" color={color} />
     </mesh>
   );
 }
 
-Sphere.propTypes = {
+Cone.propTypes = {
   position: PropTypes.arrayOf(PropTypes.number),
   args: PropTypes.arrayOf(PropTypes.number),
   color: PropTypes.string,
