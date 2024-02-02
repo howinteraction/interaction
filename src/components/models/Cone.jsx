@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
 
-export default function Cone({ position, args }) {
+export default function Cone({ position, args, color }) {
   return (
     <mesh position={position}>
       <coneGeometry args={args} />
-      <meshStandardMaterial attach="material" color="navy" />
+      <meshStandardMaterial attach="material" color={color} />
     </mesh>
   );
 }

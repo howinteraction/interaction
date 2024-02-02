@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
 
-export default function Torus({ position, args }) {
+export default function Torus({ position, args, color }) {
   return (
     <mesh position={position}>
       <torusGeometry args={args} />
-      <meshStandardMaterial attach="material" color="orange" />
+      <meshStandardMaterial attach="material" color={color} />
     </mesh>
   );
 }

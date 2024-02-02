@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
 
-export default function Capsule({ position, args }) {
+export default function Capsule({ position, args, color }) {
   return (
     <mesh position={position}>
       <capsuleGeometry args={args} />
-      <meshStandardMaterial attach="material" color="yellow" />
+      <meshStandardMaterial attach="material" color={color} />
     </mesh>
   );
 }
