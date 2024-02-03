@@ -1,9 +1,17 @@
 import { useRef } from "react";
-import PropTypes from "prop-types";
 import { useFrame } from "@react-three/fiber";
 import { Text } from "@react-three/drei";
 
-export default function CuboidButton({ args, position, onClick, color, text }) {
+import PropTypes from "prop-types";
+
+export default function CuboidButton({
+  args,
+  position,
+  rotation,
+  onClick,
+  color,
+  text,
+}) {
   const meshRef = useRef();
   const textProps = {
     fontSize: 1,
@@ -19,7 +27,7 @@ export default function CuboidButton({ args, position, onClick, color, text }) {
   });
 
   return (
-    <group position={position}>
+    <group position={position} rotation={rotation}>
       <mesh
         ref={meshRef}
         onClick={onClick}
@@ -38,24 +46,28 @@ export default function CuboidButton({ args, position, onClick, color, text }) {
         <Text
           {...textProps}
           position={[0, 1.55, 0]}
-          rotation={[-Math.PI / 2, 0, 0]}
+          rotation={[Math.PI / 2, Math.PI, 0]}
         >
           {text}
         </Text>
         <Text
           {...textProps}
           position={[0, -1.55, 0]}
-          rotation={[Math.PI / 2, 0, 0]}
+          rotation={[-Math.PI / 2, Math.PI, 0]}
         >
           {text}
         </Text>
-        <Text {...textProps} position={[0, 0, 1.55]} rotation={[0, 0, 0]}>
+        <Text
+          {...textProps}
+          position={[0, 0, 1.55]}
+          rotation={[Math.PI, Math.PI, 0]}
+        >
           {text}
         </Text>
         <Text
           {...textProps}
           position={[0, 0, -1.55]}
-          rotation={[Math.PI, 0, 0]}
+          rotation={[0, Math.PI, 0]}
         >
           {text}
         </Text>
@@ -67,6 +79,7 @@ export default function CuboidButton({ args, position, onClick, color, text }) {
 CuboidButton.propTypes = {
   args: PropTypes.arrayOf(PropTypes.number),
   position: PropTypes.arrayOf(PropTypes.number),
+  rotation: PropTypes.arrayOf(PropTypes.number),
   onClick: PropTypes.func,
   color: PropTypes.string,
   text: PropTypes.string,
@@ -74,7 +87,8 @@ CuboidButton.propTypes = {
 
 CuboidButton.defaultProps = {
   args: [12, 3, 3],
-  position: [0, 11, -3],
+  position: [10, 10, 10],
+  rotation: [11, 18.85, -8.6],
   onClick: () => {},
   color: "Gold",
   text: "Start Button",
