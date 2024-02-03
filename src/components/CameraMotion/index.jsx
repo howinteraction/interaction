@@ -1,8 +1,9 @@
 import { useRef } from "react";
-import PropTypes from "prop-types";
-import * as THREE from "three";
 import { PointerLockControls } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
+
+import * as THREE from "three";
+import PropTypes from "prop-types";
 
 export default function CameraMotion({
   targetPosition,
@@ -31,11 +32,11 @@ export default function CameraMotion({
 CameraMotion.propTypes = {
   targetPosition: PropTypes.arrayOf(PropTypes.number),
   lerpFactor: PropTypes.number,
-  targetDirectionVector: PropTypes.arrayOf(PropTypes.number),
+  targetDirection: PropTypes.arrayOf(PropTypes.number),
 }.isRequired;
 
 CameraMotion.defaultProps = {
-  targetPosition: [0, 7, 23],
-  lerpFactor: 0.02,
-  targetDirection: [0, 10, -30],
+  targetPosition: [30, 10, 30],
+  lerpFactor: 0.01,
+  targetDirection: [0, 15, 0],
 };
