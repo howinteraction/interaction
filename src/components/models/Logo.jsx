@@ -1,11 +1,12 @@
-import PropTypes from "prop-types";
-import * as THREE from "three";
 import { useLoader } from "@react-three/fiber";
+
+import * as THREE from "three";
+import PropTypes from "prop-types";
 
 export default function Logo({ position, scale, rotation }) {
   const logoTexture = useLoader(
     THREE.TextureLoader,
-    "/assets/images/stage3-picture/logo-removebg.png",
+    "/assets/images/tutorial-picture/logo-removebg.png",
   );
 
   return (
@@ -29,7 +30,7 @@ Logo.propTypes = {
 }.isRequired;
 
 Logo.defaultProps = {
-  position: [0, 27, -10],
+  position: [10, 25, 10],
   scale: [25, 15, 0],
-  rotation: [0, 0, 0],
+  rotation: [0.7, 0.7, -0.5],
 };
