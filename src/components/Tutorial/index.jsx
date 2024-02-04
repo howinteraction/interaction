@@ -2,12 +2,13 @@ import { useState } from "react";
 import { Sky } from "@react-three/drei";
 import { useThree, useFrame } from "@react-three/fiber";
 import { RigidBody, Physics } from "@react-three/rapier";
-import { useDrag  } from "@use-gesture/react";
+import { useDrag } from "@use-gesture/react";
 
 import TutorialSign from "../TutorialSign";
 
 import TutorialBackground from "../models/TutorialBackground";
 import Sphere from "../models/Sphere";
+import { DESCENT_VELOCITY } from "../../utils/constants";
 
 function Tutorial() {
   const [position, setPosition] = useState([8, 2.9, 5]);
@@ -28,17 +29,27 @@ function Tutorial() {
     },
   );
 
+  function checkTutorialClear(x) {
+    const leftToleranceRange = -4;
+    const rightToleranceRange = 1;
+
+    return x > leftToleranceRange && x < rightToleranceRange;
+  }
+
   useFrame(() => {
     if (isDropping) {
       const [currentX, currentY, currentZ] = position;
-      const descentVelocity = 0.4;
+      const sphereRadius = 3;
+      const groundToleranceRange = 0.6;
 
-      setPosition([currentX, currentY - descentVelocity, currentZ]);
+      setPosition([currentX, currentY - DESCENT_VELOCITY, currentZ]);
 
-      if (position[1] < 3.6) {
+      const isReachedGround = currentY - DESCENT_VELOCITY < sphereRadius + groundToleranceRange;
+
+      if (isReachedGround) {
         setIsDropping(false);
 
-        if (currentX > -4 && currentX < 1) {
+        if (checkTutorialClear(currentX)) {
           console.log("Tutorial Clear!");
         }
       }
