@@ -1,5 +1,7 @@
 import styled, { createGlobalStyle } from "styled-components";
 
+import { Canvas } from "@react-three/fiber";
+
 import Tutorial from "./components/Tutorial";
 
 const GlobalStyle = createGlobalStyle`
@@ -34,8 +36,11 @@ function App() {
   return (
     <Container id="container">
       <GlobalStyle />
-      <Aim />
-      <Tutorial />
+      <Canvas
+        camera={{ near: 0.1, far: 1000, position: [0, 7, 23], fov: 80 }}
+      >
+        <Tutorial />
+      </Canvas>
     </Container>
   );
 }
