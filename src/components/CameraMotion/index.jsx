@@ -30,13 +30,7 @@ export default function CameraMotion({
 }
 
 CameraMotion.propTypes = {
-  targetPosition: PropTypes.arrayOf(PropTypes.number),
-  lerpFactor: PropTypes.number,
-  targetDirection: PropTypes.arrayOf(PropTypes.number),
-}.isRequired;
-
-CameraMotion.defaultProps = {
-  targetPosition: [30, 10, 30],
-  lerpFactor: 0.01,
-  targetDirection: [0, 15, 0],
+  targetPosition: PropTypes.arrayOf(PropTypes.number).isRequired,
+  lerpFactor: PropTypes.number.isRequired,
+  targetDirection: PropTypes.arrayOf(PropTypes.number).isRequired,
 };

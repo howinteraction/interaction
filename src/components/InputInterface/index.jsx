@@ -47,21 +47,11 @@ export default function InputInterface({
 }
 
 InputInterface.propTypes = {
-  position: PropTypes.arrayOf(PropTypes.number),
-  width: PropTypes.string,
-  height: PropTypes.string,
-  rotation: PropTypes.arrayOf(PropTypes.number),
-  fontSize: PropTypes.string,
-  errorMessage: PropTypes.string,
-  onChange: PropTypes.func,
-}.isRequired;
-
-InputInterface.defaultProps = {
-  position: [10, 16, 10],
-  width: "500px",
-  height: "150px",
-  rotation: [0.6, 0.75, -0.42],
-  fontSize: "80px",
-  errorMessage: "",
-  onChange: () => {},
+  position: PropTypes.arrayOf(PropTypes.number).isRequired,
+  width: PropTypes.string.isRequired,
+  height: PropTypes.string.isRequired,
+  rotation: PropTypes.arrayOf(PropTypes.number).isRequired,
+  fontSize: PropTypes.string.isRequired,
+  errorMessage: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
 };
