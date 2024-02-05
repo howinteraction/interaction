@@ -5,21 +5,21 @@ import { useSelector } from "react-redux";
 export default function Stopwatch() {
   const [isRunning, setIsRunning] = useState(false);
   const [elapsedTime, setElapsedTime] = useState(0);
-  const isClear = useSelector(state => state.tutorial.isClear);
+  const isClear = useSelector((state) => state.tutorial.isClear);
 
   useEffect(() => {
-    let interval;
+    let intervalId;
 
     if (isRunning) {
-      interval = setInterval(() => {
-        setElapsedTime(prevElapsedTime => prevElapsedTime + 1);
+      intervalId = setInterval(() => {
+        setElapsedTime((prevElapsedTime) => prevElapsedTime + 1);
       }, 1000);
     } else {
-      clearInterval(interval);
+      clearInterval(intervalId);
     }
 
     return () => {
-      clearInterval(interval);
+      clearInterval(intervalId);
     };
   }, [isRunning]);
 
@@ -35,9 +35,10 @@ export default function Stopwatch() {
     setIsRunning(!isRunning);
   };
 
-  const formatTime = timeInSeconds => {
+  const formatTime = (timeInSeconds) => {
     const minutes = Math.floor(timeInSeconds / 60);
     const seconds = timeInSeconds % 60;
+
     return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
   };
 
@@ -45,9 +46,10 @@ export default function Stopwatch() {
     <Text
       position={[23, 14, 1]}
       color="black"
-      fontSize={4}
-      lineHeight={0.02}
+      fontSize={2.5}
+      lineHeight={0.05}
       textAlign="center"
+      rotation={[6, 0, 0]}
     >
       {formatTime(elapsedTime)}
     </Text>

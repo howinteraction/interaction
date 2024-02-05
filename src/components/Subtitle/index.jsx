@@ -21,6 +21,7 @@ export default function Subtitle() {
       fontSize={0.7}
       lineHeight={0.02}
       textAlign="center"
+      rotation={[6, 0, 0]}
     >
       {isVisible && "Drop the object from top to bottom"}
     </Text>

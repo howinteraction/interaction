@@ -10,7 +10,7 @@ export default function Cylinder({ position, args, color }) {
 }
 
 Cylinder.propTypes = {
-  position: PropTypes.arrayOf(PropTypes.number),
-  args: PropTypes.arrayOf(PropTypes.number),
-  color: PropTypes.string,
-}.isRequired;
+  position: PropTypes.arrayOf(PropTypes.number).isRequired,
+  args: PropTypes.arrayOf(PropTypes.number).isRequired,
+  color: PropTypes.string.isRequired,
+};

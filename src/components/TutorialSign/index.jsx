@@ -10,11 +10,10 @@ function TutorialSign() {
 
   return (
     <mesh position={[-15, 20, -20]} castShadow>
-      <textGeometry args={["Drop Red On Green", { font, size: 3, height: 0.1 }]} />
-      <meshPhysicalMaterial
-        attach="material"
-        color="#000000"
+      <textGeometry
+        args={["Drop Red On Green", { font, size: 3, height: 0.1 }]}
       />
+      <meshPhysicalMaterial attach="material" color="#000000" />
     </mesh>
   );
 }
