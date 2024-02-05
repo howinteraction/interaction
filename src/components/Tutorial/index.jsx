@@ -2,18 +2,26 @@ import { useState } from "react";
 import { Sky } from "@react-three/drei";
 import { useThree, useFrame } from "@react-three/fiber";
 import { RigidBody, Physics } from "@react-three/rapier";
+import { useSelector, useDispatch } from "react-redux";
 import { useDrag } from "@use-gesture/react";
 
 import TutorialSign from "../TutorialSign";
 
 import TutorialBackground from "../models/TutorialBackground";
 import Sphere from "../models/Sphere";
+import CameraMotion from "../CameraMotion";
+import Logo from "../models/Logo";
+import CuboidButton from "../models/CuboidButton";
+import InputInterface from "../InputInterface";
+import { setIsCleared } from "../../redux/tutorialSlice";
 import { DESCENT_VELOCITY } from "../../utils/constants";
 
 function Tutorial() {
+  const isTutorialCleared = useSelector(state => state.tutorial.isCleared);
   const [position, setPosition] = useState([8, 2.9, 5]);
   const [isDropping, setIsDropping] = useState(false);
   const { size, viewport } = useThree();
+  const dispatch = useDispatch();
 
   const aspect = size.width / viewport.width;
 
@@ -50,7 +58,7 @@ function Tutorial() {
         setIsDropping(false);
 
         if (checkTutorialClear(currentX)) {
-          console.log("Tutorial Clear!");
+          dispatch(setIsCleared(true));
         }
       }
     }
@@ -71,11 +79,19 @@ function Tutorial() {
             {...bind()}
           />
         </RigidBody>
-        <mesh position={[-2, 0, 5]} rotation-x={-Math.PI / 2}>
+        <mesh position={[-2, 0.01, 5]} rotation-x={-Math.PI / 2}>
           <planeGeometry args={[8, 8]} />
           <meshStandardMaterial color="green" />
         </mesh>
       </Physics>
+      {isTutorialCleared && (
+        <>
+          <CameraMotion />
+          <Logo />
+          <InputInterface />
+          <CuboidButton />
+        </>
+      )}
     </>
   );
 }
