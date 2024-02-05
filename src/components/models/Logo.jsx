@@ -24,13 +24,7 @@ export default function Logo({ position, scale, rotation }) {
 }
 
 Logo.propTypes = {
-  position: PropTypes.arrayOf(PropTypes.number),
-  scale: PropTypes.arrayOf(PropTypes.number),
-  rotation: PropTypes.arrayOf(PropTypes.number),
-}.isRequired;
-
-Logo.defaultProps = {
-  position: [10, 25, 10],
-  scale: [25, 15, 0],
-  rotation: [0.7, 0.7, -0.5],
+  position: PropTypes.arrayOf(PropTypes.number).isRequired,
+  scale: PropTypes.arrayOf(PropTypes.number).isRequired,
+  rotation: PropTypes.arrayOf(PropTypes.number).isRequired,
 };

@@ -9,12 +9,20 @@ const InputContainer = styled.div`
   align-items: center;
 `;
 
+const ErrorMessage = styled.div`
+  color: red;
+  margin-top: 10px;
+  font-size: 30px;
+`;
+
 export default function InputInterface({
   position,
   width,
   height,
   rotation,
   fontSize,
+  errorMessage,
+  onChange,
 }) {
   return (
     <Html position={position} rotation={rotation} transform occlude>
@@ -30,24 +38,20 @@ export default function InputInterface({
             borderRadius: "20px",
             fontSize,
           }}
+          onChange={e => onChange(e.target.value)}
         />
       </InputContainer>
+      {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
     </Html>
   );
 }
 
 InputInterface.propTypes = {
-  position: PropTypes.arrayOf(PropTypes.number),
-  width: PropTypes.string,
-  height: PropTypes.string,
-  rotation: PropTypes.arrayOf(PropTypes.number),
-  fontSize: PropTypes.string,
-}.isRequired;
-
-InputInterface.defaultProps = {
-  position: [10, 16, 10],
-  width: "500px",
-  height: "150px",
-  rotation: [0.6, 0.75, -0.42],
-  fontSize: "80px",
+  position: PropTypes.arrayOf(PropTypes.number).isRequired,
+  width: PropTypes.string.isRequired,
+  height: PropTypes.string.isRequired,
+  rotation: PropTypes.arrayOf(PropTypes.number).isRequired,
+  fontSize: PropTypes.string.isRequired,
+  errorMessage: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
 };

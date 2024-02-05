@@ -77,19 +77,10 @@ export default function CuboidButton({
 }
 
 CuboidButton.propTypes = {
-  args: PropTypes.arrayOf(PropTypes.number),
-  position: PropTypes.arrayOf(PropTypes.number),
-  rotation: PropTypes.arrayOf(PropTypes.number),
-  onClick: PropTypes.func,
-  color: PropTypes.string,
-  text: PropTypes.string,
-}.isRequired;
-
-CuboidButton.defaultProps = {
-  args: [12, 3, 3],
-  position: [10, 10, 10],
-  rotation: [11, 18.85, -8.6],
-  onClick: () => {},
-  color: "Gold",
-  text: "Start Button",
+  args: PropTypes.arrayOf(PropTypes.number).isRequired,
+  position: PropTypes.arrayOf(PropTypes.number).isRequired,
+  rotation: PropTypes.arrayOf(PropTypes.number).isRequired,
+  onClick: PropTypes.func.isRequired,
+  color: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
 };
