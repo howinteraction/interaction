@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 export default function Stopwatch() {
   const [isRunning, setIsRunning] = useState(false);
   const [elapsedTime, setElapsedTime] = useState(0);
-  const isClear = useSelector((state) => state.tutorial.isClear);
+  const isCleared = useSelector((state) => state.tutorial.isClear);
 
   useEffect(() => {
     let intervalId;
@@ -24,12 +24,12 @@ export default function Stopwatch() {
   }, [isRunning]);
 
   useEffect(() => {
-    setIsRunning(isClear);
+    setIsRunning(isCleared);
 
-    if (isClear) {
+    if (isCleared) {
       setElapsedTime(0);
     }
-  }, [isClear]);
+  }, [isCleared]);
 
   const startStop = () => {
     setIsRunning(!isRunning);
