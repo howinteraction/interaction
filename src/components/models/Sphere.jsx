@@ -10,8 +10,7 @@ export default function Sphere({ position, args, color, ...dragProps }) {
 }
 
 Sphere.propTypes = {
-  position: PropTypes.arrayOf(PropTypes.number),
-  args: PropTypes.arrayOf(PropTypes.number),
-  color: PropTypes.string,
-  dragProps: PropTypes.object,
-}.isRequired;
+  position: PropTypes.arrayOf(PropTypes.number).isRequired,
+  args: PropTypes.arrayOf(PropTypes.number).isRequired,
+  color: PropTypes.string.isRequired,
+};
