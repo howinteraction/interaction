@@ -6,13 +6,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { useDrag } from "@use-gesture/react";
 
 import TutorialSign from "../TutorialSign";
+import CameraMotion from "../CameraMotion";
+import GameStart from "../GameStart";
 
 import TutorialBackground from "../models/TutorialBackground";
 import Sphere from "../models/Sphere";
-import CameraMotion from "../CameraMotion";
-import Logo from "../models/Logo";
-import CuboidButton from "../models/CuboidButton";
-import InputInterface from "../InputInterface";
+
 import { setIsCleared } from "../../redux/tutorialSlice";
 import { DESCENT_VELOCITY } from "../../utils/constants";
 
@@ -86,10 +85,12 @@ function Tutorial() {
       </Physics>
       {isTutorialCleared && (
         <>
-          <CameraMotion />
-          <Logo />
-          <InputInterface />
-          <CuboidButton />
+          <CameraMotion
+            targetPosition={[30, 10, 30]}
+            lerpFactor={0.01}
+            targetDirection={[0, 15, 0]}
+          />
+          <GameStart />
         </>
       )}
     </>
