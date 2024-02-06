@@ -10,8 +10,8 @@ import GameStart from "../GameStart";
 
 import TutorialBackground from "../models/TutorialBackground";
 import TutorialTitle from "../models/TutorialTitle";
-import Sphere from "../models/Sphere";
 import Plane from "../models/Plane";
+import Sphere from "../models/Sphere";
 
 import { setIsStageCleared } from "../../redux/stageClearSlice";
 import { DESCENT_VELOCITY } from "../../utils/constants";

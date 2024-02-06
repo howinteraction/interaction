@@ -50,7 +50,7 @@ export default function Stopwatch({ position, rotation }) {
     <Text
       position={position}
       color="black"
-      fontSize={2.5}
+      fontSize={2.6}
       lineHeight={0.05}
       textAlign="center"
       rotation={rotation}
