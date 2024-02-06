@@ -1,18 +1,26 @@
 import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Text } from "@react-three/drei";
-import { useSelector } from "react-redux";
+import PropTypes from "prop-types";
 
-export default function Stopwatch() {
+import { setElapsedTime } from "../../redux/elapsedSlice";
+
+export default function Stopwatch({ position, rotation }) {
+  const dispatch = useDispatch();
+  const elapsedTime = useSelector((state) => state.elapsed.elapsedTime);
+  const isStageCleared = useSelector(
+    (state) => state.stageClear.isStageCleared,
+  );
   const [isRunning, setIsRunning] = useState(false);
-  const [elapsedTime, setElapsedTime] = useState(0);
-  const isCleared = useSelector((state) => state.tutorial.isClear);
 
   useEffect(() => {
     let intervalId;
 
     if (isRunning) {
       intervalId = setInterval(() => {
-        setElapsedTime((prevElapsedTime) => prevElapsedTime + 1);
+        const nextElapsedTime = elapsedTime + 1;
+
+        dispatch(setElapsedTime(nextElapsedTime));
       }, 1000);
     } else {
       clearInterval(intervalId);
@@ -21,19 +29,15 @@ export default function Stopwatch() {
     return () => {
       clearInterval(intervalId);
     };
-  }, [isRunning]);
+  }, [isRunning, elapsedTime]);
 
   useEffect(() => {
-    setIsRunning(isCleared);
-
-    if (isCleared) {
-      setElapsedTime(0);
+    if (!isStageCleared) {
+      setIsRunning(true);
+    } else {
+      setIsRunning(false);
     }
-  }, [isCleared]);
-
-  const startStop = () => {
-    setIsRunning(!isRunning);
-  };
+  }, [isStageCleared]);
 
   const formatTime = (timeInSeconds) => {
     const minutes = Math.floor(timeInSeconds / 60);
@@ -44,14 +48,19 @@ export default function Stopwatch() {
 
   return (
     <Text
-      position={[23, 14, 1]}
+      position={position}
       color="black"
       fontSize={2.5}
       lineHeight={0.05}
       textAlign="center"
-      rotation={[6, 0, 0]}
+      rotation={rotation}
     >
       {formatTime(elapsedTime)}
     </Text>
   );
 }
+
+Stopwatch.propTypes = {
+  position: PropTypes.arrayOf(PropTypes.number).isRequired,
+  rotation: PropTypes.arrayOf(PropTypes.number).isRequired,
+};

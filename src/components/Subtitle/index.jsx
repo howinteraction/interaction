@@ -1,13 +1,16 @@
 import { useState, useEffect } from "react";
 import { Text } from "@react-three/drei";
+import PropTypes from "prop-types";
 
-export default function Subtitle() {
+import { SUBTITLE_TIME } from "../../utils/constants";
+
+export default function Subtitle({ position, rotation, subtitle }) {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setIsVisible(false);
-    }, 5000);
+    }, SUBTITLE_TIME);
 
     return () => {
       clearTimeout(timeoutId);
@@ -16,14 +19,20 @@ export default function Subtitle() {
 
   return (
     <Text
-      position={[-0.0006, 3, 19]}
+      position={position}
       color="blue"
-      fontSize={0.7}
-      lineHeight={0.02}
+      fontSize={2.3}
+      lineHeight={0.05}
       textAlign="center"
-      rotation={[6, 0, 0]}
+      rotation={rotation}
     >
-      {isVisible && "Drop the object from top to bottom"}
+      {isVisible && subtitle}
     </Text>
   );
 }
+
+Subtitle.propTypes = {
+  position: PropTypes.arrayOf(PropTypes.number).isRequired,
+  rotation: PropTypes.arrayOf(PropTypes.number).isRequired,
+  subtitle: PropTypes.string.isRequired,
+};
