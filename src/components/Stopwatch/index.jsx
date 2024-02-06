@@ -7,7 +7,7 @@ import { setElapsedTime } from "../../redux/elapsedSlice";
 
 export default function Stopwatch({ position, rotation }) {
   const dispatch = useDispatch();
-  const elapsedTime = useSelector((state) => state.elapsed.elapsedTime);
+  const elapsedTime = useSelector((state) => state.elapsedTimer.elapsedTime);
   const isStageCleared = useSelector(
     (state) => state.stageClear.isStageCleared,
   );
