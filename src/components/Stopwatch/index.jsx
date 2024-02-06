@@ -19,6 +19,7 @@ export default function Stopwatch({ position, rotation }) {
     if (isRunning) {
       intervalId = setInterval(() => {
         const nextElapsedTime = elapsedTime + 1;
+
         dispatch(setElapsedTime(nextElapsedTime));
       }, 1000);
     } else {
