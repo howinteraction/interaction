@@ -1,13 +1,17 @@
 import { configureStore } from "@reduxjs/toolkit";
 import logger from "redux-logger";
 
-import tutorial from "./tutorialSlice";
+import stage from "./stageSlice";
+import stageClear from "./stageClearSlice";
+import elapsed from "./elapsedSlice";
 
 const store = configureStore({
   reducer: {
-    tutorial,
+    stage,
+    stageClear,
+    elapsed,
   },
-  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(logger),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });
 
 export default store;
