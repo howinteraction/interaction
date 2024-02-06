@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const elapsedTimeSlice = createSlice({
-  name: "elapsed",
+  name: "elapsedTimer",
   initialState: {
     elapsedTime: 0,
   },

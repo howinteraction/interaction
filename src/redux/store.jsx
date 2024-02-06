@@ -3,13 +3,13 @@ import logger from "redux-logger";
 
 import stage from "./stageSlice";
 import stageClear from "./stageClearSlice";
-import elapsed from "./elapsedSlice";
+import elapsedTimer from "./elapsedSlice";
 
 const store = configureStore({
   reducer: {
     stage,
     stageClear,
-    elapsed,
+    elapsedTimer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });
