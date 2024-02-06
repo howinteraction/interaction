@@ -1,9 +1,9 @@
 import { useRef } from "react";
+import PropTypes from "prop-types";
 import { PointerLockControls } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 
 import * as THREE from "three";
-import PropTypes from "prop-types";
 
 export default function CameraMotion({
   targetPosition,
