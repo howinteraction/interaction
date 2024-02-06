@@ -44,7 +44,7 @@ export default function Player() {
       z: direction.z,
     });
 
-    const {world} = rapier;
+    const { world } = rapier;
     const ray = world.castRay(
       new RAPIER.Ray(playerRef.current.translation(), { x: 0, y: -1, z: 0 }),
     );
@@ -58,10 +58,10 @@ export default function Player() {
 
   return (
     <RigidBody colliders={false} mass={1} ref={playerRef} lockRotations>
-        <mesh>
-          <capsuleGeometry args={[0.5, 0.5]} />
-          <CapsuleCollider args={[0.5, 0.5]} />
-        </mesh>
-      </RigidBody>
+      <mesh>
+        <capsuleGeometry args={[0.5, 0.5]} />
+        <CapsuleCollider args={[0.5, 0.5]} />
+      </mesh>
+    </RigidBody>
   );
 }
