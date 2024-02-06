@@ -1,9 +1,9 @@
-import * as RAPIER from "@dimforge/rapier3d-compat";
-import * as THREE from "three";
-
 import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { CapsuleCollider, RigidBody, useRapier } from "@react-three/rapier";
+
+import * as RAPIER from "@dimforge/rapier3d-compat";
+import * as THREE from "three";
 
 import usePlayerControl from "../../../hooks/usePlayerControl";
 import { MOVE_SPEED } from "../../utils/constants";
@@ -53,6 +53,7 @@ export default function Player() {
     if (jump && grounded) doJump();
 
     const { x, y, z } = playerRef.current.translation();
+
     state.camera.position.set(x, y, z);
   });
 
