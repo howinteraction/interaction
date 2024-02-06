@@ -1,12 +1,17 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { setStage } from "../../redux/stageSlice";
+import { setIsStageCleared } from "../../redux/stageClearSlice";
 
+import InputInterface from "../InputInterface";
 import Logo from "../models/Logo";
 import CuboidButton from "../models/CuboidButton";
-import InputInterface from "../InputInterface";
 
 export default function GameStart() {
   const [playerName, setPlayerName] = useState("");
   const [error, setError] = useState("");
+  const dispatch = useDispatch();
+
   const checkUserInputRegExp = /^[가-힣a-zA-Z0-9]{1,10}$/.test(playerName);
 
   function handleButtonClick() {
@@ -33,6 +38,8 @@ export default function GameStart() {
     }
 
     setError("");
+    dispatch(setStage(1));
+    dispatch(setIsStageCleared(false));
   }
 
   function handleInputChange(name) {
@@ -63,8 +70,8 @@ export default function GameStart() {
         args={[12, 3, 3]}
         position={[10, 10, 10]}
         rotation={[11, 18.85, -8.6]}
-        onClick={e => {
-          e.stopPropagation();
+        onClick={(event) => {
+          event.stopPropagation();
           handleButtonClick();
         }}
         color="Gold"

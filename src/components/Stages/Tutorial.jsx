@@ -1,40 +1,47 @@
 import { useState } from "react";
-import { Sky } from "@react-three/drei";
+import { useSelector, useDispatch } from "react-redux";
 import { useThree, useFrame } from "@react-three/fiber";
 import { RigidBody, Physics } from "@react-three/rapier";
-import { useSelector, useDispatch } from "react-redux";
+import { Sky } from "@react-three/drei";
 import { useDrag } from "@use-gesture/react";
 
-import TutorialSign from "../TutorialSign";
 import CameraMotion from "../CameraMotion";
 import GameStart from "../GameStart";
 
 import TutorialBackground from "../models/TutorialBackground";
+import TutorialTitle from "../models/TutorialTitle";
 import Sphere from "../models/Sphere";
+import Plane from "../models/Plane";
 
-import { setIsCleared } from "../../redux/tutorialSlice";
+import { setIsStageCleared } from "../../redux/stageClearSlice";
 import { DESCENT_VELOCITY } from "../../utils/constants";
 
-function Tutorial() {
-  const isTutorialCleared = useSelector(state => state.tutorial.isCleared);
+export default function Tutorial() {
+  const dispatch = useDispatch();
+  const isStageCleared = useSelector(
+    (state) => state.stageClear.isStageCleared,
+  );
   const [position, setPosition] = useState([8, 2.9, 5]);
   const [isDropping, setIsDropping] = useState(false);
-  const { size, viewport } = useThree();
-  const dispatch = useDispatch();
 
+  const { size, viewport } = useThree();
   const aspect = size.width / viewport.width;
 
-  const bind = useDrag(
-    ({ delta: [x, y], down }) => {
-      const [, , z] = position;
+  const bind = useDrag(({ delta: [x, y], down }) => {
+    const [, , z] = position;
 
-      if (down) {
-        setPosition((prev) => [prev[0] + x / aspect, prev[1] - y / aspect, z]);
+    if (down) {
+      if (position[0] < -19) {
+        setPosition((prev) => [-19, prev[1] - y / aspect, z]);
+      } else if (position[1] < 3.6) {
+        setPosition((prev) => [prev[0] + x / aspect, 3.6, z]);
       } else {
-        setIsDropping(true);
+        setPosition((prev) => [prev[0] + x / aspect, prev[1] - y / aspect, z]);
       }
-    },
-  );
+    } else {
+      setIsDropping(true);
+    }
+  });
 
   function checkTutorialClear(x) {
     const leftToleranceRange = -4;
@@ -51,13 +58,14 @@ function Tutorial() {
 
       setPosition([currentX, currentY - DESCENT_VELOCITY, currentZ]);
 
-      const isReachedGround = currentY - DESCENT_VELOCITY < sphereRadius + groundToleranceRange;
+      const isReachedGround =
+        currentY - DESCENT_VELOCITY < sphereRadius + groundToleranceRange;
 
       if (isReachedGround) {
         setIsDropping(false);
 
         if (checkTutorialClear(currentX)) {
-          dispatch(setIsCleared(true));
+          dispatch(setIsStageCleared(true));
         }
       }
     }
@@ -69,21 +77,18 @@ function Tutorial() {
       <ambientLight intensity={1} />
       <Physics>
         <TutorialBackground />
-        <TutorialSign />
-        <RigidBody type="dynamic" colliders={false} >
-          <Sphere
-            position={position}
-            color="red"
-            args={[3]}
-            {...bind()}
-          />
+        <TutorialTitle />
+        <RigidBody>
+          <Sphere position={position} color="red" args={[3]} {...bind()} />
         </RigidBody>
-        <mesh position={[-2, 0.01, 5]} rotation-x={-Math.PI / 2}>
-          <planeGeometry args={[8, 8]} />
-          <meshStandardMaterial color="green" />
-        </mesh>
+        <Plane
+          position={[-2, 0.01, 5]}
+          rotateX={-Math.PI / 2}
+          color="green"
+          args={[8, 8]}
+        />
       </Physics>
-      {isTutorialCleared && (
+      {isStageCleared && (
         <>
           <CameraMotion
             targetPosition={[30, 10, 30]}
@@ -96,5 +101,3 @@ function Tutorial() {
     </>
   );
 }
-
-export default Tutorial;
