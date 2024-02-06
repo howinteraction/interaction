@@ -2,13 +2,15 @@ import { useState, useEffect } from "react";
 import { Text } from "@react-three/drei";
 import PropTypes from "prop-types";
 
+import { SUBTITLE_TIME } from "../../utils/constants";
+
 export default function Subtitle({ position, rotation, subtitle }) {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setIsVisible(false);
-    }, 10000);
+    }, SUBTITLE_TIME);
 
     return () => {
       clearTimeout(timeoutId);
