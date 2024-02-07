@@ -29,12 +29,14 @@ export default function Tutorial() {
 
   const bind = useDrag(({ delta: [x, y], down }) => {
     const [, , z] = position;
+    const dragToWallAllowance = -19;
+    const dragToGroundAllowance = 3.6;
 
     if (down) {
-      if (position[0] < -19) {
-        setPosition((prev) => [-19, prev[1] - y / aspect, z]);
-      } else if (position[1] < 3.6) {
-        setPosition((prev) => [prev[0] + x / aspect, 3.6, z]);
+      if (position[0] < dragToWallAllowance) {
+        setPosition((prev) => [dragToWallAllowance, prev[1] - y / aspect, z]);
+      } else if (position[1] < dragToGroundAllowance) {
+        setPosition((prev) => [prev[0] + x / aspect, dragToGroundAllowance, z]);
       } else {
         setPosition((prev) => [prev[0] + x / aspect, prev[1] - y / aspect, z]);
       }
