@@ -9,7 +9,6 @@ export default function DragControl() {
   const [selectedObject, setSelectedObject] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
   const [initialDistance, setInitialDistance] = useState(null);
-
   const controls = useRef();
 
   useEffect(() => {
@@ -57,7 +56,5 @@ export default function DragControl() {
     }
   });
 
-  return (
-    <PointerLockControls ref={controls} />
-  );
+  return <PointerLockControls ref={controls} />;
 }
