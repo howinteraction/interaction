@@ -84,6 +84,7 @@ export default function Tutorial() {
         <Plane
           position={[-2, 0.01, 5]}
           rotateX={-Math.PI / 2}
+          rotateY={0}
           color="green"
           args={[8, 8]}
         />
