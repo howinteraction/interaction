@@ -1,10 +1,5 @@
-import { useState } from "react";
-import { Canvas } from "@react-three/fiber";
 import styled, { createGlobalStyle } from "styled-components";
-
-import Tutorial from "./components/Tutorial";
-import Stopwatch from "./components/Stopwatch";
-import Subtitle from "./components/Subtitle";
+import Stages from "./components/Stages/Stages";
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -35,22 +30,10 @@ const Aim = styled.div`
 `;
 
 function App() {
-  const [isShow, setIsShow] = useState(true);
-
   return (
     <Container id="container">
       <GlobalStyle />
-      {isShow ? (
-        <Canvas
-          camera={{ near: 0.1, far: 1000, position: [0, 7, 23], fov: 80 }}
-        >
-          <Tutorial />
-          <Stopwatch />
-          <Subtitle />
-        </Canvas>
-      ) : (
-        <Stopwatch />
-      )}
+      <Stages />
     </Container>
   );
 }

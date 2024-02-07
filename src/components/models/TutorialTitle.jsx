@@ -4,18 +4,16 @@ import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry";
 
 import anton from "../../assets/fonts/Anton/Anton_Regular.json";
 
-function TutorialSign() {
+export default function TutorialTitle() {
   const font = new FontLoader().parse(anton);
   extend({ TextGeometry });
 
   return (
-    <mesh position={[-15, 20, -20]} castShadow>
+    <mesh position={[-15, 20, -20]}>
       <textGeometry
-        args={["Drop Red On Green", { font, size: 3, height: 0.1 }]}
+        args={["Drop Red On Green", { font, size: 3, height: 0.5 }]}
       />
-      <meshPhysicalMaterial attach="material" color="#000000" />
+      <meshStandardMaterial attach="material" color="#000000" />
     </mesh>
   );
 }
-
-export default TutorialSign;

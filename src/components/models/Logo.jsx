@@ -1,7 +1,7 @@
 import { useLoader } from "@react-three/fiber";
+import PropTypes from "prop-types";
 
 import * as THREE from "three";
-import PropTypes from "prop-types";
 
 export default function Logo({ position, scale, rotation }) {
   const logoTexture = useLoader(

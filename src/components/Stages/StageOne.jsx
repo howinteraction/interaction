@@ -63,7 +63,7 @@ export default function StageOne() {
       </Physics>
       <Stopwatch position={[15, 24, -19.8]} rotation={[19, 6.3, 0]} />
       <SubTitle
-        position={[1, 14, -18]}
+        position={[1, 13.5, -18]}
         rotation={[19, 6.3, 0]}
         subtitle="Drop the Object top to Bottom"
       />

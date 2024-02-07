@@ -1,7 +1,6 @@
 import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { Text } from "@react-three/drei";
-
 import PropTypes from "prop-types";
 
 export default function CuboidButton({
@@ -31,8 +30,8 @@ export default function CuboidButton({
       <mesh
         ref={meshRef}
         onClick={onClick}
-        onPointerOver={e => {
-          e.stopPropagation();
+        onPointerOver={(event) => {
+          event.stopPropagation();
           meshRef.current.scale.x = 1.2;
           meshRef.current.scale.y = 1.2;
         }}
