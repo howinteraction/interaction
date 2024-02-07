@@ -45,11 +45,11 @@ export default function Tutorial() {
     }
   });
 
-  function checkTutorialClear(x) {
+  function checkTutorialClear(positionX) {
     const leftToleranceRange = -4;
     const rightToleranceRange = 1;
 
-    return x > leftToleranceRange && x < rightToleranceRange;
+    return positionX > leftToleranceRange && positionX < rightToleranceRange;
   }
 
   useFrame(() => {
