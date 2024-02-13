@@ -1,48 +1,70 @@
 import { useEffect, useRef, useState } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { PointerLockControls } from "@react-three/drei";
+import { useRapier } from "@react-three/rapier";
 
 import * as THREE from "three";
+import * as RAPIER from "@dimforge/rapier3d-compat";
 
 export default function DragControl() {
-  const { camera, scene, raycaster } = useThree();
-  const [selectedObject, setSelectedObject] = useState(null);
+  const controlsRef = useRef();
+  const [selectedHandle, setSelectedHandle] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
   const [initialDistance, setInitialDistance] = useState(null);
-  const controls = useRef();
+  const { camera } = useThree();
+  const { world } = useRapier();
 
   useEffect(() => {
-    controls.current.lock();
+    controlsRef.current.lock();
 
     const handleClick = () => {
-      const center = new THREE.Vector2(0, 0);
+      const origin = new THREE.Vector3().copy(camera.position);
+      const direction = new THREE.Vector3();
 
-      raycaster.setFromCamera(center, camera);
+      camera.getWorldDirection(direction);
 
-      const intersection = raycaster.intersectObjects(scene.children, true);
+      const originOffset = 2;
+      const maxToi = 100;
+      const adjustOrigin = origin.add(direction.multiplyScalar(originOffset));
+      const ray = new RAPIER.Ray(adjustOrigin, direction);
+      const castRay = world.castRay(ray, maxToi, true);
+      const {handle} = castRay.collider.parent();
+      const selectedRigidBody = world.getRigidBody(handle);
 
-      if (intersection.length > 0 && !isDragging) {
-        setSelectedObject(intersection[0].object);
+      if (castRay && !isDragging && selectedRigidBody.userData) {
+        const selectedRigidBodyPositionVector = new THREE.Vector3(
+          selectedRigidBody.translation().x,
+          selectedRigidBody.translation().y,
+          selectedRigidBody.translation().z,
+        );
 
-        const distance = intersection[0].object.position.distanceTo(
+        const distance = selectedRigidBodyPositionVector.distanceTo(
           camera.position,
         );
 
-        setInitialDistance(distance);
         setIsDragging(true);
+        setSelectedHandle(handle);
+        setInitialDistance(distance);
       } else {
+        selectedRigidBody.setBodyType(0);
+
         setIsDragging(false);
-        setSelectedObject(null);
+        setSelectedHandle(null);
+        setInitialDistance(null);
       }
     };
 
     document.addEventListener("click", handleClick);
 
     return () => document.removeEventListener("click", handleClick);
-  }, [camera, scene.children, raycaster, isDragging]);
+  }, [camera, isDragging, world]);
 
   useFrame(() => {
-    if (selectedObject && isDragging) {
+    if (
+      selectedHandle &&
+      isDragging &&
+      world.getRigidBody(selectedHandle).userData
+    ) {
       const direction = new THREE.Vector3();
 
       camera.getWorldDirection(direction);
@@ -50,11 +72,12 @@ export default function DragControl() {
       const newPosition = direction
         .multiplyScalar(initialDistance)
         .add(camera.position);
+      const selectedRigidBody = world.getRigidBody(selectedHandle);
 
-      selectedObject.position.copy(newPosition);
-      selectedObject.lookAt(camera.position);
+      selectedRigidBody.setTranslation(newPosition, true);
+      selectedRigidBody.setBodyType(2);
     }
   });
 
-  return <PointerLockControls ref={controls} />;
+  return <PointerLockControls ref={controlsRef} />;
 }
