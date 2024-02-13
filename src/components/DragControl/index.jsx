@@ -28,7 +28,7 @@ export default function DragControl() {
       const adjustOrigin = origin.add(direction.multiplyScalar(originOffset));
       const ray = new RAPIER.Ray(adjustOrigin, direction);
       const castRay = world.castRay(ray, maxToi, true);
-      const {handle} = castRay.collider.parent();
+      const { handle } = castRay.collider.parent();
       const selectedRigidBody = world.getRigidBody(handle);
 
       if (castRay && !isDragging && selectedRigidBody.userData) {
