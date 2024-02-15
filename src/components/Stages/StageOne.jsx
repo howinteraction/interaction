@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Sky } from "@react-three/drei";
 import { Physics, RigidBody } from "@react-three/rapier";
@@ -30,6 +31,8 @@ const Aim = styled.div`
 `;
 
 export default function StageOne() {
+  const [boxSize, setBoxSize] = useState(2);
+
   return (
     <>
       <Aim />
@@ -50,7 +53,15 @@ export default function StageOne() {
           shadow-camera-far={1000}
         />
         <Physics>
-          <DragControl minX={-19} maxX={19} maxY={29} minZ={-19} maxZ={19} />
+          <DragControl
+            minX={-19}
+            maxX={19}
+            maxY={29}
+            minZ={-19}
+            maxZ={19}
+            boxSize={boxSize}
+            setBoxSize={setBoxSize}
+          />
           <RigidBody type="fixed" colliders={false}>
             <TutorialBackground />
           </RigidBody>
@@ -62,11 +73,11 @@ export default function StageOne() {
             <Sphere args={[1]} color="red" />
           </RigidBody>
           <RigidBody
-            userData={{ isDraggable: true }}
+            userData={{ isDraggable: true, isPerspective: true }}
             lockRotations
             position={[-10, 2.8, -2]}
           >
-            <Box args={[2, 2, 2]} color="blue" />
+            <Box args={[boxSize, boxSize, boxSize]} color="blue" />
           </RigidBody>
           <RigidBody
             userData={{ isDraggable: true }}

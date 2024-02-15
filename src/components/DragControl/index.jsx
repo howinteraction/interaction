@@ -9,7 +9,16 @@ import * as RAPIER from "@dimforge/rapier3d-compat";
 import PropTypes from "prop-types";
 import restrictPosition from "../../utils/restrictPosition";
 
-export default function DragControl({ minX, maxX, maxY, minZ, maxZ }) {
+export default function DragControl({
+  minX,
+  maxX,
+  maxY,
+  minZ,
+  maxZ,
+  boxSize,
+  setBoxSize
+}) {
+  const meshScaleRef = useRef();
   const controlsRef = useRef();
   const [selectedHandle, setSelectedHandle] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -56,6 +65,7 @@ export default function DragControl({ minX, maxX, maxY, minZ, maxZ }) {
         } else if (selectedHandle && isDragging) {
           world.getRigidBody(selectedHandle).setBodyType(0);
 
+          setBoxSize(meshScaleRef.current);
           setIsDragging(false);
           setSelectedHandle(null);
           setInitialDistance(null);
@@ -86,9 +96,50 @@ export default function DragControl({ minX, maxX, maxY, minZ, maxZ }) {
       const adjustedPositionY = restrictPosition(
         newPosition.y,
         clickedPosition.y,
-        maxY,
+        maxY
       );
       const adjustedPositionZ = restrictPosition(newPosition.z, minZ, maxZ);
+
+      const adjustedPosition = new THREE.Vector3(
+        adjustedPositionX,
+        adjustedPositionY,
+        adjustedPositionZ
+      );
+
+      const finalDistance = adjustedPosition.distanceTo(camera.position);
+      const distanceRatio = finalDistance / initialDistance;
+
+      if (selectedRigidBody.userData.isPerspective) {
+        const perspectiveTolerance = 0.9;
+
+        if (distanceRatio > perspectiveTolerance) {
+          const currentHeight = adjustedPositionY;
+          const maxHeight = 29;
+          const heightRatio = Math.min(currentHeight / maxHeight, 1);
+          const scale = 1 + heightRatio;
+          const newSize = boxSize * scale;
+
+          selectedRigidBody.collider(0).setHalfExtents(new THREE.Vector3(
+            newSize / 2,
+            newSize / 2,
+            newSize / 2
+          ));
+
+          meshScaleRef.current = newSize;
+        } else {
+          const newSize = boxSize * distanceRatio;
+          const minimumSize = 0.5;
+          const adjustedSize = newSize < minimumSize ? minimumSize : newSize;
+
+          selectedRigidBody.collider(0).setHalfExtents(new THREE.Vector3(
+            adjustedSize / 2,
+            adjustedSize / 2,
+            adjustedSize / 2
+          ));
+
+          meshScaleRef.current = adjustedSize;
+        }
+      }
 
       selectedRigidBody.setTranslation(
         new THREE.Vector3(
@@ -112,4 +163,6 @@ DragControl.propTypes = {
   maxY: PropTypes.number.isRequired,
   minZ: PropTypes.number.isRequired,
   maxZ: PropTypes.number.isRequired,
+  boxSize: PropTypes.number.isRequired,
+  setBoxSize: PropTypes.func.isRequired,
 };
