@@ -50,7 +50,7 @@ export default function StageOne() {
           shadow-camera-far={1000}
         />
         <Physics>
-          <DragControl minX={-19} maxX={19} minZ={-19} maxZ={19} />
+          <DragControl minX={-19} maxX={19} maxY={29} minZ={-19} maxZ={19} />
           <RigidBody type="fixed" colliders={false}>
             <TutorialBackground />
           </RigidBody>

@@ -7,9 +7,9 @@ import * as THREE from "three";
 import * as RAPIER from "@dimforge/rapier3d-compat";
 
 import PropTypes from "prop-types";
-import clamp from "../../utils/clamp";
+import restrictPosition from "../../utils/restrictPosition";
 
-export default function DragControl({ minX, maxX, minZ, maxZ }) {
+export default function DragControl({ minX, maxX, maxY, minZ, maxZ }) {
   const controlsRef = useRef();
   const [selectedHandle, setSelectedHandle] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -82,10 +82,13 @@ export default function DragControl({ minX, maxX, minZ, maxZ }) {
         .multiplyScalar(initialDistance)
         .add(camera.position);
       const selectedRigidBody = world.getRigidBody(selectedHandle);
-      const adjustedPositionX = clamp(newPosition.x, minX, maxX);
-      const adjustedPositionY =
-        newPosition.y < clickedPosition.y ? clickedPosition.y : newPosition.y;
-      const adjustedPositionZ = clamp(newPosition.z, minZ, maxZ);
+      const adjustedPositionX = restrictPosition(newPosition.x, minX, maxX);
+      const adjustedPositionY = restrictPosition(
+        newPosition.y,
+        clickedPosition.y,
+        maxY,
+      );
+      const adjustedPositionZ = restrictPosition(newPosition.z, minZ, maxZ);
 
       selectedRigidBody.setTranslation(
         new THREE.Vector3(
@@ -106,6 +109,7 @@ export default function DragControl({ minX, maxX, minZ, maxZ }) {
 DragControl.propTypes = {
   minX: PropTypes.number.isRequired,
   maxX: PropTypes.number.isRequired,
+  maxY: PropTypes.number.isRequired,
   minZ: PropTypes.number.isRequired,
   maxZ: PropTypes.number.isRequired,
 };
