@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 
-export default function Sphere({ position, args, color, ...dragProps }) {
+export default function Sphere({ args, color, ...dragProps }) {
   return (
-    <mesh position={position} {...dragProps}>
+    <mesh {...dragProps} castShadow receiveShadow>
       <sphereGeometry args={args} />
       <meshStandardMaterial attach="material" color={color} />
     </mesh>
@@ -10,7 +10,6 @@ export default function Sphere({ position, args, color, ...dragProps }) {
 }
 
 Sphere.propTypes = {
-  position: PropTypes.arrayOf(PropTypes.number).isRequired,
   args: PropTypes.arrayOf(PropTypes.number).isRequired,
   color: PropTypes.string.isRequired,
 };
