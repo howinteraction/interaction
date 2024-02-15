@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 
-export default function Cone({ position, args, color }) {
+export default function Cone({ args, color }) {
   return (
-    <mesh position={position}>
+    <mesh castShadow receiveShadow>
       <coneGeometry args={args} />
       <meshStandardMaterial attach="material" color={color} />
     </mesh>
@@ -10,7 +10,6 @@ export default function Cone({ position, args, color }) {
 }
 
 Cone.propTypes = {
-  position: PropTypes.arrayOf(PropTypes.number).isRequired,
   args: PropTypes.arrayOf(PropTypes.number).isRequired,
   color: PropTypes.string.isRequired,
 };

@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 
-export default function Capsule({ position, args, color }) {
+export default function Capsule({ args, color }) {
   return (
-    <mesh position={position}>
+    <mesh castShadow receiveShadow>
       <capsuleGeometry args={args} />
       <meshStandardMaterial attach="material" color={color} />
     </mesh>
@@ -10,7 +10,6 @@ export default function Capsule({ position, args, color }) {
 }
 
 Capsule.propTypes = {
-  position: PropTypes.arrayOf(PropTypes.number).isRequired,
   args: PropTypes.arrayOf(PropTypes.number).isRequired,
   color: PropTypes.string.isRequired,
 };

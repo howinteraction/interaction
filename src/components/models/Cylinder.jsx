@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 
-export default function Cylinder({ position, args, color }) {
+export default function Cylinder({ args, color }) {
   return (
-    <mesh position={position}>
+    <mesh castShadow receiveShadow>
       <cylinderGeometry args={args} />
       <meshStandardMaterial attach="material" color={color} />
     </mesh>
@@ -10,7 +10,6 @@ export default function Cylinder({ position, args, color }) {
 }
 
 Cylinder.propTypes = {
-  position: PropTypes.arrayOf(PropTypes.number).isRequired,
   args: PropTypes.arrayOf(PropTypes.number).isRequired,
   color: PropTypes.string.isRequired,
 };

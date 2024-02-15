@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 
-export default function Torus({ position, args, color }) {
+export default function Torus({ args, color }) {
   return (
-    <mesh position={position}>
+    <mesh castShadow receiveShadow>
       <torusGeometry args={args} />
       <meshStandardMaterial attach="material" color={color} />
     </mesh>
@@ -10,7 +10,6 @@ export default function Torus({ position, args, color }) {
 }
 
 Torus.propTypes = {
-  position: PropTypes.arrayOf(PropTypes.number).isRequired,
   args: PropTypes.arrayOf(PropTypes.number).isRequired,
   color: PropTypes.string.isRequired,
 };
