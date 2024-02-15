@@ -1,0 +1,3 @@
+export default function restrictPosition(value, min, max) {
+  return Math.max(min, Math.min(value, max));
+}

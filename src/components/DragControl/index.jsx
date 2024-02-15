@@ -6,11 +6,15 @@ import { useRapier } from "@react-three/rapier";
 import * as THREE from "three";
 import * as RAPIER from "@dimforge/rapier3d-compat";
 
-export default function DragControl() {
+import PropTypes from "prop-types";
+import restrictPosition from "../../utils/restrictPosition";
+
+export default function DragControl({ minX, maxX, maxY, minZ, maxZ }) {
   const controlsRef = useRef();
   const [selectedHandle, setSelectedHandle] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
   const [initialDistance, setInitialDistance] = useState(null);
+  const [clickedPosition, setClickedPosition] = useState(null);
   const { camera } = useThree();
   const { world } = useRapier();
 
@@ -28,42 +32,47 @@ export default function DragControl() {
       const adjustOrigin = origin.add(direction.multiplyScalar(originOffset));
       const ray = new RAPIER.Ray(adjustOrigin, direction);
       const castRay = world.castRay(ray, maxToi, true);
-      const { handle } = castRay.collider.parent();
-      const selectedRigidBody = world.getRigidBody(handle);
 
-      if (castRay && !isDragging && selectedRigidBody.userData) {
-        const selectedRigidBodyPositionVector = new THREE.Vector3(
-          selectedRigidBody.translation().x,
-          selectedRigidBody.translation().y,
-          selectedRigidBody.translation().z,
-        );
+      if (castRay) {
+        const { handle } = castRay.collider.parent();
+        const selectedRigidBody = world.getRigidBody(handle);
 
-        const distance = selectedRigidBodyPositionVector.distanceTo(
-          camera.position,
-        );
+        if (!isDragging && selectedRigidBody.userData?.isDraggable) {
+          const selectedRigidBodyPositionVector = new THREE.Vector3(
+            selectedRigidBody.translation().x,
+            selectedRigidBody.translation().y,
+            selectedRigidBody.translation().z,
+          );
 
-        setIsDragging(true);
-        setSelectedHandle(handle);
-        setInitialDistance(distance);
-      } else {
-        selectedRigidBody.setBodyType(0);
+          setClickedPosition(selectedRigidBody.translation());
 
-        setIsDragging(false);
-        setSelectedHandle(null);
-        setInitialDistance(null);
+          const distance = selectedRigidBodyPositionVector.distanceTo(
+            camera.position,
+          );
+
+          setIsDragging(true);
+          setSelectedHandle(handle);
+          setInitialDistance(distance);
+        } else if (selectedHandle && isDragging) {
+          world.getRigidBody(selectedHandle).setBodyType(0);
+
+          setIsDragging(false);
+          setSelectedHandle(null);
+          setInitialDistance(null);
+        }
       }
     };
 
     document.addEventListener("click", handleClick);
 
     return () => document.removeEventListener("click", handleClick);
-  }, [camera, isDragging, world]);
+  }, [camera, isDragging, world, selectedHandle, clickedPosition]);
 
   useFrame(() => {
     if (
       selectedHandle &&
       isDragging &&
-      world.getRigidBody(selectedHandle).userData
+      world.getRigidBody(selectedHandle).userData?.isDraggable
     ) {
       const direction = new THREE.Vector3();
 
@@ -73,11 +82,34 @@ export default function DragControl() {
         .multiplyScalar(initialDistance)
         .add(camera.position);
       const selectedRigidBody = world.getRigidBody(selectedHandle);
+      const adjustedPositionX = restrictPosition(newPosition.x, minX, maxX);
+      const adjustedPositionY = restrictPosition(
+        newPosition.y,
+        clickedPosition.y,
+        maxY,
+      );
+      const adjustedPositionZ = restrictPosition(newPosition.z, minZ, maxZ);
 
-      selectedRigidBody.setTranslation(newPosition, true);
+      selectedRigidBody.setTranslation(
+        new THREE.Vector3(
+          adjustedPositionX,
+          adjustedPositionY,
+          adjustedPositionZ,
+        ),
+        true,
+      );
+
       selectedRigidBody.setBodyType(2);
     }
   });
 
   return <PointerLockControls ref={controlsRef} />;
 }
+
+DragControl.propTypes = {
+  minX: PropTypes.number.isRequired,
+  maxX: PropTypes.number.isRequired,
+  maxY: PropTypes.number.isRequired,
+  minZ: PropTypes.number.isRequired,
+  maxZ: PropTypes.number.isRequired,
+};
