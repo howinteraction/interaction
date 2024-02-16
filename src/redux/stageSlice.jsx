@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const stageSlice = createSlice({
-  name: "stage",
+  name: "stages",
   initialState: {
-    stage: 0,
+    stageLevel: 0,
   },
   reducers: {
     setStage: (state, action) => {

@@ -1,13 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import logger from "redux-logger";
 
-import stage from "./stageSlice";
+import stages from "./stageSlice";
 import stageClear from "./stageClearSlice";
 import elapsedTimer from "./elapsedSlice";
 
 const store = configureStore({
   reducer: {
-    stage,
+    stages,
     stageClear,
     elapsedTimer,
   },

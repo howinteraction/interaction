@@ -1,5 +1,8 @@
-import PropTypes from "prop-types";
 import styled from "styled-components";
+
+import { useDispatch } from "react-redux";
+import { setStage } from "../../redux/stageSlice";
+import { setIsStageCleared } from "../../redux/stageClearSlice";
 
 const ModalContainer = styled.div`
   display: flex;
@@ -31,11 +34,12 @@ const CloseButton = styled.button`
   font-size: 16px;
 `;
 
-export default function StageClearModal({ onClose }) {
-  function handleModalClick(event) {
-    if (event.target === event.currentTarget) {
-      onClose();
-    }
+export default function StageClearModal() {
+  const dispatch = useDispatch();
+
+  function handleModalClick() {
+    dispatch(setIsStageCleared(false));
+    dispatch(setStage(2));
   }
 
   return (
@@ -43,12 +47,8 @@ export default function StageClearModal({ onClose }) {
       <ModalContent>
         <h2>Congratulations!</h2>
         <p>You have cleared the stage. Would you like to play next stage?</p>
-        <CloseButton onClick={onClose}>Next Stage</CloseButton>
+        <CloseButton onClick={handleModalClick}>Next Stage</CloseButton>
       </ModalContent>
     </ModalContainer>
   );
 }
-
-StageClearModal.propTypes = {
-  onClose: PropTypes.func.isRequired,
-};
