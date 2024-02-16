@@ -3,9 +3,10 @@ import { useSelector } from "react-redux";
 
 import Tutorial from "./Tutorial";
 import StageOne from "./StageOne";
+// import StageTwo from "./StageTwo";
 
 export default function Stages() {
-  const currentStage = useSelector((state) => state.stage.stage);
+  const currentStage = useSelector((state) => state.stages.stage);
 
   const renderStageComponent = () => {
     switch (currentStage) {
@@ -19,6 +20,8 @@ export default function Stages() {
         );
       case 1:
         return <StageOne />;
+      // case 2:
+      // return <StageTwo />;
       default:
         return null;
     }

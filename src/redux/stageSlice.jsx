@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const stageSlice = createSlice({
-  name: "stage",
+  name: "stages",
   initialState: {
     stage: 0,
   },

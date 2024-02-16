@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { CapsuleCollider, RigidBody, useRapier } from "@react-three/rapier";
+import PropTypes from "prop-types";
 
 import * as RAPIER from "@dimforge/rapier3d-compat";
 import * as THREE from "three";
@@ -12,7 +13,7 @@ const direction = new THREE.Vector3();
 const frontVector = new THREE.Vector3();
 const sideVector = new THREE.Vector3();
 
-export default function Player() {
+export default function Player({ onPositionChange, position }) {
   const playerRef = useRef();
   const { forward, backward, left, right, jump } = usePlayerControl();
 
@@ -54,11 +55,21 @@ export default function Player() {
 
     const { x, y, z } = playerRef.current.translation();
 
+    if (onPositionChange) {
+      onPositionChange({ x, y, z });
+    }
+
     state.camera.position.set(x, y, z);
   });
 
   return (
-    <RigidBody colliders={false} mass={1} ref={playerRef} lockRotations>
+    <RigidBody
+      colliders={false}
+      mass={1}
+      ref={playerRef}
+      lockRotations
+      position={position}
+    >
       <mesh>
         <capsuleGeometry args={[0.5, 0.5]} />
         <CapsuleCollider args={[0.5, 0.5]} />
@@ -66,3 +77,12 @@ export default function Player() {
     </RigidBody>
   );
 }
+
+Player.propTypes = {
+  onPositionChange: PropTypes.func.isRequired,
+  position: PropTypes.arrayOf(PropTypes.number),
+};
+
+Player.defaultProps = {
+  position: [0, 0, 0],
+};

@@ -16,10 +16,10 @@ export default function DragControl({
   minZ,
   maxZ,
   boxSize,
-  setBoxSize
+  setBoxSize,
+  controlsRef,
 }) {
   const meshScaleRef = useRef();
-  const controlsRef = useRef();
   const [selectedHandle, setSelectedHandle] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
   const [initialDistance, setInitialDistance] = useState(null);
@@ -64,8 +64,10 @@ export default function DragControl({
           setInitialDistance(distance);
         } else if (selectedHandle && isDragging) {
           world.getRigidBody(selectedHandle).setBodyType(0);
+          if (meshScaleRef.current) {
+            setBoxSize(meshScaleRef.current);
+          }
 
-          setBoxSize(meshScaleRef.current);
           setIsDragging(false);
           setSelectedHandle(null);
           setInitialDistance(null);
@@ -96,14 +98,14 @@ export default function DragControl({
       const adjustedPositionY = restrictPosition(
         newPosition.y,
         clickedPosition.y,
-        maxY
+        maxY,
       );
       const adjustedPositionZ = restrictPosition(newPosition.z, minZ, maxZ);
 
       const adjustedPosition = new THREE.Vector3(
         adjustedPositionX,
         adjustedPositionY,
-        adjustedPositionZ
+        adjustedPositionZ,
       );
 
       const finalDistance = adjustedPosition.distanceTo(camera.position);
@@ -119,11 +121,11 @@ export default function DragControl({
           const scale = 1 + heightRatio;
           const newSize = boxSize * scale;
 
-          selectedRigidBody.collider(0).setHalfExtents(new THREE.Vector3(
-            newSize / 2,
-            newSize / 2,
-            newSize / 2
-          ));
+          selectedRigidBody
+            .collider(0)
+            .setHalfExtents(
+              new THREE.Vector3(newSize / 2, newSize / 2, newSize / 2),
+            );
 
           meshScaleRef.current = newSize;
         } else {
@@ -131,11 +133,15 @@ export default function DragControl({
           const minimumSize = 0.5;
           const adjustedSize = newSize < minimumSize ? minimumSize : newSize;
 
-          selectedRigidBody.collider(0).setHalfExtents(new THREE.Vector3(
-            adjustedSize / 2,
-            adjustedSize / 2,
-            adjustedSize / 2
-          ));
+          selectedRigidBody
+            .collider(0)
+            .setHalfExtents(
+              new THREE.Vector3(
+                adjustedSize / 2,
+                adjustedSize / 2,
+                adjustedSize / 2,
+              ),
+            );
 
           meshScaleRef.current = adjustedSize;
         }
@@ -163,6 +169,12 @@ DragControl.propTypes = {
   maxY: PropTypes.number.isRequired,
   minZ: PropTypes.number.isRequired,
   maxZ: PropTypes.number.isRequired,
-  boxSize: PropTypes.number.isRequired,
-  setBoxSize: PropTypes.func.isRequired,
+  controlsRef: PropTypes.instanceOf(Object).isRequired,
+  boxSize: PropTypes.number,
+  setBoxSize: PropTypes.func,
+};
+
+DragControl.defaultProps = {
+  boxSize: 2,
+  setBoxSize: () => {},
 };
