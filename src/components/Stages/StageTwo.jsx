@@ -1,10 +1,9 @@
-import { useEffect, useRef } from "react";
-import { Canvas, useThree } from "@react-three/fiber";
+import { useRef } from "react";
+import { Canvas } from "@react-three/fiber";
 import { Sky } from "@react-three/drei";
 import { Physics, RigidBody } from "@react-three/rapier";
 
 import styled from "styled-components";
-import * as THREE from "three";
 
 import Player from "../Player";
 import DragControl from "../DragControl";
@@ -15,16 +14,7 @@ import Cube from "../models/Cube";
 import Screen1 from "../models/Screen1";
 import Screen2 from "../models/Screen2";
 import BlackColumn from "../models/BlackColumn";
-
-function CustomFog() {
-  const { scene } = useThree();
-
-  useEffect(() => {
-    scene.fog = new THREE.FogExp2("blueviolet", 0.01);
-  }, [scene]);
-
-  return null;
-}
+import Fog from "../models/Fog";
 
 const Aim = styled.div`
   position: absolute;
@@ -38,7 +28,7 @@ const Aim = styled.div`
   z-index: 2;
 `;
 
-export default function StageOne() {
+export default function StageTwo() {
   const controlsRef = useRef();
 
   return (
@@ -46,7 +36,7 @@ export default function StageOne() {
       <Aim />
       <Canvas shadows>
         <Sky sunPosition={[30, 20, 30]} />
-        <CustomFog />
+        <Fog />
         <ambientLight intensity={3} />
         <directionalLight
           castShadow
