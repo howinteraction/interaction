@@ -7,7 +7,7 @@ const stageSlice = createSlice({
   },
   reducers: {
     setStage: (state, action) => {
-      state.stage = action.payload;
+      state.stageLevel = action.payload;
     },
   },
 });
