@@ -1,11 +1,16 @@
 import { useState, useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { Canvas } from "@react-three/fiber";
 import { Sky } from "@react-three/drei";
 import { Physics, RigidBody } from "@react-three/rapier";
 
-import styled from "styled-components";
-import * as THREE from "three";
+import Aim from "../Aim";
+import Player from "../Player";
+import DragControl from "../DragControl";
+import Stopwatch from "../Stopwatch";
+import SubTitle from "../Subtitle";
+import StageClearModal from "../StageClearModal";
+
 import Sphere from "../models/Sphere";
 import Box from "../models/Box";
 import Capsule from "../models/Capsule";
@@ -15,58 +20,16 @@ import Cone from "../models/Cone";
 import StageOnePortal from "../models/StageOnePortal";
 import TutorialBackground from "../models/TutorialBackground";
 
-import Player from "../Player";
-import DragControl from "../DragControl";
-import Stopwatch from "../Stopwatch";
-import SubTitle from "../Subtitle";
-import StageClearModal from "../StageClearModal";
-
-
-import { setIsStageCleared } from "../../redux/stageClearSlice";
-
-const Aim = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  transform: translate3d(-50%, -50%, 0);
-  border: 2px solid white;
-  z-index: 2;
-`;
+import usePlayerPosition from "../../../hooks/usePlayerPosition";
 
 export default function StageOne() {
-  const dispatch = useDispatch();
   const isStageCleared = useSelector(
     (state) => state.stageClear.isStageCleared,
   );
   const [boxSize, setBoxSize] = useState(2);
-  const playerPositionRef = useRef();
   const controlsRef = useRef();
 
-  function checkClearCondition(position) {
-    const portalPosition = new THREE.Vector3(-19.5, 6, 0);
-    const portalRadius = 5;
-
-    const playerPosition = new THREE.Vector3(
-      position.x,
-      position.y,
-      position.z,
-    );
-
-    const distanceToPortal = playerPosition.distanceTo(portalPosition);
-
-    if (distanceToPortal < portalRadius) {
-      dispatch(setIsStageCleared(true));
-      controlsRef.current.unlock();
-    }
-  }
-
-  function handlePlayerPositionChange(position) {
-    playerPositionRef.current = position;
-    checkClearCondition(playerPositionRef.current);
-  }
+  const { handlePlayerPositionChange } = usePlayerPosition(controlsRef);
 
   return (
     <>
@@ -149,7 +112,7 @@ export default function StageOne() {
           subtitle="Drop the Object top to Bottom"
         />
       </Canvas>
-      {isStageCleared && <StageClearModal />}
+      {isStageCleared && <StageClearModal nextStage={2} />}
     </>
   );
 }
