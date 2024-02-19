@@ -17,8 +17,8 @@ import Fog from "../models/Fog";
 
 import VisualIllusion from "../VisualIllusion";
 import BlackColumn from "../models/BlackColumn";
-import BlackPillar from "../models/BlackPiller";
-import BlackPillar2 from "../models/BlackPiller2";
+import BlackPillar from "../models/BlackPillar";
+import BlackPillar2 from "../models/BlackPillar2";
 
 const Aim = styled.div`
   position: absolute;
