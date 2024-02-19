@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useFrame, useThree } from "@react-three/fiber";
-import { RigidBody } from "@react-three/rapier";
+import { CuboidCollider, RigidBody } from "@react-three/rapier";
 
 import { setIsCombined } from "../redux/combinationSlice";
 
@@ -54,11 +54,14 @@ export default function VisualIllusion() {
   return (
     isCombined && (
       <RigidBody
-        scale={1}
-        userData={{ isDraggable: true }}
+        scale={1.5}
         position={[-5, 2.5, -2.5]}
         lockRotations
+        userData={{ isDraggable: true }}
+        name="TetrahedronCube"
+        colliders={false}
       >
+        <CuboidCollider position={[0.065, 0.35, 0]} args={[0.35, 0.35, 0.35]} />
         <TetrahedronCube />
       </RigidBody>
     )
