@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Sky } from "@react-three/drei";
-import { Physics, RigidBody } from "@react-three/rapier";
+import { Physics, RigidBody, CuboidCollider } from "@react-three/rapier";
 
 import styled from "styled-components";
 
@@ -13,11 +13,12 @@ import StageTwoPortal from "../models/StageTwoPortal";
 import Cube from "../models/Cube";
 import Screen1 from "../models/Screen1";
 import Screen2 from "../models/Screen2";
-import BlackColumn from "../models/BlackColumn";
 import Fog from "../models/Fog";
-import Pillar from "../models/Pillar";
-import Pillar2 from "../models/Pillar2";
+
 import VisualIllusion from "../VisualIllusion";
+import BlackColumn from "../models/BlackColumn";
+import BlackPillar from "../models/BlackPiller";
+import BlackPillar2 from "../models/BlackPiller2";
 
 const Aim = styled.div`
   position: absolute;
@@ -75,10 +76,10 @@ export default function StageTwo() {
             <Cube />
           </RigidBody>
           <RigidBody
-            scale={2}
+            scale={4}
             colliders={false}
-            rotation={[0, 0, 0]}
-            position={[0, -3, 0]}
+            rotation={[0, 3.5, 0]}
+            position={[30, 2, 0]}
           >
             <Screen1 />
           </RigidBody>
@@ -91,32 +92,90 @@ export default function StageTwo() {
             <Screen2 />
           </RigidBody>
           <RigidBody
+            type="fixed"
             colliders={false}
-            scale={0.4}
-            position={[-30, 0, 2]}
-            rotation={[0, 0.3, 0]}
-          >
-            <Pillar args={[5, 82, 5]} color="rgb(62, 60, 60)" />
-          </RigidBody>
-          <RigidBody
-            colliders={false}
-            scale={0.4}
-            position={[-15, 0, 0.5]}
-            rotation={[0, 0.3, 0]}
-          >
-            <Pillar2 args={[5, 82, 5]} color="rgb(62, 60, 60)" />
-          </RigidBody>
-          <RigidBody
-            colliders={false}
-            scale={0.4}
-            position={[-30, 0, -4]}
-            rotation={[0, Math.PI, 0]}
+            scale={0.3}
+            position={[-30, 0, 3.5]}
+            rotation={[0, -20, 0]}
           >
             <BlackColumn />
           </RigidBody>
           <RigidBody
+            type="fixed"
+            colliders={false}
+            scale={0.3}
+            position={[-25, 0, -2.4]}
+            rotation={[0, 45, 0]}
+          >
+            <BlackColumn />
+          </RigidBody>
+          <RigidBody
+            type="fixed"
+            colliders={false}
+            scale={0.3}
+            position={[-18, 0, 4]}
+            rotation={[0, Math.PI / 10, 0]}
+          >
+            <BlackColumn />
+          </RigidBody>
+          <RigidBody
+            type="fixed"
+            colliders={false}
+            scale={0.3}
+            position={[-17, 0, -4]}
+            rotation={[0, 20, 0]}
+          >
+            <BlackColumn />
+          </RigidBody>
+
+          <RigidBody
+            type="fixed"
+            colliders={false}
+            scale={0.3}
+            position={[-7, 0, 3]}
+            rotation={[0, 13, 0]}
+          >
+            <BlackColumn />
+          </RigidBody>
+          <RigidBody
+            type="fixed"
+            colliders={false}
+            scale={0.3}
+            position={[-13, 0, 0]}
+            rotation={[0, 14, 0]}
+          >
+            <BlackColumn />
+          </RigidBody>
+          <RigidBody
+            type="fixed"
+            position={[10, 0, -2]}
+            rotation={[0, -Math.PI / 2, 0]}
+            colliders={false}
+          >
+            <BlackPillar />
+            <CuboidCollider args={[1.5, 15, 1.5]} position={[0.5, 1, -0.3]} />
+          </RigidBody>
+          <RigidBody
+            type="fixed"
+            position={[10, 0, -2]}
+            rotation={[0, -Math.PI / 2, 0]}
+            colliders={false}
+          >
+            <BlackPillar />
+            <CuboidCollider args={[1.5, 15, 1.5]} position={[0.5, 1, -0.3]} />
+          </RigidBody>
+          <RigidBody
+            type="fixed"
+            position={[24, 0, 4.3]}
+            rotation={[0, 17.2, 0]}
+            colliders={false}
+          >
+            <BlackPillar2 />
+            <CuboidCollider args={[1.5, 15, 1.5]} position={[0.5, 1, -0.3]} />
+          </RigidBody>
+          <RigidBody
             position={[50, 4, 2]}
-            scale={2}
+            scale={1}
             type="fixed"
             colliders={false}
             rotation={[0.53, 0, 1.5]}
