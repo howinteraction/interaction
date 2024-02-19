@@ -15,6 +15,9 @@ import Screen1 from "../models/Screen1";
 import Screen2 from "../models/Screen2";
 import BlackColumn from "../models/BlackColumn";
 import Fog from "../models/Fog";
+import Pillar from "../models/Pillar";
+import Pillar2 from "../models/Pillar2";
+import VisualIllusion from "../VisualIllusion";
 
 const Aim = styled.div`
   position: absolute;
@@ -90,7 +93,23 @@ export default function StageTwo() {
           <RigidBody
             colliders={false}
             scale={0.4}
-            position={[-40, 0, 5]}
+            position={[-30, 0, 2]}
+            rotation={[0, 0.3, 0]}
+          >
+            <Pillar args={[5, 82, 5]} color="rgb(62, 60, 60)" />
+          </RigidBody>
+          <RigidBody
+            colliders={false}
+            scale={0.4}
+            position={[-15, 0, 0.5]}
+            rotation={[0, 0.3, 0]}
+          >
+            <Pillar2 args={[5, 82, 5]} color="rgb(62, 60, 60)" />
+          </RigidBody>
+          <RigidBody
+            colliders={false}
+            scale={0.4}
+            position={[-30, 0, -4]}
             rotation={[0, Math.PI, 0]}
           >
             <BlackColumn />
@@ -105,6 +124,7 @@ export default function StageTwo() {
             <StageTwoPortal />
           </RigidBody>
           <Player position={[-66, 0, 0]} />
+          <VisualIllusion />
         </Physics>
       </Canvas>
     </>

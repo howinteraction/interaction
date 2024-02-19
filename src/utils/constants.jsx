@@ -1,3 +1,15 @@
 export const DESCENT_VELOCITY = 0.4;
 export const MOVE_SPEED = 5;
 export const SUBTITLE_TIME = 10000;
+export const MAX_CAMERA_POSITION_X = -39.4;
+export const MIN_CAMERA_POSITION_X = -39.6;
+export const MAX_CAMERA_POSITION_Y = 1;
+export const MIN_CAMERA_POSITION_Y = 0.9;
+export const MAX_CAMERA_POSITION_Z = 5.3;
+export const MIN_CAMERA_POSITION_Z = 5.1;
+export const MAX_CAMERA_ROTATION_X = 1;
+export const MIN_CAMERA_ROTATION_X = 0.92;
+export const MAX_CAMERA_ROTATION_Y = -1.12;
+export const MIN_CAMERA_ROTATION_Y = -1.22;
+export const MAX_CAMERA_ROTATION_Z = 0.95;
+export const MIN_CAMERA_ROTATION_Z = 0.85;
