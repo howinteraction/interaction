@@ -3,6 +3,7 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { RigidBody } from "@react-three/rapier";
 
 import { setIsCombined } from "../redux/combinationSlice";
+
 import TetrahedronCube from "./models/TetrahedronCube";
 import {
   MAX_CAMERA_POSITION_X,
