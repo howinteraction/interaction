@@ -54,8 +54,9 @@ export default function VisualIllusion() {
   return (
     isCombined && (
       <RigidBody
+        scale={1}
         userData={{ isDraggable: true }}
-        position={[-32, 3.6, 3.4]}
+        position={[-5, 2.5, -2.5]}
         lockRotations
       >
         <TetrahedronCube />
