@@ -1,9 +1,9 @@
-import { useGLTF } from "@react-three/drei";
+import { useGLTF, Clone } from "@react-three/drei";
 
 function BlackColumn() {
-  const gltf = useGLTF("/assets/glb/black-column.glb");
+  const gltf = useGLTF("/assets/glb/black-column-02.glb");
 
-  return <primitive object={gltf.scene} />;
+  return <Clone object={gltf.scene} />;
 }
 
 export default BlackColumn;
