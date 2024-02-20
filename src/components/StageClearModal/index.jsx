@@ -1,8 +1,9 @@
-import styled from "styled-components";
-
 import { useDispatch } from "react-redux";
+import PropTypes from "prop-types";
+import styled from "styled-components";
 import { setStage } from "../../redux/stageSlice";
 import { setIsStageCleared } from "../../redux/stageClearSlice";
+
 
 const ModalContainer = styled.div`
   display: flex;
@@ -34,12 +35,12 @@ const CloseButton = styled.button`
   font-size: 16px;
 `;
 
-export default function StageClearModal() {
+export default function StageClearModal({ nextStage }) {
   const dispatch = useDispatch();
 
   function handleModalClick() {
     dispatch(setIsStageCleared(false));
-    dispatch(setStage(2));
+    dispatch(setStage(nextStage));
   }
 
   return (
@@ -52,3 +53,7 @@ export default function StageClearModal() {
     </ModalContainer>
   );
 }
+
+StageClearModal.propTypes = {
+  nextStage: PropTypes.number.isRequired,
+};

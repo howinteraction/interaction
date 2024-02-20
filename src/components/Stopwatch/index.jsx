@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 
 import { setElapsedTime } from "../../redux/elapsedSlice";
 
-export default function Stopwatch({ position, rotation }) {
+export default function Stopwatch({ position, rotation, color }) {
   const dispatch = useDispatch();
   const elapsedTime = useSelector((state) => state.elapsedTimer.elapsedTime);
   const isStageCleared = useSelector(
@@ -49,7 +49,7 @@ export default function Stopwatch({ position, rotation }) {
   return (
     <Text
       position={position}
-      color="black"
+      color={color}
       fontSize={2.6}
       lineHeight={0.05}
       textAlign="center"
@@ -63,4 +63,9 @@ export default function Stopwatch({ position, rotation }) {
 Stopwatch.propTypes = {
   position: PropTypes.arrayOf(PropTypes.number).isRequired,
   rotation: PropTypes.arrayOf(PropTypes.number).isRequired,
+  color: PropTypes.string,
+};
+
+Stopwatch.defaultProps = {
+  color: "black",
 };

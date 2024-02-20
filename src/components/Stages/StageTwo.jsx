@@ -1,39 +1,35 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import { useSelector } from "react-redux";
 import { Canvas } from "@react-three/fiber";
 import { Sky } from "@react-three/drei";
 import { Physics, RigidBody, CuboidCollider } from "@react-three/rapier";
 
-import styled from "styled-components";
-
+import Aim from "../Aim";
 import Player from "../Player";
 import DragControl from "../DragControl";
-
-import StageTwoBackground from "../models/StageTwoBackground";
-import StageTwoPortal from "../models/StageTwoPortal";
-import Cube from "../models/Cube";
-import Screen1 from "../models/Screen1";
-import Screen2 from "../models/Screen2";
-import Fog from "../models/Fog";
-
 import VisualIllusion from "../VisualIllusion";
+import Stopwatch from "../Stopwatch";
+import StageClearModal from "../StageClearModal";
+
+import Fog from "../models/Fog";
+import StageTwoBackground from "../models/StageTwoBackground";
+import StageTwoGoal from "../models/StageTwoGoal";
+import HelperScreen from "../models/HelperScreen";
+import TimeScreen from "../models/TimeScreen";
+import Cube from "../models/Cube";
 import BlackColumn from "../models/BlackColumn";
 import BlackPillar from "../models/BlackPillar";
 import BlackPillar2 from "../models/BlackPillar2";
 
-const Aim = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  transform: translate3d(-50%, -50%, 0);
-  border: 2px solid white;
-  z-index: 2;
-`;
+import usePlayerPosition from "../../../hooks/usePlayerPosition";
 
 export default function StageTwo() {
   const controlsRef = useRef();
+  const isStageCleared = useSelector(
+    (state) => state.stageClear.isStageCleared,
+  );
+  const [isCollided, setIsCollided] = useState(false);
+  const { handlePlayerPositionChange } = usePlayerPosition(controlsRef);
 
   return (
     <>
@@ -65,7 +61,7 @@ export default function StageTwo() {
             controlsRef={controlsRef}
           />
           <RigidBody type="fixed" colliders={false} scale={2}>
-            <StageTwoBackground />
+            <StageTwoBackground isCollided={isCollided} />
           </RigidBody>
           <RigidBody
             userData={{ isDraggable: true }}
@@ -76,20 +72,20 @@ export default function StageTwo() {
             <Cube />
           </RigidBody>
           <RigidBody
-            scale={4}
-            colliders={false}
-            rotation={[0, 3.5, 0]}
-            position={[30, 2, 0]}
-          >
-            <Screen1 />
-          </RigidBody>
-          <RigidBody
             scale={5}
             colliders={false}
-            rotation={[0, 1.1, 0]}
-            position={[-35, 3, 0.5]}
+            rotation={[0, 0, 0]}
+            position={[-40.5, 3, 0.5]}
           >
-            <Screen2 />
+            <TimeScreen />
+          </RigidBody>
+          <RigidBody
+            scale={4}
+            colliders={false}
+            rotation={[-0.017, -0.01, 0]}
+            position={[-62, -4, 0.3]}
+          >
+            <HelperScreen />
           </RigidBody>
           <RigidBody
             type="fixed"
@@ -127,7 +123,6 @@ export default function StageTwo() {
           >
             <BlackColumn />
           </RigidBody>
-
           <RigidBody
             type="fixed"
             colliders={false}
@@ -173,19 +168,20 @@ export default function StageTwo() {
             <BlackPillar2 />
             <CuboidCollider args={[1.5, 15, 1.5]} position={[0.5, 1, -0.3]} />
           </RigidBody>
-          <RigidBody
-            position={[50, 4, 2]}
-            scale={1}
-            type="fixed"
-            colliders={false}
-            rotation={[0.53, 0, 1.5]}
-          >
-            <StageTwoPortal />
-          </RigidBody>
-          <Player position={[-66, 0, 0]} />
+          <StageTwoGoal isCollided={isCollided} setIsCollided={setIsCollided} />
+          <Player
+            position={[-68.5, 0, 0.2]}
+            onPositionChange={handlePlayerPositionChange}
+          />
           <VisualIllusion />
         </Physics>
+        <Stopwatch
+          position={[-41.45, 13.7, 0.9]}
+          rotation={[-0.5, 4.7, -0.5]}
+          color="rgb(182, 45, 8)"
+        />
       </Canvas>
+      {isStageCleared && <StageClearModal nextStage={3} />}
     </>
   );
 }

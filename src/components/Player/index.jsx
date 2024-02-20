@@ -1,4 +1,5 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import { useSelector } from "react-redux";
 import { useFrame } from "@react-three/fiber";
 import { CapsuleCollider, RigidBody, useRapier } from "@react-three/rapier";
 import PropTypes from "prop-types";
@@ -15,6 +16,8 @@ const sideVector = new THREE.Vector3();
 
 export default function Player({ onPositionChange, position }) {
   const playerRef = useRef();
+  const [initialDirection, setInitialDirection] = useState(false);
+  const currentStage = useSelector((state) => state.stages.stageLevel);
   const { forward, backward, left, right, jump } = usePlayerControl();
 
   const rapier = useRapier();
@@ -26,6 +29,11 @@ export default function Player({ onPositionChange, position }) {
   useFrame((state) => {
     if (!playerRef.current) {
       return;
+    }
+
+    if (currentStage === 2 && !initialDirection) {
+      state.camera.lookAt(new THREE.Vector3(60, 12, 6.5));
+      setInitialDirection(true);
     }
 
     const velocity = playerRef.current.linvel();
