@@ -13,7 +13,7 @@ import StageClearModal from "../StageClearModal";
 
 import Fog from "../models/Fog";
 import StageTwoBackground from "../models/StageTwoBackground";
-import StageTwoCollision from "../models/StageTwoCollision";
+import StageTwoGoal from "../models/StageTwoGoal";
 import HelperScreen from "../models/HelperScreen";
 import TimeScreen from "../models/TimeScreen";
 import Cube from "../models/Cube";
@@ -168,10 +168,7 @@ export default function StageTwo() {
             <BlackPillar2 />
             <CuboidCollider args={[1.5, 15, 1.5]} position={[0.5, 1, -0.3]} />
           </RigidBody>
-          <StageTwoCollision
-            isCollided={isCollided}
-            setIsCollided={setIsCollided}
-          />
+          <StageTwoGoal isCollided={isCollided} setIsCollided={setIsCollided} />
           <Player
             position={[-68.5, 0, 0.2]}
             onPositionChange={handlePlayerPositionChange}

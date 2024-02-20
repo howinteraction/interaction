@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import TriangleLight from "./TriangleLight";
 import StageTwoPortal from "./StageTwoPortal";
 
-export default function StageTwoCollision({ isCollided, setIsCollided }) {
+export default function StageTwoGoal({ isCollided, setIsCollided }) {
   const colliderRef = useRef();
 
   const handleCollisionEnter = ({ other }) => {
@@ -58,7 +58,7 @@ export default function StageTwoCollision({ isCollided, setIsCollided }) {
   );
 }
 
-StageTwoCollision.propTypes = {
+StageTwoGoal.propTypes = {
   isCollided: PropTypes.bool.isRequired,
   setIsCollided: PropTypes.func.isRequired,
 };

@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import * as THREE from "three";
 import { setIsStageCleared } from "../src/redux/stageClearSlice";
 
-
 const usePlayerPosition = (controlsRef) => {
   const playerPositionRef = useRef();
   const dispatch = useDispatch();
