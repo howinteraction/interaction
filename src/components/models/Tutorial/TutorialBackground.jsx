@@ -2,7 +2,7 @@ import { useGLTF } from "@react-three/drei";
 import { CuboidCollider } from "@react-three/rapier";
 
 export default function TutorialBackground() {
-  const gltf = useGLTF("/assets/glb/tutorialBackground.glb");
+  const gltf = useGLTF("/assets/glb/tutorial-background.glb");
 
   gltf.scene.traverse((child) => {
     child.receiveShadow = true;
@@ -21,4 +21,4 @@ export default function TutorialBackground() {
   );
 }
 
-useGLTF.preload("/assets/glb/tutorialBackground.glb");
+useGLTF.preload("/assets/glb/tutorial-background.glb");
