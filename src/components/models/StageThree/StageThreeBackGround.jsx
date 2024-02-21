@@ -1,7 +1,7 @@
 import { useGLTF } from "@react-three/drei";
 
-export default function StageThreeBackground() {
-  const { scene } = useGLTF("/assets/glb/stage3-ground.glb");
+export default function StageThreeBackGround() {
+  const { scene } = useGLTF("/assets/glb/stage3-background.glb");
 
   scene.traverse((child) => {
     child.receiveShadow = true;
@@ -11,4 +11,4 @@ export default function StageThreeBackground() {
   return <primitive object={scene} />;
 }
 
-useGLTF.preload("/assets/glb/stage3-ground.glb");
+useGLTF.preload("/assets/glb/stage3-background.glb");

@@ -1,5 +1,4 @@
 import { Clone, useGLTF } from "@react-three/drei";
-import { CuboidCollider } from "@react-three/rapier";
 
 export default function StageThreeStone() {
   const { scene } = useGLTF("/assets/glb/stage3-stone.glb");
@@ -12,4 +11,4 @@ export default function StageThreeStone() {
   return <Clone object={scene} />;
 }
 
-useGLTF.preload("/assets/glb/stage3-stone.glb");
+useGLTF.preload("/assets/glb/state3-stone.glb");
