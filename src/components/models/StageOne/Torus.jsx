@@ -1,15 +1,18 @@
-import PropTypes from "prop-types";
+import { useGLTF } from "@react-three/drei";
 
-export default function Torus({ args, color }) {
+export default function Torus() {
+  const gltf = useGLTF("/assets/glb/torus.glb");
+
+  gltf.scene.traverse((child) => {
+    child.castShadow = true;
+    child.receiveShadow = true;
+  });
+
   return (
-    <mesh castShadow receiveShadow>
-      <torusGeometry args={args} />
-      <meshStandardMaterial attach="material" color={color} />
+    <mesh>
+      <primitive object={gltf.scene} />
     </mesh>
   );
 }
 
-Torus.propTypes = {
-  args: PropTypes.arrayOf(PropTypes.number).isRequired,
-  color: PropTypes.string.isRequired,
-};
+useGLTF.preload("/assets/glb/torus.glb");

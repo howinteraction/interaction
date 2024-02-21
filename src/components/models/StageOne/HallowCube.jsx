@@ -1,7 +1,7 @@
 import { useGLTF } from "@react-three/drei";
 
-export default function Cone() {
-  const gltf = useGLTF("/assets/glb/cone.glb");
+export default function HallowCube() {
+  const gltf = useGLTF("/assets/glb/hallow-cube.glb");
 
   gltf.scene.traverse((child) => {
     child.castShadow = true;
