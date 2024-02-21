@@ -1,7 +1,6 @@
 import { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { Canvas } from "@react-three/fiber";
-import { Sky } from "@react-three/drei";
 import { Physics, RigidBody, CuboidCollider } from "@react-three/rapier";
 
 import Aim from "../Aim";
@@ -11,6 +10,7 @@ import VisualIllusion from "../VisualIllusion";
 import Stopwatch from "../Stopwatch";
 import StageClearModal from "../StageClearModal";
 
+import StageTwoSky from "../models/StageTwo/StageTwoSky";
 import Fog from "../models/StageTwo/Fog";
 import StageTwoBackground from "../models/StageTwo/StageTwoBackground";
 import StageTwoGoal from "../models/StageTwo/StageTwoGoal";
@@ -35,7 +35,7 @@ export default function StageTwo() {
     <>
       <Aim />
       <Canvas shadows>
-        <Sky sunPosition={[30, 20, 30]} />
+        <StageTwoSky />
         <Fog />
         <ambientLight intensity={3} />
         <directionalLight
