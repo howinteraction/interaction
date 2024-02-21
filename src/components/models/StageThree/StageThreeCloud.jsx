@@ -8,9 +8,7 @@ export default function StageThreeBackground() {
     child.castShadow = true;
   });
 
-  return (
-    <Clone object={scene} />
-  );
+  return <Clone object={scene} />;
 }
 
 useGLTF.preload("/assets/glb/stage3-ground8.glb");

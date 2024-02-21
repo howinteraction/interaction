@@ -26,7 +26,7 @@ export default function Stages() {
       case 3:
         return <StageThree />;
       default:
-        return <StageThree />;
+        return null;
     }
   };
 

@@ -2,7 +2,7 @@ import { extend } from "@react-three/fiber";
 import { FontLoader } from "three/examples/jsm/loaders/FontLoader";
 import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry";
 
-import anton from "../../assets/fonts/Anton/Anton_Regular.json";
+import anton from "../../../assets/fonts/Anton/Anton_Regular.json";
 
 export default function TutorialTitle() {
   const font = new FontLoader().parse(anton);

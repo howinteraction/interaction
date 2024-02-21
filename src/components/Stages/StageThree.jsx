@@ -6,13 +6,11 @@ import Aim from "../Aim";
 import Player from "../Player";
 import DragControl from "../DragControl";
 
-import StageThreeSky from "../models/StageThreeSky";
-import StageThreeGround from "../models/StageThreeGround";
-import StageThreeStone from "../models/StageThreeStone";
-import StageThreeSheep from "../models/StageThreeSheep";
-import StageThreeCloud from "../models/StageThreeCloud";
-
-import usePlayerPosition from "../../../hooks/usePlayerPosition";
+import StageThreeSky from "../models/StageThree/StageThreeSky";
+import StageThreeGround from "../models/StageThree/StageThreeGround";
+import StageThreeStone from "../models/StageThree/StageThreeStone";
+import StageThreeShip from "../models/StageThree/StageThreeShip";
+import StageThreeCloud from "../models/StageThree/StageThreeCloud";
 
 export default function StageThree() {
   const controlsRef = useRef();
@@ -36,8 +34,7 @@ export default function StageThree() {
           shadow-camera-near={1}
           shadow-camera-far={1000}
         />
-
-        <Physics debug>
+        <Physics>
           <DragControl
             minX={-200}
             maxX={200}
@@ -53,7 +50,7 @@ export default function StageThree() {
             <StageThreeGround />
           </RigidBody>
           <RigidBody type="fixed" scale={0.2} position={[25, -10, -10]}>
-            <StageThreeSheep />
+            <StageThreeShip />
           </RigidBody>
           <RigidBody
             type="fixed"
@@ -91,12 +88,6 @@ export default function StageThree() {
           >
             <StageThreeStone />
           </RigidBody>
-          <RigidBody
-            userData={{ isDraggable: true }}
-            lockRotations
-            position={[2, 3, 0]}
-            scale={0.5}
-          ></RigidBody>
           <Player position={[27.26, 26.76, -29.7]} />
         </Physics>
       </Canvas>

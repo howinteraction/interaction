@@ -4,8 +4,8 @@ import { setStage } from "../../redux/stageSlice";
 import { setIsStageCleared } from "../../redux/stageClearSlice";
 
 import InputInterface from "../InputInterface";
-import Logo from "../models/Logo";
-import CuboidButton from "../models/CuboidButton";
+import Logo from "../models/Tutorial/Logo";
+import CuboidButton from "../models/Tutorial/CuboidButton";
 
 export default function GameStart() {
   const [playerName, setPlayerName] = useState("");
