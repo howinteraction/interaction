@@ -2,16 +2,16 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useThree, useFrame } from "@react-three/fiber";
 import { RigidBody, Physics } from "@react-three/rapier";
-import { Sky } from "@react-three/drei";
 import { useDrag } from "@use-gesture/react";
 
 import CameraMotion from "../CameraMotion";
 import GameStart from "../GameStart";
 
 import TutorialBackground from "../models/Tutorial/TutorialBackground";
+import Galaxy from "../models/StageOne/Galaxy";
 import TutorialTitle from "../models/Tutorial/TutorialTitle";
 import Plane from "../models/Tutorial/Plane";
-import Sphere from "../models/StageOne/Sphere";
+import HexSphere from "../models/StageOne/HexSphere";
 
 import { setIsStageCleared } from "../../redux/stageClearSlice";
 import { DESCENT_VELOCITY } from "../../utils/constants";
@@ -75,13 +75,13 @@ export default function Tutorial() {
 
   return (
     <>
-      <Sky sunPosition={[100, 20, 100]} />
-      <ambientLight intensity={1} />
+      <Galaxy />
+      <ambientLight intensity={2} />
       <Physics>
         <TutorialBackground />
         <TutorialTitle />
         <RigidBody>
-          <Sphere position={position} color="red" args={[3]} {...bind()} />
+          <HexSphere position={position} {...bind()} />
         </RigidBody>
         <Plane
           position={[-2, 0.01, 5]}
@@ -94,7 +94,7 @@ export default function Tutorial() {
       {isStageCleared && (
         <>
           <CameraMotion
-            targetPosition={[30, 10, 30]}
+            targetPosition={[60, 10, 0]}
             lerpFactor={0.01}
             targetDirection={[0, 15, 0]}
           />

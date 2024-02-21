@@ -53,28 +53,28 @@ export default function GameStart() {
   return (
     <>
       <Logo
-        position={[10, 25, 10]}
+        position={[35, 23, 0]}
         scale={[25, 15, 0]}
-        rotation={[0.7, 0.7, -0.5]}
+        rotation={[0.33, 1.5, -0.35]}
       />
       <InputInterface
-        position={[10, 16, 10]}
+        position={[35, 14, 0]}
+        rotation={[0.6, 1.6, -0.59]}
         width="500px"
         height="150px"
-        rotation={[0.6, 0.75, -0.42]}
         fontSize="80px"
         errorMessage={error}
         onChange={handleInputChange}
       />
       <CuboidButton
+        position={[35, 7, 0]}
         args={[12, 3, 3]}
-        position={[10, 10, 10]}
-        rotation={[11, 18.85, -8.6]}
+        rotation={[11.05, 5, -7.8]}
         onClick={(event) => {
           event.stopPropagation();
           handleButtonClick();
         }}
-        color="Gold"
+        color="blue"
         text="Start Button"
       />
     </>
