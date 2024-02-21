@@ -1,5 +1,5 @@
 import { useGLTF } from "@react-three/drei";
-import { CuboidCollider, RigidBody } from "@react-three/rapier";
+import { RigidBody } from "@react-three/rapier";
 
 import PropTypes from "prop-types";
 
@@ -15,11 +15,10 @@ export default function StageOnePortal({ scale, rotation }) {
       scale={scale}
       type="fixed"
       rotation={rotation}
-      position={[-19.5, 6, 0]}
+      position={[48, 6, 2.5]}
       colliders={false}
     >
       <primitive object={gltf.scene} />
-      <CuboidCollider args={[2, 0.5, 2]} position={[1.5, 0, 0]} />
     </RigidBody>
   );
 }

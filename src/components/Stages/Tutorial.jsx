@@ -8,7 +8,6 @@ import CameraMotion from "../CameraMotion";
 import GameStart from "../GameStart";
 
 import TutorialBackground from "../models/Tutorial/TutorialBackground";
-import Galaxy from "../models/StageOne/Galaxy";
 import TutorialTitle from "../models/Tutorial/TutorialTitle";
 import Plane from "../models/Tutorial/Plane";
 import HexSphere from "../models/StageOne/HexSphere";
@@ -75,7 +74,6 @@ export default function Tutorial() {
 
   return (
     <>
-      <Galaxy />
       <ambientLight intensity={2} />
       <Physics>
         <TutorialBackground />

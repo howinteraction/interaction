@@ -10,8 +10,8 @@ const usePlayerPosition = (controlsRef) => {
 
   const clearCondition = {
     stage1: {
-      portalPosition: new THREE.Vector3(-19.5, 6, 0),
-      portalRadius: 5,
+      portalPosition: new THREE.Vector3(50, 8, 2.5),
+      portalRadius: 6,
     },
     stage2: {
       portalPosition: new THREE.Vector3(67, 1.5, 0.3),
