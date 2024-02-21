@@ -1,6 +1,6 @@
 import { Clone, useGLTF } from "@react-three/drei";
 
-export default function StageThreeBackground() {
+export default function StageThreeCloud() {
   const { scene } = useGLTF("/assets/glb/stage3-cloud.glb");
 
   scene.traverse((child) => {
@@ -11,4 +11,4 @@ export default function StageThreeBackground() {
   return <Clone object={scene} />;
 }
 
-useGLTF.preload("/assets/glb/stage3-ground8.glb");
+useGLTF.preload("/assets/glb/stage3-cloud.glb");

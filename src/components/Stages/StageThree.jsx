@@ -7,7 +7,7 @@ import Player from "../Player";
 import DragControl from "../DragControl";
 
 import StageThreeSky from "../models/StageThree/StageThreeSky";
-import StageThreeGround from "../models/StageThree/StageThreeGround";
+import StageThreeBackground from "../models/StageThree/StageThreeBackground";
 import StageThreeStone from "../models/StageThree/StageThreeStone";
 import StageThreeShip from "../models/StageThree/StageThreeShip";
 import StageThreeCloud from "../models/StageThree/StageThreeCloud";
@@ -47,7 +47,7 @@ export default function StageThree() {
             <StageThreeSky />
           </RigidBody>
           <RigidBody type="fixed" colliders="hull" scale={0.2}>
-            <StageThreeGround />
+            <StageThreeBackground />
           </RigidBody>
           <RigidBody type="fixed" scale={0.2} position={[25, -10, -10]}>
             <StageThreeShip />
