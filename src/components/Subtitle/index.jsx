@@ -20,8 +20,8 @@ export default function Subtitle({ position, rotation, subtitle }) {
   return (
     <Text
       position={position}
-      color="blue"
-      fontSize={2.3}
+      color="rgb(239,243,20)"
+      fontSize={3}
       lineHeight={0.05}
       textAlign="center"
       rotation={rotation}

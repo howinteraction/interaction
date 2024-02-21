@@ -1,7 +1,6 @@
 import { useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { Canvas } from "@react-three/fiber";
-import { Sky } from "@react-three/drei";
 import { Physics, RigidBody } from "@react-three/rapier";
 
 import Aim from "../Aim";
@@ -11,12 +10,14 @@ import Stopwatch from "../Stopwatch";
 import SubTitle from "../Subtitle";
 import StageClearModal from "../StageClearModal";
 
-import Sphere from "../models/StageOne/Sphere";
+import HexSphere from "../models/StageOne/HexSphere";
+import HallowCube from "../models/StageOne/HallowCube";
 import Box from "../models/StageOne/Box";
 import Capsule from "../models/StageOne/Capsule";
 import Cylinder from "../models/StageOne/Cylinder";
 import Torus from "../models/StageOne/Torus";
 import Cone from "../models/StageOne/Cone";
+import StageOneTimeScreen from "../models/StageOne/StageOneTimeScreen";
 import StageOnePortal from "../models/StageOne/StageOnePortal";
 import TutorialBackground from "../models/Tutorial/TutorialBackground";
 
@@ -35,12 +36,11 @@ export default function StageOne() {
     <>
       <Aim />
       <Canvas shadows>
-        <Sky sunPosition={[45, 30, 30]} />
-        <ambientLight intensity={0.3} />
+        <ambientLight intensity={1.8} />
         <directionalLight
           castShadow
-          intensity={1.7}
-          position={[45, 30, 30]}
+          intensity={2}
+          position={[-120, 45, 10]}
           shadow-mapSize-width={2048}
           shadow-mapSize-height={4096}
           shadow-camera-left={-200}
@@ -52,8 +52,8 @@ export default function StageOne() {
         />
         <Physics>
           <DragControl
-            minX={-19}
-            maxX={19}
+            minX={-46}
+            maxX={46}
             maxY={29}
             minZ={-19}
             maxZ={19}
@@ -67,9 +67,17 @@ export default function StageOne() {
           <RigidBody
             userData={{ isDraggable: true }}
             lockRotations
-            position={[10, 2.9, 2]}
+            position={[10, 2.8, 2]}
+            scale={0.3}
           >
-            <Sphere args={[1]} color="red" />
+            <HexSphere />
+          </RigidBody>
+          <RigidBody
+            userData={{ isDraggable: true }}
+            lockRotations
+            position={[15, 2.8, -8]}
+          >
+            <HallowCube />
           </RigidBody>
           <RigidBody
             userData={{ isDraggable: true, isPerspective: true }}
@@ -79,8 +87,9 @@ export default function StageOne() {
             <Box args={[boxSize, boxSize, boxSize]} color="blue" />
           </RigidBody>
           <RigidBody
-            userData={{ isDraggable: true }}
             position={[6, 2.7, -3]}
+            scale={0.7}
+            userData={{ isDraggable: true }}
             lockRotations
           >
             <Capsule args={[1, 1, 4, 8]} color="yellow" />
@@ -96,18 +105,31 @@ export default function StageOne() {
             <Torus args={[1, 0.25, 8, 50]} color="green" />
           </RigidBody>
           <RigidBody
-            userData={{ isDraggable: true }}
             position={[-6, 2, 5]}
+            scale={0.7}
+            userData={{ isDraggable: true }}
             lockRotations
           >
-            <Cone args={[1, 2, 20]} color="purple" />
+            <Cone />
+          </RigidBody>
+          <RigidBody
+            scale={10}
+            colliders={false}
+            rotation={[0, 0, 0]}
+            position={[-15, -5, 0.3]}
+          >
+            <StageOneTimeScreen />
           </RigidBody>
           <StageOnePortal scale={2} rotation={[0, Math.PI / 2, 0]} />
           <Player onPositionChange={handlePlayerPositionChange} />
         </Physics>
-        <Stopwatch position={[15, 24, -19.8]} rotation={[19, 6.3, 0]} />
+        <Stopwatch
+          position={[-16.2, 16.5, 1]}
+          rotation={[0.2, 7.83, -0.2]}
+          color="rgb(182, 45, 8)"
+        />
         <SubTitle
-          position={[1, 13.5, -18]}
+          position={[1, 12, -18]}
           rotation={[19, 6.3, 0]}
           subtitle="Drop the Object top to Bottom"
         />
