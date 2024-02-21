@@ -4,7 +4,7 @@ import { CuboidCollider, RigidBody } from "@react-three/rapier";
 
 import { setIsCombined } from "../redux/combinationSlice";
 
-import TetrahedronCube from "./models/TetrahedronCube";
+import TetrahedronCube from "./models/StageTwo/TetrahedronCube";
 import {
   MAX_CAMERA_POSITION_X,
   MAX_CAMERA_POSITION_Y,

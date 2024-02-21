@@ -11,14 +11,14 @@ import Stopwatch from "../Stopwatch";
 import SubTitle from "../Subtitle";
 import StageClearModal from "../StageClearModal";
 
-import Sphere from "../models/Sphere";
-import Box from "../models/Box";
-import Capsule from "../models/Capsule";
-import Cylinder from "../models/Cylinder";
-import Torus from "../models/Torus";
-import Cone from "../models/Cone";
-import StageOnePortal from "../models/StageOnePortal";
-import TutorialBackground from "../models/TutorialBackground";
+import Sphere from "../models/StageOne/Sphere";
+import Box from "../models/StageOne/Box";
+import Capsule from "../models/StageOne/Capsule";
+import Cylinder from "../models/StageOne/Cylinder";
+import Torus from "../models/StageOne/Torus";
+import Cone from "../models/StageOne/Cone";
+import StageOnePortal from "../models/StageOne/StageOnePortal";
+import TutorialBackground from "../models/Tutorial/TutorialBackground";
 
 import usePlayerPosition from "../../../hooks/usePlayerPosition";
 

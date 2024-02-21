@@ -8,10 +8,10 @@ import { useDrag } from "@use-gesture/react";
 import CameraMotion from "../CameraMotion";
 import GameStart from "../GameStart";
 
-import TutorialBackground from "../models/TutorialBackground";
-import TutorialTitle from "../models/TutorialTitle";
-import Plane from "../models/Plane";
-import Sphere from "../models/Sphere";
+import TutorialBackground from "../models/Tutorial/TutorialBackground";
+import TutorialTitle from "../models/Tutorial/TutorialTitle";
+import Plane from "../models/Tutorial/Plane";
+import Sphere from "../models/StageOne/Sphere";
 
 import { setIsStageCleared } from "../../redux/stageClearSlice";
 import { DESCENT_VELOCITY } from "../../utils/constants";

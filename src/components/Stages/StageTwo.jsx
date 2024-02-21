@@ -11,15 +11,15 @@ import VisualIllusion from "../VisualIllusion";
 import Stopwatch from "../Stopwatch";
 import StageClearModal from "../StageClearModal";
 
-import Fog from "../models/Fog";
-import StageTwoBackground from "../models/StageTwoBackground";
-import StageTwoGoal from "../models/StageTwoGoal";
-import HelperScreen from "../models/HelperScreen";
-import TimeScreen from "../models/TimeScreen";
-import Cube from "../models/Cube";
-import BlackColumn from "../models/BlackColumn";
-import BlackPillar from "../models/BlackPillar";
-import BlackPillar2 from "../models/BlackPillar2";
+import Fog from "../models/StageTwo/Fog";
+import StageTwoBackground from "../models/StageTwo/StageTwoBackground";
+import StageTwoGoal from "../models/StageTwo/StageTwoGoal";
+import HelperScreen from "../models/StageTwo/HelperScreen";
+import TimeScreen from "../models/StageTwo/TimeScreen";
+import Cube from "../models/StageTwo/Cube";
+import BlackColumn from "../models/StageTwo/BlackColumn";
+import BlackPillar from "../models/StageTwo/BlackPillar";
+import BlackPillar2 from "../models/StageTwo/BlackPillar2";
 
 import usePlayerPosition from "../../../hooks/usePlayerPosition";
 
