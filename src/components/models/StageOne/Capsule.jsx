@@ -1,15 +1,18 @@
-import PropTypes from "prop-types";
+import { useGLTF } from "@react-three/drei";
 
-export default function Capsule({ args, color }) {
+export default function Capsule() {
+  const { scene } = useGLTF("/assets/glb/capsule.glb");
+
+  scene.traverse((child) => {
+    child.castShadow = true;
+    child.receiveShadow = true;
+  });
+
   return (
-    <mesh castShadow receiveShadow>
-      <capsuleGeometry args={args} />
-      <meshStandardMaterial attach="material" color={color} />
+    <mesh>
+      <primitive object={scene} />
     </mesh>
   );
 }
 
-Capsule.propTypes = {
-  args: PropTypes.arrayOf(PropTypes.number).isRequired,
-  color: PropTypes.string.isRequired,
-};
+useGLTF.preload("/assets/glb/capsule.glb");

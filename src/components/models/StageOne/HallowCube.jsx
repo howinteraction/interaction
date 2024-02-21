@@ -1,7 +1,7 @@
 import { useGLTF } from "@react-three/drei";
 
-export default function Torus() {
-  const { scene } = useGLTF("/assets/glb/torus.glb");
+export default function HallowCube() {
+  const { scene } = useGLTF("/assets/glb/hallow-cube.glb");
 
   scene.traverse((child) => {
     child.castShadow = true;
@@ -15,4 +15,4 @@ export default function Torus() {
   );
 }
 
-useGLTF.preload("/assets/glb/torus.glb");
+useGLTF.preload("/assets/glb/hallow-cube.glb");
