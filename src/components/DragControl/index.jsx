@@ -12,7 +12,7 @@ import restrictPosition from "../../utils/restrictPosition";
 
 import {
   setIsBridgeIllusion,
-  setIsThreeIllusion,
+  setIsObjectIllusion,
 } from "../../redux/threeIllusionSlice";
 
 export default function DragControl({
@@ -78,7 +78,7 @@ export default function DragControl({
           }
 
           if (selectedRigidBody.userData?.is2DCube) {
-            dispatch(setIsThreeIllusion(true));
+            dispatch(setIsObjectIllusion(true));
           }
 
           if (selectedRigidBody.userData?.is2DBridge) {
