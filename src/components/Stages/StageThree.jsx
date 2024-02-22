@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useState, useRef } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Physics, RigidBody } from "@react-three/rapier";
 
@@ -22,6 +22,8 @@ import StageThreePicture6 from "../models/StageThree/StageThreePicture6";
 
 export default function StageThree() {
   const controlsRef = useRef();
+
+  const [isPictureVisible, setIsPictureVisible] = useState(true);
 
   return (
     <>
@@ -98,6 +100,7 @@ export default function StageThree() {
           <RigidBody type="fixed" scale={0.2} position={[80, -1, -10]}>
             <StageThreeShip />
           </RigidBody>
+
           <RigidBody
             type="fixed"
             colliders="hull"
@@ -108,7 +111,17 @@ export default function StageThree() {
             <StageThreeBridge />
           </RigidBody>
 
-          <Player position={[-15, -15, 35]} />
+          {isPictureVisible && (
+            <RigidBody
+              position={[3.5, -13, -25]}
+              userData={{ isDraggable: true, is2DCube: true }}
+              lockRotations
+            >
+              <StageThreePicture3 />
+            </RigidBody>
+          )}
+
+          <Player position={[3, -14, -22]} />
         </Physics>
       </Canvas>
     </>

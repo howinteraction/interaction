@@ -3,7 +3,7 @@ import * as THREE from "three";
 export default function StageThreePicture4() {
   const textureLoader = new THREE.TextureLoader();
   const texture = textureLoader.load(
-    "../../assets/images/stage3-picture/column-2d.png",
+    "assets/images/stage3-picture/column-2d.png",
   );
 
   return (

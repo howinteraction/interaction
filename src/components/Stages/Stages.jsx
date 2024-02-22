@@ -11,22 +11,22 @@ export default function Stages() {
 
   const renderStageComponent = () => {
     switch (currentStage) {
-      // case 0:
-      //   return (
-      //     <Canvas
-      //       camera={{ near: 0.1, far: 1000, position: [0, 7, 23], fov: 80 }}
-      //     >
-      //       <Tutorial />
-      //     </Canvas>
-      //   );
-      // case 1:
-      //   return <StageOne />;
-      // case 2:
-      //   return <StageTwo />;
-      // case 3:
-      //   return <StageThree />;
-      default:
+      case 0:
+        return (
+          <Canvas
+            camera={{ near: 0.1, far: 1000, position: [0, 7, 23], fov: 80 }}
+          >
+            <Tutorial />
+          </Canvas>
+        );
+      case 1:
+        return <StageOne />;
+      case 2:
+        return <StageTwo />;
+      case 3:
         return <StageThree />;
+      default:
+        return null;
     }
   };
 

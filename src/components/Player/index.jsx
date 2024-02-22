@@ -66,7 +66,6 @@ export default function Player({ onPositionChange, position }) {
     if (onPositionChange) {
       onPositionChange({ x, y, z });
     }
-    console.log({ x, y, z });
 
     state.camera.position.set(x, y, z);
   });
