@@ -15,7 +15,7 @@ import {
 export default function GameStart() {
   const [playerName, setPlayerName] = useState("");
   const [error, setError] = useState("");
-  const [showModal, setShowModal] = useState(true);
+  const [isModalVisible, setIsModalVisible] = useState(true);
   const dispatch = useDispatch();
   const checkUserInputRegExp = /^[가-힣a-zA-Z0-9]{2,10}$/.test(playerName);
 
@@ -47,7 +47,7 @@ export default function GameStart() {
     setError("");
     dispatch(setStage(1));
     dispatch(setIsStageCleared(false));
-    setShowModal(false);
+    setIsModalVisible(false);
   }
 
   function handleInputChange(name) {
@@ -62,8 +62,8 @@ export default function GameStart() {
   }
 
   return (
-    showModal && (
-      <Modal $show={showModal}>
+    isModalVisible && (
+      <Modal $show={isModalVisible}>
         <ModalContent>
           <Input
             type="text"
