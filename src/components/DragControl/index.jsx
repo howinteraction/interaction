@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { PointerLockControls } from "@react-three/drei";
-import { useRapier , RigidBody } from "@react-three/rapier";
-import { useDispatch, useSelector } from "react-redux";
+import { useRapier } from "@react-three/rapier";
+import { useDispatch } from "react-redux";
 
 import * as THREE from "three";
 import * as RAPIER from "@dimforge/rapier3d-compat";
@@ -10,9 +10,10 @@ import * as RAPIER from "@dimforge/rapier3d-compat";
 import PropTypes from "prop-types";
 import restrictPosition from "../../utils/restrictPosition";
 
-import { setIsCombined } from "../../redux/combinationSlice";
-
-import Cube from "../models/StageTwo/Cube";
+import {
+  setIsBridgeIllusion,
+  setIsThreeIllusion,
+} from "../../redux/threeIllusionSlice";
 
 export default function DragControl({
   minX,
@@ -33,8 +34,6 @@ export default function DragControl({
   const { world } = useRapier();
 
   const dispatch = useDispatch();
-
-  const isCombined = useSelector((state) => state.imageCombination.isCombined);
 
   useEffect(() => {
     controlsRef.current.lock();
@@ -73,12 +72,17 @@ export default function DragControl({
           setInitialDistance(distance);
         } else if (selectedHandle && isDragging) {
           world.getRigidBody(selectedHandle).setBodyType(0);
+
           if (meshScaleRef.current) {
             setBoxSize(meshScaleRef.current);
           }
 
           if (selectedRigidBody.userData?.is2DCube) {
-            dispatch(setIsCombined(true));
+            dispatch(setIsThreeIllusion(true));
+          }
+
+          if (selectedRigidBody.userData?.is2DBridge) {
+            dispatch(setIsBridgeIllusion(true));
           }
 
           setIsDragging(false);
@@ -173,21 +177,7 @@ export default function DragControl({
     }
   });
 
-  return (
-    <>
-      {isCombined && (
-        <RigidBody
-          userData={{ isDraggable: true }}
-          lockRotations
-          position={[16, -12, -30]}
-          scale={0.5}
-        >
-          <Cube />
-        </RigidBody>
-      )}
-      <PointerLockControls ref={controlsRef} />;
-    </>
-  );
+  return <PointerLockControls ref={controlsRef} />;
 }
 
 DragControl.propTypes = {

@@ -1,29 +1,33 @@
-import { useState, useRef } from "react";
+import { useRef, useState } from "react";
+
 import { Canvas } from "@react-three/fiber";
 import { Physics, RigidBody } from "@react-three/rapier";
 
-import Aim from "../Aim";
-import Player from "../Player";
-import DragControl from "../DragControl";
+import { Aim } from "../Styles";
 
 import StageThreeSky from "../models/StageThree/StageThreeSky";
 import StageThreeBackGround from "../models/StageThree/StageThreeBackGround";
 import StageThreeStone from "../models/StageThree/StageThreeStone";
 import StageThreeShip from "../models/StageThree/StageThreeShip";
 import StageThreeCloud from "../models/StageThree/StageThreeCloud";
+import StageHayStack from "../models/StageThree/StageThreeHayStack";
 import StageThreeBridge from "../models/StageThree/StageThreeBridge";
 
-import StageThreePicture1 from "../models/StageThree/StageThreePicture1";
-import StageThreePicture2 from "../models/StageThree/StageThreePicture2";
-import StageThreePicture3 from "../models/StageThree/StageThreePicture3";
-import StageThreePicture4 from "../models/StageThree/StageThreePicture4";
-import StageThreePicture5 from "../models/StageThree/StageThreePicture5";
-import StageThreePicture6 from "../models/StageThree/StageThreePicture6";
+import StageThreeBridge2dReal from "../models/StageThree/StageThreeBridge2dReal";
+import StageThreeBridge2d from "../models/StageThree/StageThreeBridge2d";
+import StageThreeHaytack2d from "../models/StageThree/StageThreeHaytack2d";
+import StageThreeColumn2d from "../models/StageThree/StageThreeColumn2d";
+import StageThreeColumnLong2d from "../models/StageThree/StageThreeColumnLong2d";
+import StageThreeMetalColumnLong2d from "../models/StageThree/StageThreeMetalColumnLong2d";
+import StageThreeMetalColumn2d from "../models/StageThree/StageThreeMetalColumn2d";
+
+import Player from "../Player";
+import DragControl from "../DragControl";
+import Stopwatch from "../Stopwatch";
 
 export default function StageThree() {
   const controlsRef = useRef();
-
-  const [isPictureVisible, setIsPictureVisible] = useState(true);
+  const [playerPosition, setPlayerPosition] = useState([-19, -17, 21]);
 
   return (
     <>
@@ -59,7 +63,16 @@ export default function StageThree() {
           <RigidBody type="fixed" colliders="hull" scale={0.2}>
             <StageThreeBackGround />
           </RigidBody>
-
+          <StageThreeShip />
+          <StageHayStack />
+          <StageThreeHaytack2d />
+          <StageThreeBridge2dReal />
+          <StageThreeBridge2d />
+          <StageThreeColumn2d />
+          <StageThreeColumnLong2d />
+          <StageThreeMetalColumnLong2d />
+          <StageThreeMetalColumn2d />
+          <StageThreeBridge />
           <RigidBody
             type="fixed"
             colliders="hull"
@@ -96,32 +109,12 @@ export default function StageThree() {
           >
             <StageThreeStone />
           </RigidBody>
-
-          <RigidBody type="fixed" scale={0.2} position={[80, -1, -10]}>
-            <StageThreeShip />
-          </RigidBody>
-
-          <RigidBody
-            type="fixed"
-            colliders="hull"
-            scale={1}
-            position={[70, 33, -15]}
-            rotation={[3.1, 25, 28]}
-          >
-            <StageThreeBridge />
-          </RigidBody>
-
-          {isPictureVisible && (
-            <RigidBody
-              position={[3.5, -13, -25]}
-              userData={{ isDraggable: true, is2DCube: true }}
-              lockRotations
-            >
-              <StageThreePicture3 />
-            </RigidBody>
-          )}
-
-          <Player position={[3, -14, -22]} />
+          <Stopwatch
+            position={[94, 45, -18.3]}
+            rotation={[-0.5, 4.7, -0.5]}
+            color="rgb(135, 206, 235)"
+          />
+          <Player position={playerPosition} />
         </Physics>
       </Canvas>
     </>

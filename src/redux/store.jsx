@@ -5,6 +5,7 @@ import stages from "./stageSlice";
 import stageClear from "./stageClearSlice";
 import elapsedTimer from "./elapsedSlice";
 import imageCombination from "./combinationSlice";
+import threeIllusion from "./threeIllusionSlice";
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     stageClear,
     elapsedTimer,
     imageCombination,
+    threeIllusion,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });
