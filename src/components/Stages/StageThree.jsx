@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useState, useRef } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Physics, RigidBody } from "@react-three/rapier";
 
@@ -7,13 +7,23 @@ import Player from "../Player";
 import DragControl from "../DragControl";
 
 import StageThreeSky from "../models/StageThree/StageThreeSky";
-import StageThreeBackground from "../models/StageThree/StageThreeBackground";
+import StageThreeBackGround from "../models/StageThree/StageThreeBackGround";
 import StageThreeStone from "../models/StageThree/StageThreeStone";
 import StageThreeShip from "../models/StageThree/StageThreeShip";
 import StageThreeCloud from "../models/StageThree/StageThreeCloud";
+import StageThreeBridge from "../models/StageThree/StageThreeBridge";
+
+import StageThreePicture1 from "../models/StageThree/StageThreePicture1";
+import StageThreePicture2 from "../models/StageThree/StageThreePicture2";
+import StageThreePicture3 from "../models/StageThree/StageThreePicture3";
+import StageThreePicture4 from "../models/StageThree/StageThreePicture4";
+import StageThreePicture5 from "../models/StageThree/StageThreePicture5";
+import StageThreePicture6 from "../models/StageThree/StageThreePicture6";
 
 export default function StageThree() {
   const controlsRef = useRef();
+
+  const [isPictureVisible, setIsPictureVisible] = useState(true);
 
   return (
     <>
@@ -47,11 +57,9 @@ export default function StageThree() {
             <StageThreeSky />
           </RigidBody>
           <RigidBody type="fixed" colliders="hull" scale={0.2}>
-            <StageThreeBackground />
+            <StageThreeBackGround />
           </RigidBody>
-          <RigidBody type="fixed" scale={0.2} position={[25, -10, -10]}>
-            <StageThreeShip />
-          </RigidBody>
+
           <RigidBody
             type="fixed"
             colliders="hull"
@@ -88,7 +96,32 @@ export default function StageThree() {
           >
             <StageThreeStone />
           </RigidBody>
-          <Player position={[27.26, 26.76, -29.7]} />
+
+          <RigidBody type="fixed" scale={0.2} position={[80, -1, -10]}>
+            <StageThreeShip />
+          </RigidBody>
+
+          <RigidBody
+            type="fixed"
+            colliders="hull"
+            scale={1}
+            position={[70, 33, -15]}
+            rotation={[3.1, 25, 28]}
+          >
+            <StageThreeBridge />
+          </RigidBody>
+
+          {isPictureVisible && (
+            <RigidBody
+              position={[3.5, -13, -25]}
+              userData={{ isDraggable: true, is2DCube: true }}
+              lockRotations
+            >
+              <StageThreePicture3 />
+            </RigidBody>
+          )}
+
+          <Player position={[3, -14, -22]} />
         </Physics>
       </Canvas>
     </>

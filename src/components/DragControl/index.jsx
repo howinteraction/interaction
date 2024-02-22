@@ -1,13 +1,18 @@
 import { useEffect, useRef, useState } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { PointerLockControls } from "@react-three/drei";
-import { useRapier } from "@react-three/rapier";
+import { useRapier , RigidBody } from "@react-three/rapier";
+import { useDispatch, useSelector } from "react-redux";
 
 import * as THREE from "three";
 import * as RAPIER from "@dimforge/rapier3d-compat";
 
 import PropTypes from "prop-types";
 import restrictPosition from "../../utils/restrictPosition";
+
+import { setIsCombined } from "../../redux/combinationSlice";
+
+import Cube from "../models/StageTwo/Cube";
 
 export default function DragControl({
   minX,
@@ -26,6 +31,10 @@ export default function DragControl({
   const [clickedPosition, setClickedPosition] = useState(null);
   const { camera } = useThree();
   const { world } = useRapier();
+
+  const dispatch = useDispatch();
+
+  const isCombined = useSelector((state) => state.imageCombination.isCombined);
 
   useEffect(() => {
     controlsRef.current.lock();
@@ -66,6 +75,10 @@ export default function DragControl({
           world.getRigidBody(selectedHandle).setBodyType(0);
           if (meshScaleRef.current) {
             setBoxSize(meshScaleRef.current);
+          }
+
+          if (selectedRigidBody.userData?.is2DCube) {
+            dispatch(setIsCombined(true));
           }
 
           setIsDragging(false);
@@ -160,7 +173,21 @@ export default function DragControl({
     }
   });
 
-  return <PointerLockControls ref={controlsRef} />;
+  return (
+    <>
+      {isCombined && (
+        <RigidBody
+          userData={{ isDraggable: true }}
+          lockRotations
+          position={[16, -12, -30]}
+          scale={0.5}
+        >
+          <Cube />
+        </RigidBody>
+      )}
+      <PointerLockControls ref={controlsRef} />;
+    </>
+  );
 }
 
 DragControl.propTypes = {
