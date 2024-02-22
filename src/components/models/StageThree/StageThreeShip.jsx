@@ -11,8 +11,8 @@ export default function StageThreeShip() {
 
   return (
     <RigidBody type="fixed" scale={0.2} position={[87.7, -1, -10]}>
-        <primitive object={scene} />
-      </RigidBody>
+      <primitive object={scene} />
+    </RigidBody>
   );
 }
 
