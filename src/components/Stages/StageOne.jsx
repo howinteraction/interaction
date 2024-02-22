@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Canvas } from "@react-three/fiber";
 import { Physics, RigidBody } from "@react-three/rapier";
 
-import Aim from "../Aim";
+import { Aim } from "../Styles";
 import Player from "../Player";
 import DragControl from "../DragControl";
 import Stopwatch from "../Stopwatch";
