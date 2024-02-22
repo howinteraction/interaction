@@ -68,7 +68,7 @@ export default function GameStart() {
           <Input
             type="text"
             value={playerName}
-            onChange={(e) => handleInputChange(e.target.value)}
+            onChange={(event) => handleInputChange(event.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="이름을 입력하세요"
             $isError={!!error}
