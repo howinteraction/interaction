@@ -1,14 +1,14 @@
-import { useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Canvas } from "@react-three/fiber";
 import { Physics, RigidBody, CuboidCollider } from "@react-three/rapier";
+import { resetIllusions } from "../../redux/twoIllusionSlice";
 
-import { Aim } from "../Styles";
 import Player from "../Player";
 import DragControl from "../DragControl";
 import VisualIllusion from "../VisualIllusion";
 import Stopwatch from "../Stopwatch";
-import StageClearModal from "../StageClearModal";
+import RenderingContents from "../ClearStateRenderer";
 
 import StageTwoSky from "../models/StageTwo/StageTwoSky";
 import Fog from "../models/StageTwo/Fog";
@@ -28,12 +28,17 @@ export default function StageTwo() {
   const isStageCleared = useSelector(
     (state) => state.stageClear.isStageCleared,
   );
-  const [isCollided, setIsCollided] = useState(false);
   const { handlePlayerPositionChange } = usePlayerPosition(controlsRef);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (isStageCleared) {
+      dispatch(resetIllusions());
+    }
+  }, [isStageCleared, dispatch]);
 
   return (
     <>
-      <Aim />
       <Canvas shadows>
         <StageTwoSky />
         <Fog />
@@ -61,7 +66,7 @@ export default function StageTwo() {
             controlsRef={controlsRef}
           />
           <RigidBody type="fixed" colliders={false} scale={2}>
-            <StageTwoBackground isCollided={isCollided} />
+            <StageTwoBackground />
           </RigidBody>
           <RigidBody
             userData={{ isDraggable: true }}
@@ -168,7 +173,7 @@ export default function StageTwo() {
             <BlackPillar2 />
             <CuboidCollider args={[1.5, 15, 1.5]} position={[0.5, 1, -0.3]} />
           </RigidBody>
-          <StageTwoGoal isCollided={isCollided} setIsCollided={setIsCollided} />
+          <StageTwoGoal />
           <Player
             position={[-68.5, 0, 0.2]}
             onPositionChange={handlePlayerPositionChange}
@@ -181,7 +186,7 @@ export default function StageTwo() {
           color="rgb(182, 45, 8)"
         />
       </Canvas>
-      {isStageCleared && <StageClearModal nextStage={3} />}
+      <RenderingContents isStageCleared={isStageCleared} nextStage={3} />
     </>
   );
 }

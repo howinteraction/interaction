@@ -1,22 +1,23 @@
 import { useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
 import { useFrame } from "@react-three/fiber";
 import { useGLTF } from "@react-three/drei";
 import { CuboidCollider } from "@react-three/rapier";
-import PropTypes from "prop-types";
 
 import * as THREE from "three";
 
-export default function StageTwoBackground({ isCollided }) {
+export default function StageTwoBackground() {
   const { scene, animations } = useGLTF("/assets/glb/stage2-background.glb");
   const mixerRef = useRef();
   const backgroundRef = useRef();
+  const isAttached = useSelector((state) => state.twoIllusion.isAttached);
 
   scene.traverse((child) => {
     child.receiveShadow = true;
   });
 
   useEffect(() => {
-    if (isCollided) {
+    if (isAttached) {
       mixerRef.current = new THREE.AnimationMixer(scene);
 
       animations.forEach((clip) => {
@@ -29,7 +30,7 @@ export default function StageTwoBackground({ isCollided }) {
         action.play();
       });
     }
-  }, [animations, scene, isCollided]);
+  }, [animations, scene, isAttached]);
 
   useFrame((state, delta) => {
     mixerRef.current?.update(delta);
@@ -56,7 +57,3 @@ export default function StageTwoBackground({ isCollided }) {
 }
 
 useGLTF.preload("/assets/glb/stage2-background.glb");
-
-StageTwoBackground.propTypes = {
-  isCollided: PropTypes.bool.isRequired,
-};

@@ -1,14 +1,15 @@
 import { useEffect, useRef } from "react";
 import { useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import PropTypes from "prop-types";
 
 import * as THREE from "three";
+import { useSelector } from "react-redux";
 
-export default function StageTwoPortal({ isCollided }) {
+export default function StageTwoPortal() {
   const { scene, animations } = useGLTF("/assets/glb/stage2-portal.glb");
   const mixerRef = useRef();
   const portalRef = useRef();
+  const isAttached = useSelector((state) => state.twoIllusion.isAttached);
 
   scene.traverse((child) => {
     child.castShadow = true;
@@ -33,7 +34,7 @@ export default function StageTwoPortal({ isCollided }) {
     portalRef.current.rotation.y += 0.005;
     portalRef.current.rotation.y += 0.01;
 
-    if (isCollided && portalRef.current.position.z > -2.5) {
+    if (isAttached && portalRef.current.position.z > -2.5) {
       portalRef.current.position.z -= 0.012;
       portalRef.current.position.x += 0.02;
       portalRef.current.rotation.y -= 0.005;
@@ -45,7 +46,3 @@ export default function StageTwoPortal({ isCollided }) {
 }
 
 useGLTF.preload("/assets/glb/StageTwoPortal.glb");
-
-StageTwoPortal.propTypes = {
-  isCollided: PropTypes.bool.isRequired,
-};

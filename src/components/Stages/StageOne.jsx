@@ -3,12 +3,11 @@ import { useSelector } from "react-redux";
 import { Canvas } from "@react-three/fiber";
 import { Physics, RigidBody } from "@react-three/rapier";
 
-import { Aim } from "../Styles";
 import Player from "../Player";
 import DragControl from "../DragControl";
 import Stopwatch from "../Stopwatch";
 import SubTitle from "../Subtitle";
-import StageClearModal from "../StageClearModal";
+import RenderingContents from "../ClearStateRenderer";
 
 import HexSphere from "../models/StageOne/HexSphere";
 import HallowCube from "../models/StageOne/HallowCube";
@@ -29,12 +28,10 @@ export default function StageOne() {
   );
   const [boxSize, setBoxSize] = useState(2);
   const controlsRef = useRef();
-
   const { handlePlayerPositionChange } = usePlayerPosition(controlsRef);
 
   return (
     <>
-      <Aim />
       <Canvas shadows>
         <ambientLight intensity={1.8} />
         <directionalLight
@@ -134,7 +131,7 @@ export default function StageOne() {
           subtitle="Drop the Object top to Bottom"
         />
       </Canvas>
-      {isStageCleared && <StageClearModal nextStage={2} />}
+      <RenderingContents isStageCleared={isStageCleared} nextStage={2} />
     </>
   );
 }

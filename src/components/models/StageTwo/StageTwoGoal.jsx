@@ -1,25 +1,29 @@
 import { useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { CuboidCollider, RigidBody } from "@react-three/rapier";
-import PropTypes from "prop-types";
+
+import { setIsAttached } from "../../../redux/twoIllusionSlice";
 
 import TriangleLight from "./TriangleLight";
 import StageTwoPortal from "./StageTwoPortal";
 
-export default function StageTwoGoal({ isCollided, setIsCollided }) {
+export default function StageTwoGoal() {
   const colliderRef = useRef();
+  const dispatch = useDispatch();
+  const isAttached = useSelector((state) => state.twoIllusion.isAttached);
 
   const handleCollisionEnter = ({ other }) => {
     if (
       other.rigidBodyObject &&
       other.rigidBodyObject.name === "TetrahedronCube"
     ) {
-      setIsCollided(true);
+      dispatch(setIsAttached(true));
     }
   };
 
   return (
     <>
-      {!isCollided && (
+      {!isAttached && (
         <>
           <RigidBody>
             <CuboidCollider
@@ -52,13 +56,8 @@ export default function StageTwoGoal({ isCollided, setIsCollided }) {
         colliders={false}
         rotation={[0.53, 0, 1.65]}
       >
-        <StageTwoPortal isCollided={isCollided} />
+        <StageTwoPortal />
       </RigidBody>
     </>
   );
 }
-
-StageTwoGoal.propTypes = {
-  isCollided: PropTypes.bool.isRequired,
-  setIsCollided: PropTypes.func.isRequired,
-};

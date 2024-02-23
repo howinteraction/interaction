@@ -13,9 +13,13 @@ const threeIllusionSlice = createSlice({
     setIsBridgeIllusion: (state, action) => {
       state.is3DBridge = action.payload;
     },
+    resetIllusions: (state) => {
+      state.is3DObject = false;
+      state.is3DBridge = false;
+    },
   },
 });
 
-export const { setIsObjectIllusion, setIsBridgeIllusion } =
+export const { setIsObjectIllusion, setIsBridgeIllusion, resetIllusions } =
   threeIllusionSlice.actions;
 export default threeIllusionSlice.reducer;
