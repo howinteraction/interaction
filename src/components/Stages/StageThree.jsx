@@ -1,7 +1,8 @@
-import { useRef, useState } from "react";
-
+import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Canvas } from "@react-three/fiber";
 import { Physics, RigidBody } from "@react-three/rapier";
+import { resetIllusions } from "../../redux/threeIllusionSlice";
 
 import { Aim } from "../Styles";
 
@@ -24,14 +25,28 @@ import StageThreeMetalColumn2d from "../models/StageThree/StageThreeMetalColumn2
 import Player from "../Player";
 import DragControl from "../DragControl";
 import Stopwatch from "../Stopwatch";
+import StageClearScore from "../StageClearScore";
+
+import usePlayerPosition from "../../../hooks/usePlayerPosition";
 
 export default function StageThree() {
   const controlsRef = useRef();
   const [playerPosition, setPlayerPosition] = useState([-19, -17, 21]);
+  const isStageCleared = useSelector(
+    (state) => state.stageClear.isStageCleared,
+  );
+  const { handlePlayerPositionChange } = usePlayerPosition(controlsRef);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (isStageCleared) {
+      dispatch(resetIllusions());
+    }
+  }, [isStageCleared, dispatch]);
 
   return (
     <>
-      <Aim />
+      {!isStageCleared && <Aim />}
       <Canvas shadows>
         <ambientLight intensity={3} />
         <StageThreeCloud />
@@ -114,9 +129,13 @@ export default function StageThree() {
             rotation={[-0.5, 4.7, -0.5]}
             color="rgb(135, 206, 235)"
           />
-          <Player position={playerPosition} />
+          <Player
+            position={playerPosition}
+            onPositionChange={handlePlayerPositionChange}
+          />
         </Physics>
       </Canvas>
+      {isStageCleared && <StageClearScore />}
     </>
   );
 }

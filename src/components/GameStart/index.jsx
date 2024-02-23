@@ -24,25 +24,16 @@ export default function GameStart() {
       setError(
         "이름은 한글, 영어, 숫자 혼용 2글자 이상 10글자 이하여야 합니다.",
       );
+
       return;
     }
 
-    const startTime = new Date().toLocaleString();
-    const startTimeList = [];
-    const storedTime = localStorage.getItem("startTime");
+    const startTime = new Date().toISOString();
+    const storedTime = localStorage.getItem("gameSessions");
+    const sessions = storedTime ? JSON.parse(storedTime) : [];
 
-    localStorage.setItem("playerName", playerName);
-
-    if (storedTime) {
-      const parsedTimeList = JSON.parse(storedTime);
-      const sessionRecord = { [startTime]: "" };
-
-      parsedTimeList.push(sessionRecord);
-      localStorage.setItem("startTime", JSON.stringify(parsedTimeList));
-    } else {
-      startTimeList.push({ [startTime]: "" });
-      localStorage.setItem("startTime", JSON.stringify(startTimeList));
-    }
+    sessions.push({ playerName, startTime, endTime: null });
+    localStorage.setItem("gameSessions", JSON.stringify(sessions));
 
     setError("");
     dispatch(setStage(1));
