@@ -5,9 +5,8 @@ import StageClearModal from "../StageClearModal";
 export default function RenderingContents({ isStageCleared, nextStage }) {
   if (isStageCleared) {
     return <StageClearModal nextStage={nextStage} />;
-  } 
-    return <Aim />;
-  
+  }
+  return <Aim />;
 }
 
 RenderingContents.propTypes = {
