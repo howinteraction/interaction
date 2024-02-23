@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useFrame, useThree } from "@react-three/fiber";
 import { CuboidCollider, RigidBody } from "@react-three/rapier";
 
-import { setIsCombined } from "../redux/combinationSlice";
+import { setIsCombined } from "../redux/twoIllusionSlice";
 
 import TetrahedronCube from "./models/StageTwo/TetrahedronCube";
 import {
@@ -23,7 +23,7 @@ import {
 export default function VisualIllusion() {
   const dispatch = useDispatch();
   const { camera } = useThree();
-  const isCombined = useSelector((state) => state.imageCombination.isCombined);
+  const isCombined = useSelector((state) => state.twoIllusion.isCombined);
 
   function checkCameraRange() {
     const isInRange =

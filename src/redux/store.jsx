@@ -4,7 +4,7 @@ import logger from "redux-logger";
 import stages from "./stageSlice";
 import stageClear from "./stageClearSlice";
 import elapsedTimer from "./elapsedSlice";
-import imageCombination from "./combinationSlice";
+import twoIllusion from "./twoIllusionSlice";
 import threeIllusion from "./threeIllusionSlice";
 
 const store = configureStore({
@@ -12,7 +12,7 @@ const store = configureStore({
     stages,
     stageClear,
     elapsedTimer,
-    imageCombination,
+    twoIllusion,
     threeIllusion,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),

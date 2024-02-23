@@ -6,7 +6,7 @@ export default function BlackPillar() {
     "/assets/images/stage2-picture/left-half-triangle.png",
   );
   const { nodes, materials } = useGLTF("/assets/glb/blackpillar-image.glb");
-  const isCombined = useSelector((state) => state.imageCombination.isCombined);
+  const isCombined = useSelector((state) => state.twoIllusion.isCombined);
 
   return (
     <mesh
