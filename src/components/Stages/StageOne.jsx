@@ -52,8 +52,8 @@ export default function StageOne() {
             minX={-46}
             maxX={46}
             maxY={29}
-            minZ={-19}
-            maxZ={19}
+            minZ={-21.5}
+            maxZ={21.5}
             boxSize={boxSize}
             setBoxSize={setBoxSize}
             controlsRef={controlsRef}

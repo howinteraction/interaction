@@ -137,14 +137,20 @@ export default function DragControl({
           const heightRatio = Math.min(currentHeight / maxHeight, 1);
           const scale = 1 + heightRatio;
           const newSize = boxSize * scale;
+          const maximumSize = 5;
+          const adjustedSize = newSize > maximumSize ? maximumSize : newSize;
 
           selectedRigidBody
             .collider(0)
             .setHalfExtents(
-              new THREE.Vector3(newSize / 2, newSize / 2, newSize / 2),
+              new THREE.Vector3(
+                adjustedSize / 2,
+                adjustedSize / 2,
+                adjustedSize / 2,
+              ),
             );
 
-          meshScaleRef.current = newSize;
+          meshScaleRef.current = adjustedSize;
         } else {
           const newSize = boxSize * distanceRatio;
           const minimumSize = 0.5;
