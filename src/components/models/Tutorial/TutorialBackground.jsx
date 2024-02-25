@@ -15,7 +15,7 @@ export default function TutorialBackground() {
       <Galaxy />
       <primitive object={scene} />
       <CuboidCollider args={[50, 1, 50]} position={[0, -1, 0]} />
-      <CuboidCollider args={[50, 1, 50]} position={[0, 29, 0]} />
+      <CuboidCollider args={[50, 1, 50]} position={[0, 27, 0]} />
       <CuboidCollider args={[1, 50, 50]} position={[-48, 10, 0]} />
       <CuboidCollider args={[1, 50, 50]} position={[48, 10, 0]} />
       <CuboidCollider args={[50, 50, 1]} position={[0, 10, -23.9]} />

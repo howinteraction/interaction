@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
+
 import { setStage } from "../../redux/stageSlice";
 import { setIsStageCleared } from "../../redux/stageClearSlice";
 
@@ -39,15 +40,10 @@ export default function ScoreBoard() {
     setIsModalVisible(false);
   }
 
-  function calculateTotalTime(startTime, endTime) {
-    const start = new Date(startTime);
-    const end = new Date(endTime);
-    const totalMilliseconds = end - start;
-    const totalSeconds = Math.floor(totalMilliseconds / 1000);
+  function calculateTotalTime(totalSeconds) {
     const minutes = Math.floor(totalSeconds / 60);
     const seconds = totalSeconds % 60;
-
-    return `${minutes}분 ${seconds}초`;
+    return `${String(minutes).padStart(2, "0")} : ${String(seconds).padStart(2, "0")}`;
   }
 
   function handlePlayAgainButton() {
@@ -76,7 +72,7 @@ export default function ScoreBoard() {
                 <Rank>{index + 1}</Rank>
                 <span>{`Player: ${session.playerName}`}</span>
                 <Divider />
-                <span>{`Play time: ${calculateTotalTime(session.startTime, session.endTime)}`}</span>
+                <span>{`Play time: ${calculateTotalTime(session.totalSeconds)}`}</span>
               </ListItem>
             ))}
           </StyledList>
