@@ -4,7 +4,6 @@ import styled, { keyframes } from "styled-components";
 import movementImage from "../../../../../../../assets/images/tutorial-picture/movement.png";
 import logo from "../../../../../../../assets/images/tutorial-picture/logo-removebg.png";
 
-
 const LoadingContainer = styled.div`
   display: flex;
   height: 100%;
@@ -52,7 +51,7 @@ export default function StageTwoLoading() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setDots((prevDots) => (prevDots.length < 5 ? `${prevDots  }.` : ""));
+      setDots((prevDots) => (prevDots.length < 5 ? `${prevDots}.` : ""));
     }, 500);
 
     return () => clearInterval(interval);
