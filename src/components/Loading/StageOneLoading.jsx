@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 
 import styled, { keyframes } from "styled-components";
-import movementImage from "../../../../../../../assets/images/tutorial-picture/movement.png";
-import logo from "../../../../../../../assets/images/tutorial-picture/logo-removebg.png";
 
 const LoadingContainer = styled.div`
   display: flex;
@@ -65,10 +63,16 @@ export default function StageOneLoading() {
         This is Stage1. You have to clear this stage with perpective. Keep
         going!
       </StageText>
-      <StyledImage src={movementImage} alt="Keyboard Movement" />
+      <StyledImage
+        src="/assets/images/tutorial-picture/movement.png"
+        alt="Keyboard Movement"
+      />
       <LoadingText>
         <h2>
-          <RotatingLogo src={logo} alt="Logo" />
+          <RotatingLogo
+            src="/assets/images/tutorial-picture/logo-removebg.png"
+            alt="Logo"
+          />
           Loading {dots}
         </h2>
       </LoadingText>

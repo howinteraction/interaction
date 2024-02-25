@@ -41,7 +41,7 @@ export default function Stopwatch({ position, rotation, color }) {
     const minutes = Math.floor(elapsedTime / 60);
     const seconds = elapsedTime % 60;
 
-    return `${String(minutes).padStart(2, "0")} : ${String(seconds).padStart(2, "0")}`;
+    return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
   }
 
   return (
