@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useState, Suspense, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Canvas } from "@react-three/fiber";
 import { Physics, RigidBody, CuboidCollider } from "@react-three/rapier";
@@ -9,6 +9,7 @@ import DragControl from "../DragControl";
 import VisualIllusion from "../VisualIllusion";
 import Stopwatch from "../Stopwatch";
 import RenderingContents from "../ClearStateRenderer";
+import Loading from "../Loading";
 
 import StageTwoSky from "../models/StageTwo/StageTwoSky";
 import Fog from "../models/StageTwo/Fog";
@@ -31,14 +32,26 @@ export default function StageTwo() {
   const { handlePlayerPositionChange } = usePlayerPosition(controlsRef);
   const dispatch = useDispatch();
 
+  const [loadingComplete, setLoadingComplete] = useState(false);
+
+  useEffect(() => {
+    const loadingTimeout = setTimeout(() => {
+      setLoadingComplete(true);
+    }, 7000);
+
+    return () => clearTimeout(loadingTimeout);
+  }, []);
+
   useEffect(() => {
     if (isStageCleared) {
       dispatch(resetIllusions());
     }
   }, [isStageCleared, dispatch]);
 
-  return (
-    <>
+  return !loadingComplete ? (
+    <Loading />
+  ) : (
+    <Suspense fallback={<Loading />}>
       <Canvas shadows>
         <StageTwoSky />
         <Fog />
@@ -187,6 +200,6 @@ export default function StageTwo() {
         />
       </Canvas>
       <RenderingContents isStageCleared={isStageCleared} nextStage={3} />
-    </>
+    </Suspense>
   );
 }

@@ -36,6 +36,11 @@ export default function Player({ onPositionChange, position }) {
       setInitialDirection(true);
     }
 
+    if (currentStage === 3 && !initialDirection) {
+      state.camera.lookAt(new THREE.Vector3(70, 12, 7.5));
+      setInitialDirection(true);
+    }
+
     const velocity = playerRef.current.linvel();
 
     frontVector.set(0, 0, backward - forward);

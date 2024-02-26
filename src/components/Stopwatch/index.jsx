@@ -22,8 +22,6 @@ export default function Stopwatch({ position, rotation, color }) {
 
         dispatch(setElapsedTime(nextElapsedTime));
       }, 1000);
-    } else {
-      clearInterval(intervalId);
     }
 
     return () => {
@@ -39,12 +37,12 @@ export default function Stopwatch({ position, rotation, color }) {
     }
   }, [isStageCleared]);
 
-  const formatTime = (timeInSeconds) => {
-    const minutes = Math.floor(timeInSeconds / 60);
-    const seconds = timeInSeconds % 60;
+  function formatTime() {
+    const minutes = Math.floor(elapsedTime / 60);
+    const seconds = elapsedTime % 60;
 
     return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
-  };
+  }
 
   return (
     <Text

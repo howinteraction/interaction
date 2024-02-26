@@ -1,3 +1,4 @@
+import { useState, useEffect, Suspense } from "react";
 import { useSelector } from "react-redux";
 import { Canvas } from "@react-three/fiber";
 import { RigidBody, Physics } from "@react-three/rapier";
@@ -11,14 +12,26 @@ import TutorialTitle from "../models/Tutorial/TutorialTitle";
 import Plane from "../models/Tutorial/Plane";
 
 import HexSphereWithDrag from "../HexSphereWithDrag";
+import Loading from "../Loading";
 
 export default function Tutorial() {
   const isStageCleared = useSelector(
     (state) => state.stageClear.isStageCleared,
   );
+  const [loadingComplete, setLoadingComplete] = useState(false);
 
-  return (
-    <>
+  useEffect(() => {
+    const loadingTimeout = setTimeout(() => {
+      setLoadingComplete(true);
+    }, 10000);
+
+    return () => clearTimeout(loadingTimeout);
+  }, []);
+
+  return !loadingComplete ? (
+    <Loading />
+  ) : (
+    <Suspense fallback={<Loading />}>
       <Canvas camera={{ near: 0.1, far: 1000, position: [0, 7, 23], fov: 80 }}>
         <ambientLight intensity={2} />
         <Physics>
@@ -49,6 +62,6 @@ export default function Tutorial() {
         />
       </Canvas>
       {isStageCleared && <GameStart />}
-    </>
+    </Suspense>
   );
 }

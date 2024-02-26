@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import ScoreBoard from "../ScoreBoard";
 import { ScoreModal, ModalContent, SubmitButton, Light } from "../Styles";
+
 import { setElapsedTime } from "../../redux/elapsedSlice";
+import ScoreBoard from "../ScoreBoard";
 
 export default function StageClearScore() {
   const [totalTime, setTotalTime] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(true);
   const [isScoreBoardVisible, setIsScoreBoardVisible] = useState(false);
+  const elapsedTime = useSelector((state) => state.elapsedTimer.elapsedTime);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -18,20 +20,16 @@ export default function StageClearScore() {
 
     if (sessions.length > 0) {
       const lastSession = sessions[sessions.length - 1];
-
       lastSession.endTime = endTime;
-
-      const startTime = new Date(lastSession.startTime);
-      const endTimeDate = new Date(endTime);
-      const totalMilliseconds = endTimeDate - startTime;
-      const totalSeconds = Math.floor(totalMilliseconds / 1000);
-
+      const totalSeconds = elapsedTime;
       lastSession.totalSeconds = totalSeconds;
-
       const minutes = Math.floor(totalSeconds / 60);
       const seconds = totalSeconds % 60;
 
-      setTotalTime(`${minutes}분 ${seconds}초`);
+      setTotalTime(
+        `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`,
+      );
+
       localStorage.setItem("gameSessions", JSON.stringify(sessions));
     }
   }, []);

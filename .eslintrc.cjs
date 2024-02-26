@@ -15,7 +15,7 @@ module.exports = {
   ignorePatterns: ["dist", ".eslintrc.cjs"],
   overrides: [
     {
-      files: ["eslintrc.{js, cjf}"],
+      files: ["eslintrc.{js, cjs}"],
       parserOptions: {
         sourceType: "script",
       },

@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useEffect, useRef, Suspense } from "react";
 import { useSelector } from "react-redux";
 import { Canvas } from "@react-three/fiber";
 import { Physics, RigidBody } from "@react-three/rapier";
@@ -8,6 +8,7 @@ import DragControl from "../DragControl";
 import Stopwatch from "../Stopwatch";
 import SubTitle from "../Subtitle";
 import RenderingContents from "../ClearStateRenderer";
+import Loading from "../Loading";
 
 import HexSphere from "../models/StageOne/HexSphere";
 import HallowCube from "../models/StageOne/HallowCube";
@@ -26,12 +27,24 @@ export default function StageOne() {
   const isStageCleared = useSelector(
     (state) => state.stageClear.isStageCleared,
   );
-  const [boxSize, setBoxSize] = useState(2);
   const controlsRef = useRef();
+  const [loadingComplete, setLoadingComplete] = useState(false);
+  const [boxSize, setBoxSize] = useState(2);
+
   const { handlePlayerPositionChange } = usePlayerPosition(controlsRef);
 
-  return (
-    <>
+  useEffect(() => {
+    const loadingTimeout = setTimeout(() => {
+      setLoadingComplete(true);
+    }, 7000);
+
+    return () => clearTimeout(loadingTimeout);
+  }, []);
+
+  return !loadingComplete ? (
+    <Loading />
+  ) : (
+    <Suspense fallback={<Loading />}>
       <Canvas shadows>
         <ambientLight intensity={1.8} />
         <directionalLight
@@ -132,6 +145,6 @@ export default function StageOne() {
         />
       </Canvas>
       <RenderingContents isStageCleared={isStageCleared} nextStage={2} />
-    </>
+    </Suspense>
   );
 }

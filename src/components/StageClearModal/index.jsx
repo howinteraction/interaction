@@ -1,9 +1,10 @@
 import { useDispatch } from "react-redux";
 import PropTypes from "prop-types";
+
 import styled from "styled-components";
+
 import { setStage } from "../../redux/stageSlice";
 import { setIsStageCleared } from "../../redux/stageClearSlice";
-
 
 const ModalContainer = styled.div`
   display: flex;
