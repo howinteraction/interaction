@@ -8,8 +8,8 @@ export default function StageTwoSquare2dLeft() {
 
   return (
     <mesh>
-        <planeGeometry args={[1.3, 1.3]} />
-        <meshBasicMaterial map={texture} side={THREE.DoubleSide} />
-      </mesh>
+      <planeGeometry args={[1.3, 1.3]} />
+      <meshBasicMaterial map={texture} side={THREE.DoubleSide} />
+    </mesh>
   );
 }
