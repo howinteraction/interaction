@@ -24,6 +24,13 @@ import BlackColumn from "../models/StageTwo/BlackColumn";
 import BlackPillar from "../models/StageTwo/BlackPillar";
 import BlackPillar2 from "../models/StageTwo/BlackPillar2";
 
+import StageTwoSquare2dRight from "../models/StageTwo/StageTwoSquare2dRight";
+import StageTwoSquare2dLeft from "../models/StageTwo/StageTwoSquare2dLeft";
+import StageTwoCircle2dRight from "../models/StageTwo/StageTwoCircle2dRight";
+import StageTwoCircle2dLeft from "../models/StageTwo/StageTwoCircle2dLeft";
+import StageTwoOctagon2dRight from "../models/StageTwo/StageTwoOctagon2dRight";
+import StageTwoOctagon2dLeft from "../models/StageTwo/StageTwoOctagon2dLeft";
+
 import usePlayerPosition from "../../../hooks/usePlayerPosition";
 
 export default function StageTwo() {
@@ -39,7 +46,7 @@ export default function StageTwo() {
   useEffect(() => {
     const loadingTimeout = setTimeout(() => {
       setLoadingComplete(true);
-    }, 100);
+    }, 7000);
 
     return () => clearTimeout(loadingTimeout);
   }, []);
@@ -131,6 +138,24 @@ export default function StageTwo() {
             rotation={[0, -20, 0]}
           >
             <BlackColumn />
+          </RigidBody>
+          <RigidBody position={[-30.3, 8.5, 1.92]} rotation={[0, 0.35, 0]}>
+            <StageTwoSquare2dRight />
+          </RigidBody>
+          <RigidBody position={[-18.7, 7.5, 5.2]} rotation={[0, 1.9, 0]}>
+            <StageTwoSquare2dLeft />
+          </RigidBody>
+          <RigidBody position={[-14, 4, 0.5]} rotation={[0, 1.5, 0]}>
+            <StageTwoCircle2dRight />
+          </RigidBody>
+          <RigidBody position={[-25.433, 6.75, -1.2]} rotation={[0, 2.5, 0]}>
+            <StageTwoCircle2dLeft />
+          </RigidBody>
+          <RigidBody position={[-5.6, 7, 3]} rotation={[0, 2, 0]}>
+            <StageTwoOctagon2dRight />
+          </RigidBody>
+          <RigidBody position={[-17.2, 9, -3.25]} rotation={[0, 2.8, 0]}>
+            <StageTwoOctagon2dLeft />
           </RigidBody>
           <RigidBody
             type="fixed"
