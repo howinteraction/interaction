@@ -9,7 +9,7 @@ import DragControl from "../DragControl";
 import VisualIllusion from "../VisualIllusion";
 import Stopwatch from "../Stopwatch";
 import RenderingContents from "../ClearStateRenderer";
-import StageTwoLoading from "../Loading/StageTwoLoading";
+import Loading from "../Loading";
 
 import StageTwoSky from "../models/StageTwo/StageTwoSky";
 import Fog from "../models/StageTwo/Fog";
@@ -49,9 +49,9 @@ export default function StageTwo() {
   }, [isStageCleared, dispatch]);
 
   return !loadingComplete ? (
-    <StageTwoLoading />
+    <Loading />
   ) : (
-    <Suspense fallback={<StageTwoLoading />}>
+    <Suspense fallback={<Loading />}>
       <Canvas shadows>
         <StageTwoSky />
         <Fog />

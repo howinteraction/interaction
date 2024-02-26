@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 
 import styled, { keyframes } from "styled-components";
 
@@ -44,7 +45,8 @@ const RotatingLogo = styled.img`
   animation: ${rotateAnimation} 1s infinite linear;
 `;
 
-export default function StageOneLoading() {
+export default function Loading() {
+  const stage = useSelector((state) => state.stages.stageLevel);
   const [dots, setDots] = useState("");
 
   useEffect(() => {
@@ -58,10 +60,36 @@ export default function StageOneLoading() {
   return (
     <LoadingContainer>
       <StageText>
-        <h2>Stage1</h2>
-        <br></br>
-        This is Stage1. You have to clear this stage with perpective. Keep
-        going!
+        {stage === 1 && (
+          <>
+            <h2>Stage1</h2>
+            <br />
+            <p>
+              This is Stage1. You have to clear this stage with perspective.
+              Keep going!
+            </p>
+          </>
+        )}
+        {stage === 2 && (
+          <>
+            <h2>Stage2</h2>
+            <br />
+            <p>
+              This is stage2. You need to match the torn objects to clear this
+              stage. Keep going!
+            </p>
+          </>
+        )}
+        {stage === 3 && (
+          <>
+            <h2>Stage3</h2>
+            <br />
+            <p>
+              This is stage3. You have to clear the stage by turning 2D objects
+              into 3D objects. Keep going!
+            </p>
+          </>
+        )}
       </StageText>
       <StyledImage
         src="/assets/images/tutorial-picture/movement.png"

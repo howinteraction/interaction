@@ -8,7 +8,7 @@ import DragControl from "../DragControl";
 import Stopwatch from "../Stopwatch";
 import SubTitle from "../Subtitle";
 import RenderingContents from "../ClearStateRenderer";
-import StageOneLoading from "../Loading/StageOneLoading";
+import Loading from "../Loading";
 
 import HexSphere from "../models/StageOne/HexSphere";
 import HallowCube from "../models/StageOne/HallowCube";
@@ -41,9 +41,9 @@ export default function StageOne() {
   }, []);
 
   return !loadingComplete ? (
-    <StageOneLoading />
+    <Loading />
   ) : (
-    <Suspense fallback={<StageOneLoading />}>
+    <Suspense fallback={<Loading />}>
       <Canvas shadows>
         <ambientLight intensity={1.8} />
         <directionalLight

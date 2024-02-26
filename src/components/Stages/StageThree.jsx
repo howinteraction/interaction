@@ -26,7 +26,7 @@ import Player from "../Player";
 import DragControl from "../DragControl";
 import Stopwatch from "../Stopwatch";
 import StageClearScore from "../StageClearScore";
-import StageThreeLoading from "../Loading/StageThreeLoading";
+import Loading from "../Loading";
 
 import usePlayerPosition from "../../../hooks/usePlayerPosition";
 
@@ -59,9 +59,9 @@ export default function StageThree() {
     <>
       {!isStageCleared && <Aim />}
       {!loadingComplete ? (
-        <StageThreeLoading />
+        <Loading />
       ) : (
-        <Suspense fallback={<StageThreeLoading />}>
+        <Suspense fallback={<Loading />}>
           <Canvas shadows>
             <ambientLight intensity={3} />
             <StageThreeCloud />
@@ -78,7 +78,7 @@ export default function StageThree() {
               shadow-camera-near={1}
               shadow-camera-far={1000}
             />
-            <Physics debug>
+            <Physics>
               <DragControl
                 minX={-200}
                 maxX={200}
