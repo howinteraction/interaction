@@ -9,6 +9,10 @@ const usePlayerPosition = (controlsRef) => {
   const currentStage = useSelector((state) => state.stages.stageLevel);
 
   const clearCondition = {
+    stage0: {
+      portalPosition: new THREE.Vector3(-1, 0, -2),
+      portalRadius: 3,
+    },
     stage1: {
       portalPosition: new THREE.Vector3(50, 8, 2.5),
       portalRadius: 6,
