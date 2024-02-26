@@ -9,6 +9,7 @@ import Stopwatch from "../Stopwatch";
 import SubTitle from "../Subtitle";
 import RenderingContents from "../ClearStateRenderer";
 import Loading from "../Loading";
+import CameraMotion from "../CameraMotion";
 
 import HexSphere from "../models/StageOne/HexSphere";
 import HallowCube from "../models/StageOne/HallowCube";
@@ -20,6 +21,7 @@ import Cone from "../models/StageOne/Cone";
 import StageOneTimeScreen from "../models/StageOne/StageOneTimeScreen";
 import StageOnePortal from "../models/StageOne/StageOnePortal";
 import TutorialBackground from "../models/Tutorial/TutorialBackground";
+import BlackHole from "../models/StageOne/BlackHole";
 
 import usePlayerPosition from "../../../hooks/usePlayerPosition";
 
@@ -61,16 +63,18 @@ export default function StageOne() {
           shadow-camera-far={1000}
         />
         <Physics>
-          <DragControl
-            minX={-46}
-            maxX={46}
-            maxY={29}
-            minZ={-21.5}
-            maxZ={21.5}
-            boxSize={boxSize}
-            setBoxSize={setBoxSize}
-            controlsRef={controlsRef}
-          />
+          {!isStageCleared && (
+            <DragControl
+              minX={-46}
+              maxX={46}
+              maxY={29}
+              minZ={-21.5}
+              maxZ={21.5}
+              boxSize={boxSize}
+              setBoxSize={setBoxSize}
+              controlsRef={controlsRef}
+            />
+          )}
           <RigidBody type="fixed" colliders={false}>
             <TutorialBackground />
           </RigidBody>
@@ -131,7 +135,16 @@ export default function StageOne() {
             <StageOneTimeScreen />
           </RigidBody>
           <StageOnePortal scale={2} rotation={[0, Math.PI / 2, 0]} />
-          <Player onPositionChange={handlePlayerPositionChange} />
+          <BlackHole position={[450, 20, 0]} rotation={[0, 0, Math.PI / 2]} />
+          {isStageCleared ? (
+            <CameraMotion
+              targetPosition={[450, 20, 0]}
+              lerpFactor={0.02}
+              targetDirection={[450, 20, 0]}
+            />
+          ) : (
+            <Player onPositionChange={handlePlayerPositionChange} />
+          )}
         </Physics>
         <Stopwatch
           position={[-16.2, 16.5, 1]}

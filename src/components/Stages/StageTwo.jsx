@@ -10,6 +10,7 @@ import VisualIllusion from "../VisualIllusion";
 import Stopwatch from "../Stopwatch";
 import RenderingContents from "../ClearStateRenderer";
 import Loading from "../Loading";
+import CameraMotion from "../CameraMotion";
 
 import StageTwoSky from "../models/StageTwo/StageTwoSky";
 import Fog from "../models/StageTwo/Fog";
@@ -21,6 +22,7 @@ import Cube from "../models/StageTwo/Cube";
 import BlackColumn from "../models/StageTwo/BlackColumn";
 import BlackPillar from "../models/StageTwo/BlackPillar";
 import BlackPillar2 from "../models/StageTwo/BlackPillar2";
+import BlackHole from "../models/StageOne/BlackHole";
 
 import usePlayerPosition from "../../../hooks/usePlayerPosition";
 
@@ -70,14 +72,16 @@ export default function StageTwo() {
           shadow-camera-far={1000}
         />
         <Physics>
-          <DragControl
-            minX={-60}
-            maxX={49}
-            maxY={30}
-            minZ={-5}
-            maxZ={6}
-            controlsRef={controlsRef}
-          />
+          {!isStageCleared && (
+            <DragControl
+              minX={-60}
+              maxX={49}
+              maxY={30}
+              minZ={-5}
+              maxZ={6}
+              controlsRef={controlsRef}
+            />
+          )}
           <RigidBody type="fixed" colliders={false} scale={2}>
             <StageTwoBackground />
           </RigidBody>
@@ -187,10 +191,19 @@ export default function StageTwo() {
             <CuboidCollider args={[1.5, 15, 1.5]} position={[0.5, 1, -0.3]} />
           </RigidBody>
           <StageTwoGoal />
-          <Player
-            position={[-68.5, 0, 0.2]}
-            onPositionChange={handlePlayerPositionChange}
-          />
+          <BlackHole position={[120, 10, 0]} rotation={[0, 0, Math.PI / 2]} />
+          {isStageCleared ? (
+            <CameraMotion
+              targetPosition={[120, 10, 0]}
+              lerpFactor={0.05}
+              targetDirection={[120, 10, 0]}
+            />
+          ) : (
+            <Player
+              position={[-68.5, 0, 0.2]}
+              onPositionChange={handlePlayerPositionChange}
+            />
+          )}
           <VisualIllusion />
         </Physics>
         <Stopwatch

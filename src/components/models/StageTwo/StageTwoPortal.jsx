@@ -16,6 +16,8 @@ export default function StageTwoPortal() {
   });
 
   useEffect(() => {
+    portalRef.current.position.z = 0;
+    portalRef.current.position.x = 0;
     mixerRef.current = new THREE.AnimationMixer(scene);
 
     const animationClip = animations.find(
@@ -31,14 +33,12 @@ export default function StageTwoPortal() {
 
   useFrame((state, delta) => {
     mixerRef.current?.update(delta);
-    portalRef.current.rotation.y += 0.005;
-    portalRef.current.rotation.y += 0.01;
+    portalRef.current.rotation.y += 0.015;
 
     if (isAttached && portalRef.current.position.z > -2.5) {
       portalRef.current.position.z -= 0.012;
       portalRef.current.position.x += 0.02;
-      portalRef.current.rotation.y -= 0.005;
-      portalRef.current.rotation.y -= 0.01;
+      portalRef.current.rotation.y -= 0.015;
     }
   });
 
