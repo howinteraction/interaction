@@ -31,20 +31,19 @@ import Loading from "../Loading";
 import usePlayerPosition from "../../../hooks/usePlayerPosition";
 
 export default function StageThree() {
-  const controlsRef = useRef();
-  const [playerPosition, setPlayerPosition] = useState([-19, -17, 21]);
-  const [loadingComplete, setLoadingComplete] = useState(false);
-
+  const dispatch = useDispatch();
   const isStageCleared = useSelector(
     (state) => state.stageClear.isStageCleared,
   );
+  const controlsRef = useRef();
+  const [loadingComplete, setLoadingComplete] = useState(false);
+  const [playerPosition, setPosition] = useState([-19.41, -11.2, -18.65]);
   const { handlePlayerPositionChange } = usePlayerPosition(controlsRef);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     const loadingTimeout = setTimeout(() => {
       setLoadingComplete(true);
-    }, 10000);
+    }, 7000);
 
     return () => clearTimeout(loadingTimeout);
   }, []);

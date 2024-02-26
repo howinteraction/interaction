@@ -30,12 +30,13 @@ export default function StageOne() {
   const controlsRef = useRef();
   const [loadingComplete, setLoadingComplete] = useState(false);
   const [boxSize, setBoxSize] = useState(2);
+
   const { handlePlayerPositionChange } = usePlayerPosition(controlsRef);
 
   useEffect(() => {
     const loadingTimeout = setTimeout(() => {
       setLoadingComplete(true);
-    }, 10000);
+    }, 7000);
 
     return () => clearTimeout(loadingTimeout);
   }, []);

@@ -37,7 +37,7 @@ export default function StageTwo() {
   useEffect(() => {
     const loadingTimeout = setTimeout(() => {
       setLoadingComplete(true);
-    }, 10000);
+    }, 7000);
 
     return () => clearTimeout(loadingTimeout);
   }, []);

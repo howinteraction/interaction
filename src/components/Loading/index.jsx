@@ -60,13 +60,23 @@ export default function Loading() {
   return (
     <LoadingContainer>
       <StageText>
+        {stage === 0 && (
+          <>
+            <h2>Tutorial</h2>
+            <br />
+            <p>
+              This is Tutorial. You can move around with the keyboard, and
+              control the viewpoint with the mouse
+            </p>
+          </>
+        )}
         {stage === 1 && (
           <>
             <h2>Stage1</h2>
             <br />
             <p>
-              This is Stage1. You have to clear this stage with perspective.
-              Keep going!
+              This is Stage1. You have to clear this stage with perspective!
+              Blue box is suspicious... Keep going!
             </p>
           </>
         )}

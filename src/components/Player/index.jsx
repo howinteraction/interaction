@@ -23,7 +23,7 @@ export default function Player({ onPositionChange, position }) {
   const rapier = useRapier();
 
   const doJump = () => {
-    playerRef.current.setLinvel({ x: 0, y: 6, z: 0 });
+    playerRef.current.setLinvel({ x: 0, y: 8, z: 0 });
   };
 
   useFrame((state) => {
@@ -33,6 +33,11 @@ export default function Player({ onPositionChange, position }) {
 
     if (currentStage === 2 && !initialDirection) {
       state.camera.lookAt(new THREE.Vector3(60, 12, 6.5));
+      setInitialDirection(true);
+    }
+
+    if (currentStage === 3 && !initialDirection) {
+      state.camera.lookAt(new THREE.Vector3(70, 12, 7.5));
       setInitialDirection(true);
     }
 
@@ -55,9 +60,9 @@ export default function Player({ onPositionChange, position }) {
 
     const { world } = rapier;
     const ray = world.castRay(
-      new RAPIER.Ray(playerRef.current.translation(), { x: 0, y: -2, z: 0 }),
+      new RAPIER.Ray(playerRef.current.translation(), { x: 0, y: -1, z: 0 }),
     );
-    const grounded = ray && ray.collider && Math.abs(ray.toi) <= 3;
+    const grounded = ray && ray.collider && Math.abs(ray.toi) <= 1.5;
 
     if (jump && grounded) doJump();
 
@@ -79,8 +84,8 @@ export default function Player({ onPositionChange, position }) {
       position={position}
     >
       <mesh>
-        <capsuleGeometry args={[1, 1]} />
-        <CapsuleCollider args={[1, 1]} />
+        <capsuleGeometry args={[0.5, 0.5]} />
+        <CapsuleCollider args={[0.5, 0.5]} />
       </mesh>
     </RigidBody>
   );
