@@ -27,6 +27,7 @@ import DragControl from "../DragControl";
 import Stopwatch from "../Stopwatch";
 import StageClearScore from "../StageClearScore";
 import Loading from "../Loading";
+import CameraMotion from "../CameraMotion";
 
 import usePlayerPosition from "../../../hooks/usePlayerPosition";
 
@@ -78,14 +79,16 @@ export default function StageThree() {
               shadow-camera-far={1000}
             />
             <Physics>
-              <DragControl
-                minX={-200}
-                maxX={200}
-                maxY={200}
-                minZ={-200}
-                maxZ={200}
-                controlsRef={controlsRef}
-              />
+              {!isStageCleared && (
+                <DragControl
+                  minX={-200}
+                  maxX={200}
+                  maxY={200}
+                  minZ={-200}
+                  maxZ={200}
+                  controlsRef={controlsRef}
+                />
+              )}
               <RigidBody type="fixed" colliders={false} scale={1.5}>
                 <StageThreeSky />
               </RigidBody>
@@ -143,10 +146,18 @@ export default function StageThree() {
                 rotation={[-0.5, 4.7, -0.5]}
                 color="rgb(135, 206, 235)"
               />
-              <Player
-                position={playerPosition}
-                onPositionChange={handlePlayerPositionChange}
-              />
+              {isStageCleared ? (
+                <CameraMotion
+                  targetPosition={[450, 20, 0]}
+                  lerpFactor={0.005}
+                  targetDirection={[450, 20, 0]}
+                />
+              ) : (
+                <Player
+                  position={playerPosition}
+                  onPositionChange={handlePlayerPositionChange}
+                />
+              )}
             </Physics>
           </Canvas>
         </Suspense>
