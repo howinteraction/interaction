@@ -9,9 +9,9 @@ export default function TutorialTitle() {
   extend({ TextGeometry });
 
   return (
-    <mesh position={[-20, 20, -20]}>
+    <mesh position={[-14, 20, -20]}>
       <textGeometry
-        args={["Drop The Ball On Green", { font, size: 3, height: 0.5 }]}
+        args={["Go To The Portal", { font, size: 3, height: 0.5 }]}
       />
       <meshStandardMaterial attach="material" color="rgb(159,223,205)" />
     </mesh>
