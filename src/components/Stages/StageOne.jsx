@@ -97,28 +97,33 @@ export default function StageOne() {
             <Box args={[boxSize, boxSize, boxSize]} color="blue" />
           </RigidBody>
           <RigidBody
-            position={[6, 2.7, -3]}
-            scale={0.7}
             userData={{ isDraggable: true }}
             lockRotations
+            position={[6, 2.7, -3]}
+            scale={0.5}
           >
             <Capsule args={[1, 1, 4, 8]} color="yellow" />
           </RigidBody>
           <RigidBody
             userData={{ isDraggable: true }}
-            position={[-1, 2.6, -8]}
             lockRotations
+            position={[-1, 2.6, -8]}
+            scale={0.5}
           >
             <Cylinder args={[0.5, 0.5, 1.5, 16]} color="orange" />
           </RigidBody>
-          <RigidBody userData={{ isDraggable: true }} position={[3, 1.25, 6]}>
+          <RigidBody
+            userData={{ isDraggable: true }}
+            position={[3, 1.25, 6]}
+            scale={0.5}
+          >
             <Torus args={[1, 0.25, 8, 50]} color="green" />
           </RigidBody>
           <RigidBody
-            position={[-6, 2, 5]}
-            scale={0.7}
             userData={{ isDraggable: true }}
             lockRotations
+            scale={0.5}
+            position={[-6, 2, 5]}
           >
             <Cone />
           </RigidBody>

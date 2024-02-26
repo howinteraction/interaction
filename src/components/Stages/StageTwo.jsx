@@ -2,6 +2,7 @@ import { useState, Suspense, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Canvas } from "@react-three/fiber";
 import { Physics, RigidBody, CuboidCollider } from "@react-three/rapier";
+import { Text } from "@react-three/drei";
 import { resetIllusions } from "../../redux/twoIllusionSlice";
 
 import Player from "../Player";
@@ -17,6 +18,7 @@ import StageTwoBackground from "../models/StageTwo/StageTwoBackground";
 import StageTwoGoal from "../models/StageTwo/StageTwoGoal";
 import HelperScreen from "../models/StageTwo/HelperScreen";
 import TimeScreen from "../models/StageTwo/TimeScreen";
+import Screen1 from "../models/StageTwo/Screen1";
 import Cube from "../models/StageTwo/Cube";
 import BlackColumn from "../models/StageTwo/BlackColumn";
 import BlackPillar from "../models/StageTwo/BlackPillar";
@@ -37,7 +39,7 @@ export default function StageTwo() {
   useEffect(() => {
     const loadingTimeout = setTimeout(() => {
       setLoadingComplete(true);
-    }, 7000);
+    }, 100);
 
     return () => clearTimeout(loadingTimeout);
   }, []);
@@ -98,6 +100,22 @@ export default function StageTwo() {
             <TimeScreen />
           </RigidBody>
           <RigidBody
+            rotation={[0, 2, 0]}
+            scale={3}
+            colliders={false}
+            position={[-48.5, -3, -7]}
+          >
+            <Screen1 />
+          </RigidBody>
+          <RigidBody
+            colliders={false}
+            position={[-49, 6, -6.2]}
+            scale={0.5}
+            rotation={[0, 0, 0]}
+          >
+            <Text color="white">Find this Triangle</Text>
+          </RigidBody>
+          <RigidBody
             scale={4}
             colliders={false}
             rotation={[-0.017, -0.01, 0]}
@@ -108,8 +126,8 @@ export default function StageTwo() {
           <RigidBody
             type="fixed"
             colliders={false}
-            scale={0.3}
-            position={[-30, 0, 3.5]}
+            scale={0.25}
+            position={[-30, 0, 2.5]}
             rotation={[0, -20, 0]}
           >
             <BlackColumn />
@@ -117,8 +135,8 @@ export default function StageTwo() {
           <RigidBody
             type="fixed"
             colliders={false}
-            scale={0.3}
-            position={[-25, 0, -2.4]}
+            scale={0.25}
+            position={[-25, 0, -1.7]}
             rotation={[0, 45, 0]}
           >
             <BlackColumn />
@@ -126,8 +144,8 @@ export default function StageTwo() {
           <RigidBody
             type="fixed"
             colliders={false}
-            scale={0.3}
-            position={[-18, 0, 4]}
+            scale={0.25}
+            position={[-18, 0, 5]}
             rotation={[0, Math.PI / 10, 0]}
           >
             <BlackColumn />
@@ -145,7 +163,7 @@ export default function StageTwo() {
             type="fixed"
             colliders={false}
             scale={0.3}
-            position={[-7, 0, 3]}
+            position={[-5, 0, 2.5]}
             rotation={[0, 13, 0]}
           >
             <BlackColumn />
@@ -154,7 +172,7 @@ export default function StageTwo() {
             type="fixed"
             colliders={false}
             scale={0.3}
-            position={[-13, 0, 0]}
+            position={[-13, 0, 0.65]}
             rotation={[0, 14, 0]}
           >
             <BlackColumn />

@@ -22,9 +22,9 @@ export default function Player({ onPositionChange, position }) {
 
   const rapier = useRapier();
 
-  const doJump = () => {
-    playerRef.current.setLinvel({ x: 0, y: 8, z: 0 });
-  };
+  function doJump() {
+    playerRef.current.setLinvel({ x: 0, y: 6.5, z: 0 });
+  }
 
   useFrame((state) => {
     if (!playerRef.current) {
@@ -62,7 +62,7 @@ export default function Player({ onPositionChange, position }) {
     const ray = world.castRay(
       new RAPIER.Ray(playerRef.current.translation(), { x: 0, y: -1, z: 0 }),
     );
-    const grounded = ray && ray.collider && Math.abs(ray.toi) <= 1.5;
+    const grounded = ray && ray.collider && Math.abs(ray.toi) <= 3;
 
     if (jump && grounded) doJump();
 
@@ -84,8 +84,8 @@ export default function Player({ onPositionChange, position }) {
       position={position}
     >
       <mesh>
-        <capsuleGeometry args={[0.5, 0.5]} />
-        <CapsuleCollider args={[0.5, 0.5]} />
+        <capsuleGeometry args={[1, 1]} />
+        <CapsuleCollider args={[1, 1]} />
       </mesh>
     </RigidBody>
   );
