@@ -8,7 +8,7 @@ export default function StageTwoOctagon2dRight() {
 
   return (
     <mesh>
-      <planeGeometry args={[1.2, 1.2]} />
+      <planeGeometry args={[1.2, 1.25]} />
       <meshBasicMaterial map={texture} side={THREE.DoubleSide} />
     </mesh>
   );

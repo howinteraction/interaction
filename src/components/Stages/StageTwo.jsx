@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Canvas } from "@react-three/fiber";
 import { Physics, RigidBody, CuboidCollider } from "@react-three/rapier";
 import { Text } from "@react-three/drei";
+import * as THREE from "three";
 import { resetIllusions } from "../../redux/twoIllusionSlice";
 
 import Player from "../Player";
@@ -20,7 +21,6 @@ import StageTwoGoal from "../models/StageTwo/StageTwoGoal";
 import HelperScreen from "../models/StageTwo/HelperScreen";
 import TimeScreen from "../models/StageTwo/TimeScreen";
 import Screen1 from "../models/StageTwo/Screen1";
-import Cube from "../models/StageTwo/Cube";
 import BlackColumn from "../models/StageTwo/BlackColumn";
 import BlackPillar from "../models/StageTwo/BlackPillar";
 import BlackPillar2 from "../models/StageTwo/BlackPillar2";
@@ -30,28 +30,60 @@ import StageTwoSquare2dRight from "../models/StageTwo/StageTwoSquare2dRight";
 import StageTwoSquare2dLeft from "../models/StageTwo/StageTwoSquare2dLeft";
 import StageTwoCircle2dRight from "../models/StageTwo/StageTwoCircle2dRight";
 import StageTwoCircle2dLeft from "../models/StageTwo/StageTwoCircle2dLeft";
-import StageTwoOctagon2dRight from "../models/StageTwo/StageTwoOctagon2dRight";
-import StageTwoOctagon2dLeft from "../models/StageTwo/StageTwoOctagon2dLeft";
+import StageTwoOctagon2dRight from "../models/StageTwo/StageTwoOctagon2dLeft";
+import StageTwoOctagon2dLeft from "../models/StageTwo/StageTwoOctagon2dRight";
 
 import usePlayerPosition from "../../../hooks/usePlayerPosition";
 
 export default function StageTwo() {
-  const controlsRef = useRef();
+  const dispatch = useDispatch();
   const isStageCleared = useSelector(
     (state) => state.stageClear.isStageCleared,
   );
-  const { handlePlayerPositionChange } = usePlayerPosition(controlsRef);
-  const dispatch = useDispatch();
-
   const [loadingComplete, setLoadingComplete] = useState(false);
+  const [audioStarted, setAudioStarted] = useState(false);
+  const controlsRef = useRef();
+  const audioRef = useRef(null);
+
+  const { handlePlayerPositionChange } = usePlayerPosition(controlsRef);
 
   useEffect(() => {
     const loadingTimeout = setTimeout(() => {
       setLoadingComplete(true);
+      setAudioStarted(true);
     }, 7000);
 
     return () => clearTimeout(loadingTimeout);
   }, []);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.stop();
+    }
+
+    const audioLoader = new THREE.AudioLoader();
+    const listener = new THREE.AudioListener();
+    const newAudio = new THREE.Audio(listener);
+
+    audioRef.current = newAudio;
+
+    const stageOneBGM = "/assets/audio/stage2.mp3";
+
+    audioLoader.load(stageOneBGM, (buffer) => {
+      if (newAudio && audioStarted) {
+        newAudio.setBuffer(buffer);
+        newAudio.setLoop(true);
+        newAudio.setVolume(0.15);
+        newAudio.play();
+      }
+    });
+
+    return () => {
+      if (newAudio) {
+        newAudio.stop();
+      }
+    };
+  }, [audioStarted]);
 
   useEffect(() => {
     if (isStageCleared) {
@@ -93,14 +125,6 @@ export default function StageTwo() {
           )}
           <RigidBody type="fixed" colliders={false} scale={2}>
             <StageTwoBackground />
-          </RigidBody>
-          <RigidBody
-            userData={{ isDraggable: true }}
-            lockRotations
-            position={[-48, 0, 0]}
-            scale={0.5}
-          >
-            <Cube />
           </RigidBody>
           <RigidBody
             scale={5}
@@ -155,7 +179,7 @@ export default function StageTwo() {
           <RigidBody position={[-25.433, 6.75, -1.2]} rotation={[0, 2.5, 0]}>
             <StageTwoCircle2dLeft />
           </RigidBody>
-          <RigidBody position={[-5.6, 7, 3]} rotation={[0, 2, 0]}>
+          <RigidBody position={[-5.73, 7, 2.83]} rotation={[0, 2, 0]}>
             <StageTwoOctagon2dRight />
           </RigidBody>
           <RigidBody position={[-17.2, 9, -3.25]} rotation={[0, 2.8, 0]}>

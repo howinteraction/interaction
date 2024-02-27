@@ -2,6 +2,7 @@ import { Suspense, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Canvas } from "@react-three/fiber";
 import { Physics, RigidBody } from "@react-three/rapier";
+import * as THREE from "three";
 import { resetIllusions } from "../../redux/threeIllusionSlice";
 
 import { Aim } from "../Styles";
@@ -39,11 +40,15 @@ export default function StageThree() {
   const controlsRef = useRef();
   const [loadingComplete, setLoadingComplete] = useState(false);
   const [playerPosition, setPosition] = useState([-19.41, -11.2, -18.65]);
+  const [audioStarted, setAudioStarted] = useState(false);
+  const audioRef = useRef(null);
+
   const { handlePlayerPositionChange } = usePlayerPosition(controlsRef);
 
   useEffect(() => {
     const loadingTimeout = setTimeout(() => {
       setLoadingComplete(true);
+      setAudioStarted(true);
     }, 7000);
 
     return () => clearTimeout(loadingTimeout);
@@ -54,6 +59,35 @@ export default function StageThree() {
       dispatch(resetIllusions());
     }
   }, [isStageCleared, dispatch]);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.stop();
+    }
+
+    const audioLoader = new THREE.AudioLoader();
+    const listener = new THREE.AudioListener();
+    const newAudio = new THREE.Audio(listener);
+
+    audioRef.current = newAudio;
+
+    const stageOneBGM = "/assets/audio/stage3.mp3";
+
+    audioLoader.load(stageOneBGM, (buffer) => {
+      if (newAudio && audioStarted) {
+        newAudio.setBuffer(buffer);
+        newAudio.setLoop(true);
+        newAudio.setVolume(0.15);
+        newAudio.play();
+      }
+    });
+
+    return () => {
+      if (newAudio) {
+        newAudio.stop();
+      }
+    };
+  }, [audioStarted]);
 
   return (
     <>
