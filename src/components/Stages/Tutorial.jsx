@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { Canvas } from "@react-three/fiber";
 import { Physics } from "@react-three/rapier";
 
+import * as THREE from "three";
 import { Aim } from "../Styles";
 
 import CameraMotion from "../CameraMotion";
@@ -23,7 +24,9 @@ export default function Tutorial() {
     (state) => state.stageClear.isStageCleared,
   );
   const [loadingComplete, setLoadingComplete] = useState(false);
+  const [audioStarted, setAudioStarted] = useState(false);
   const controlsRef = useRef();
+  const audioRef = useRef(null);
 
   const { handlePlayerPositionChange } = usePlayerPosition(controlsRef);
 
@@ -32,8 +35,57 @@ export default function Tutorial() {
       setLoadingComplete(true);
     }, 10000);
 
-    return () => clearTimeout(loadingTimeout);
-  }, []);
+    const handleUserGesture = () => {
+      setAudioStarted(true);
+      document.removeEventListener("keydown", handleUserGesture);
+      document.removeEventListener("click", handleUserGesture);
+    };
+
+    if (loadingComplete) {
+      document.addEventListener("keydown", handleUserGesture);
+      document.addEventListener("click", handleUserGesture);
+    }
+
+    return () => {
+      clearTimeout(loadingTimeout);
+      document.removeEventListener("keydown", handleUserGesture);
+      document.removeEventListener("click", handleUserGesture);
+    };
+  }, [loadingComplete]);
+
+  useEffect(() => {
+    if (audioRef.current && audioStarted) {
+      audioRef.current.play();
+    }
+  }, [audioStarted]);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.stop();
+    }
+
+    const audioLoader = new THREE.AudioLoader();
+    const listener = new THREE.AudioListener();
+    const newAudio = new THREE.Audio(listener);
+    audioRef.current = newAudio;
+
+    const tutorialBGM = "/assets/audio/tutorial.mp3";
+
+    audioLoader.load(tutorialBGM, (buffer) => {
+      if (newAudio && audioStarted) {
+        newAudio.setBuffer(buffer);
+        newAudio.setLoop(true);
+        newAudio.setVolume(0.15);
+        newAudio.play();
+      }
+    });
+
+    return () => {
+      if (newAudio) {
+        newAudio.stop();
+      }
+    };
+  }, [audioStarted]);
 
   return (
     <>

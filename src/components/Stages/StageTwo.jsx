@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Canvas } from "@react-three/fiber";
 import { Physics, RigidBody, CuboidCollider } from "@react-three/rapier";
 import { Text } from "@react-three/drei";
+import * as THREE from "three";
 import { resetIllusions } from "../../redux/twoIllusionSlice";
 
 import Player from "../Player";
@@ -36,22 +37,53 @@ import StageTwoOctagon2dLeft from "../models/StageTwo/StageTwoOctagon2dRight";
 import usePlayerPosition from "../../../hooks/usePlayerPosition";
 
 export default function StageTwo() {
-  const controlsRef = useRef();
+  const dispatch = useDispatch();
   const isStageCleared = useSelector(
     (state) => state.stageClear.isStageCleared,
   );
-  const { handlePlayerPositionChange } = usePlayerPosition(controlsRef);
-  const dispatch = useDispatch();
-
   const [loadingComplete, setLoadingComplete] = useState(false);
+  const [audioStarted, setAudioStarted] = useState(false);
+  const controlsRef = useRef();
+  const audioRef = useRef(null);
+
+  const { handlePlayerPositionChange } = usePlayerPosition(controlsRef);
 
   useEffect(() => {
     const loadingTimeout = setTimeout(() => {
       setLoadingComplete(true);
+      setAudioStarted(true);
     }, 7000);
 
     return () => clearTimeout(loadingTimeout);
   }, []);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.stop();
+    }
+
+    const audioLoader = new THREE.AudioLoader();
+    const listener = new THREE.AudioListener();
+    const newAudio = new THREE.Audio(listener);
+    audioRef.current = newAudio;
+
+    const stageOneBGM = "/assets/audio/stage2.mp3";
+
+    audioLoader.load(stageOneBGM, (buffer) => {
+      if (newAudio && audioStarted) {
+        newAudio.setBuffer(buffer);
+        newAudio.setLoop(true);
+        newAudio.setVolume(0.15);
+        newAudio.play();
+      }
+    });
+
+    return () => {
+      if (newAudio) {
+        newAudio.stop();
+      }
+    };
+  }, [audioStarted]);
 
   useEffect(() => {
     if (isStageCleared) {

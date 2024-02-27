@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, Suspense } from "react";
 import { useSelector } from "react-redux";
 import { Canvas } from "@react-three/fiber";
 import { Physics, RigidBody } from "@react-three/rapier";
+import * as THREE from "three";
 
 import Player from "../Player";
 import DragControl from "../DragControl";
@@ -29,19 +30,50 @@ export default function StageOne() {
   const isStageCleared = useSelector(
     (state) => state.stageClear.isStageCleared,
   );
-  const controlsRef = useRef();
+  const [boxSize, setBoxSize] = useState(1);
   const [loadingComplete, setLoadingComplete] = useState(false);
-  const [boxSize, setBoxSize] = useState(2);
+  const [audioStarted, setAudioStarted] = useState(false);
+  const controlsRef = useRef();
+  const audioRef = useRef(null);
 
   const { handlePlayerPositionChange } = usePlayerPosition(controlsRef);
 
   useEffect(() => {
     const loadingTimeout = setTimeout(() => {
       setLoadingComplete(true);
+      setAudioStarted(true);
     }, 7000);
 
     return () => clearTimeout(loadingTimeout);
   }, []);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.stop();
+    }
+
+    const audioLoader = new THREE.AudioLoader();
+    const listener = new THREE.AudioListener();
+    const newAudio = new THREE.Audio(listener);
+    audioRef.current = newAudio;
+
+    const stageOneBGM = "/assets/audio/stage1.mp3";
+
+    audioLoader.load(stageOneBGM, (buffer) => {
+      if (newAudio && audioStarted) {
+        newAudio.setBuffer(buffer);
+        newAudio.setLoop(true);
+        newAudio.setVolume(0.15);
+        newAudio.play();
+      }
+    });
+
+    return () => {
+      if (newAudio) {
+        newAudio.stop();
+      }
+    };
+  }, [audioStarted]);
 
   return !loadingComplete ? (
     <Loading />
