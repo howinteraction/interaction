@@ -55,6 +55,7 @@ export default function StageOne() {
     const audioLoader = new THREE.AudioLoader();
     const listener = new THREE.AudioListener();
     const newAudio = new THREE.Audio(listener);
+
     audioRef.current = newAudio;
 
     const stageOneBGM = "/assets/audio/stage1.mp3";
