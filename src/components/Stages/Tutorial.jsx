@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, Suspense } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { Canvas } from "@react-three/fiber";
 import { Physics } from "@react-three/rapier";
@@ -93,7 +93,7 @@ export default function Tutorial() {
       {!loadingComplete ? (
         <Loading />
       ) : (
-        <Suspense fallback={<Loading />}>
+        <>
           <Canvas>
             <ambientLight intensity={2} />
             <Physics>
@@ -126,7 +126,7 @@ export default function Tutorial() {
             )}
           </Canvas>
           {isStageCleared && <GameStart />}
-        </Suspense>
+        </>
       )}
     </>
   );

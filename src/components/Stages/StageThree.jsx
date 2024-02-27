@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Canvas } from "@react-three/fiber";
 import { Physics, RigidBody } from "@react-three/rapier";
@@ -95,8 +95,7 @@ export default function StageThree() {
       {!loadingComplete ? (
         <Loading />
       ) : (
-        <Suspense fallback={<Loading />}>
-          <Canvas shadows>
+        <Canvas shadows>
             <ambientLight intensity={3} />
             <StageThreeCloud />
             <directionalLight
@@ -194,7 +193,6 @@ export default function StageThree() {
               )}
             </Physics>
           </Canvas>
-        </Suspense>
       )}
       {isStageCleared && <StageClearScore />}
     </>
