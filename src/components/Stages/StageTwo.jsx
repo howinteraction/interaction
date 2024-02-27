@@ -21,7 +21,6 @@ import StageTwoGoal from "../models/StageTwo/StageTwoGoal";
 import HelperScreen from "../models/StageTwo/HelperScreen";
 import TimeScreen from "../models/StageTwo/TimeScreen";
 import Screen1 from "../models/StageTwo/Screen1";
-import Cube from "../models/StageTwo/Cube";
 import BlackColumn from "../models/StageTwo/BlackColumn";
 import BlackPillar from "../models/StageTwo/BlackPillar";
 import BlackPillar2 from "../models/StageTwo/BlackPillar2";
@@ -125,14 +124,6 @@ export default function StageTwo() {
           )}
           <RigidBody type="fixed" colliders={false} scale={2}>
             <StageTwoBackground />
-          </RigidBody>
-          <RigidBody
-            userData={{ isDraggable: true }}
-            lockRotations
-            position={[-48, 0, 0]}
-            scale={0.5}
-          >
-            <Cube />
           </RigidBody>
           <RigidBody
             scale={5}

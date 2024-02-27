@@ -66,7 +66,7 @@ export default function Loading() {
             <br />
             <p>
               This is Tutorial. You can move around with the keyboard, and
-              control the viewpoint with the mouse
+              control the viewpoint with the mouse.
             </p>
           </>
         )}
@@ -75,8 +75,11 @@ export default function Loading() {
             <h2>Stage1</h2>
             <br />
             <p>
-              This is Stage1. You have to clear this stage with perspective!
-              Blue box is suspicious... Keep going!
+              This is Stage1. You have to clear this stage with perspective.
+              Keep going!
+              <br />
+              <br />
+              Tip: Blue Box is suspicious...
             </p>
           </>
         )}
@@ -85,8 +88,11 @@ export default function Loading() {
             <h2>Stage2</h2>
             <br />
             <p>
-              This is stage2. You need to match the torn objects to clear this
-              stage. Keep going!
+              This is stage2. You have to aim at the torn objects and match it
+              to clear this stage. Keep going!
+              <br />
+              <br />
+              Tip: Blue Triangle is suspicious...
             </p>
           </>
         )}
@@ -95,8 +101,11 @@ export default function Loading() {
             <h2>Stage3</h2>
             <br />
             <p>
-              This is stage3. You have to clear the stage by turning 2D objects
-              into 3D objects. Keep going!
+              This is stage3. You have to turn a 2D photos into a 3D Object by
+              grabbing and dropping it to clear this stage. Keep going!
+              <br />
+              <br />
+              Tip: HayStack and Bridge is suspicious...
             </p>
           </>
         )}
