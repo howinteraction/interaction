@@ -15,7 +15,7 @@ export default function StageOnePortal({ scale, rotation }) {
       scale={scale}
       type="fixed"
       rotation={rotation}
-      position={[48, 6, 2.5]}
+      position={[48, 7, 2.5]}
       colliders={false}
     >
       <primitive object={scene} />

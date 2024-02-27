@@ -46,7 +46,7 @@ const RotatingLogo = styled.img`
 `;
 
 export default function Loading() {
-  const stage = useSelector((state) => state.stages.stageLevel);
+  const currentStage = useSelector((state) => state.stages.stageLevel);
   const [dots, setDots] = useState("");
 
   useEffect(() => {
@@ -60,7 +60,7 @@ export default function Loading() {
   return (
     <LoadingContainer>
       <StageText>
-        {stage === 0 && (
+        {currentStage === 0 && (
           <>
             <h2>Tutorial</h2>
             <br />
@@ -70,7 +70,7 @@ export default function Loading() {
             </p>
           </>
         )}
-        {stage === 1 && (
+        {currentStage === 1 && (
           <>
             <h2>Stage1</h2>
             <br />
@@ -80,7 +80,7 @@ export default function Loading() {
             </p>
           </>
         )}
-        {stage === 2 && (
+        {currentStage === 2 && (
           <>
             <h2>Stage2</h2>
             <br />
@@ -90,7 +90,7 @@ export default function Loading() {
             </p>
           </>
         )}
-        {stage === 3 && (
+        {currentStage === 3 && (
           <>
             <h2>Stage3</h2>
             <br />
