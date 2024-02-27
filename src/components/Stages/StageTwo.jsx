@@ -1,4 +1,4 @@
-import { useState, Suspense, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Canvas } from "@react-three/fiber";
 import { Physics, RigidBody, CuboidCollider } from "@react-three/rapier";
@@ -94,7 +94,7 @@ export default function StageTwo() {
   return !loadingComplete ? (
     <Loading />
   ) : (
-    <Suspense fallback={<Loading />}>
+    <>
       <Canvas shadows>
         <StageTwoSky />
         <Fog />
@@ -280,6 +280,6 @@ export default function StageTwo() {
         />
       </Canvas>
       <RenderingContents isStageCleared={isStageCleared} nextStage={3} />
-    </Suspense>
+    </>
   );
 }
