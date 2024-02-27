@@ -30,8 +30,8 @@ import StageTwoSquare2dRight from "../models/StageTwo/StageTwoSquare2dRight";
 import StageTwoSquare2dLeft from "../models/StageTwo/StageTwoSquare2dLeft";
 import StageTwoCircle2dRight from "../models/StageTwo/StageTwoCircle2dRight";
 import StageTwoCircle2dLeft from "../models/StageTwo/StageTwoCircle2dLeft";
-import StageTwoOctagon2dRight from "../models/StageTwo/StageTwoOctagon2dRight";
-import StageTwoOctagon2dLeft from "../models/StageTwo/StageTwoOctagon2dLeft";
+import StageTwoOctagon2dRight from "../models/StageTwo/StageTwoOctagon2dLeft";
+import StageTwoOctagon2dLeft from "../models/StageTwo/StageTwoOctagon2dRight";
 
 import usePlayerPosition from "../../../hooks/usePlayerPosition";
 
@@ -155,7 +155,7 @@ export default function StageTwo() {
           <RigidBody position={[-25.433, 6.75, -1.2]} rotation={[0, 2.5, 0]}>
             <StageTwoCircle2dLeft />
           </RigidBody>
-          <RigidBody position={[-5.6, 7, 3]} rotation={[0, 2, 0]}>
+          <RigidBody position={[-5.73, 7, 2.83]} rotation={[0, 2, 0]}>
             <StageTwoOctagon2dRight />
           </RigidBody>
           <RigidBody position={[-17.2, 9, -3.25]} rotation={[0, 2.8, 0]}>
