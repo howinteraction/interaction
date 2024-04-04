@@ -15,4 +15,4 @@ export default function Cone() {
   );
 }
 
-useGLTF.preload("/assets/glb/hallow-cube.glb");
+useGLTF.preload("/assets/glb/cone.glb");
