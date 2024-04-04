@@ -1,6 +1,6 @@
 import { useGLTF } from "@react-three/drei";
 
-export default function HexSphere({ ...dragProps }) {
+export default function HexSphere() {
   const { scene } = useGLTF("/assets/glb/hex-sphere.glb");
 
   scene.traverse((child) => {
@@ -9,7 +9,7 @@ export default function HexSphere({ ...dragProps }) {
   });
 
   return (
-    <mesh {...dragProps}>
+    <mesh>
       <primitive object={scene} />
     </mesh>
   );
