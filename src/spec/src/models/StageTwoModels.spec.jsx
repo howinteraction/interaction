@@ -22,7 +22,6 @@ describe("StageTwo의 useGLTF로 로드 및 렌더링 하는 컴포넌트", () =
 
       return {
         useGLTF: mockUseGLTF,
-        // Clone: vi.fn(),
       };
     });
   });
