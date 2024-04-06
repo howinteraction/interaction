@@ -6,7 +6,7 @@ import { useGLTF } from "@react-three/drei";
 import StageThreeBackGround from "../../../components/models/StageThree/StageThreeBackGround";
 import StageThreeSky from "../../../components/models/StageThree/StageThreeSky";
 
-describe("StageOne의 useGLTF로 로드 및 렌더링 하는 컴포넌트", () => {
+describe("StageThree의 useGLTF로 로드 및 렌더링 하는 컴포넌트", () => {
   beforeEach(() => {
     vi.mock("@react-three/drei", () => {
       const mockClone = vi
