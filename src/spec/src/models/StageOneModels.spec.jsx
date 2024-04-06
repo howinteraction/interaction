@@ -12,6 +12,7 @@ import HallowCube from "../../../components/models/StageOne/HallowCube";
 import StageOneTimeScreen from "../../../components/models/StageOne/StageOneTimeScreen";
 import Torus from "../../../components/models/StageOne/Torus";
 import HexSphere from "../../../components/models/StageOne/HexSphere";
+import StageOnePortal from "../../../components/models/StageOne/StageOnePortal";
 
 function changeColorNameToHex(colorName) {
   const colors = {
@@ -36,6 +37,10 @@ describe("StageOne의 useGLTF로 로드 및 렌더링 하는 컴포넌트", () =
         useGLTF: mockUseGLTF,
       };
     });
+
+    vi.mock("@react-three/rapier", () => ({
+      RigidBody: vi.fn(),
+    }));
   });
 
   it("Capsule 컴포넌트가 useGLTF를 통해 scene을 로드하고 렌더링해야 함", async () => {
@@ -110,6 +115,23 @@ describe("StageOne의 useGLTF로 로드 및 렌더링 하는 컴포넌트", () =
 
     expect(useGLTF).toHaveBeenCalledWith("/assets/glb/hex-sphere.glb");
     expect(useGLTF.preload).toHaveBeenCalledWith("/assets/glb/hex-sphere.glb");
+  });
+
+  it("StageOnePortal 컴포넌트가 useGLTF를 통해 scene을 로드하고 RigidBody 컴포넌트를 포함한다", async () => {
+    await ReactThreeTestRenderer.act(async () => {
+      const renderer = await ReactThreeTestRenderer.create(<StageOnePortal />);
+
+      expect(vi.mocked(useGLTF).mock.calls.length).toBeGreaterThan(0);
+
+      const RigidBody = renderer.scene.findAllByType("RigidBody");
+
+      expect(RigidBody).not.toBeNull();
+    });
+
+    expect(useGLTF).toHaveBeenCalledWith("/assets/glb/stage1-portal.glb");
+    expect(useGLTF.preload).toHaveBeenCalledWith(
+      "/assets/glb/stage1-portal.glb",
+    );
   });
 });
 
