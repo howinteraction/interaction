@@ -8,7 +8,7 @@ Interaction은 정적인 웹페이지에서 1인칭 시점을 기준으로 키�
 
 # Links 🔗
 
-Deployed web / frontend repo
+Deployed web / [Frontend repo](https://github.com/howinteraction/interaction)
 
 # Contents 📖
 
@@ -75,13 +75,13 @@ WebGL은 대부분 3D API가 아닌 좌표 기반인 저수준의 래스터 (작
 
 대표적으로 바닐라 자바스크립트 만을 이용한 Vanilla Threejs, 그리고 React를 이용한 React Three Fiber(r3f) 를 사용하여 3D 작업을 할 수 있다는 것을 알게 되었습니다.
 
-![threejs-structure.png]();
-
 저희 프로젝트의 초기 작업 방향은 **“threeJS 만을 이용해서 게임을 구현하자”** 였습니다.
 
 그러나 기능 구현을 제외하고도 물체를 만들고, 화면에 만든 물체들을 세팅할 때 적절한 조명과 카메라 각도를 세팅하지 않거나 리사이즈 로직을 적절한 곳에 추가하지 않는 등 세세한 작업까지 직접 해주지 않으면 화면 및 물체들이 깨지는 일이 빈번하게 일어났습니다.
 
-그렇기에 리액트 라이브러리 들을 찾게 되었고, 3D 작업 효율을 높이기 위해 해당 라이브러리 사용을 체택하였습니다
+그렇기에 리액트 라이브러리 들을 찾게 되었고, 3D 작업 효율을 높이기 위해 해당 라이브러리 사용을 체택하였습니다.
+
+![threejs-structure.png]();
 
 <br>
 
@@ -232,7 +232,7 @@ WebGL은 대부분 3D API가 아닌 좌표 기반인 저수준의 래스터 (작
 
 ### 3D 물체와 유저가 상호작용 하는 기능들을 React DOM 조작을 하면서 canvas는 어떻게 다룰 수 있을까? ❓
 
-- React DOM을 조작하는 것은 react의 **상태(state)** 및 **프롭스(props)**를 사용하여 DOM 요소를 업데이트 하였습니다. 예를 들어 react의 상태를 변경하거나, 이벤트 핸들러를 사용하여 React DOM 요소를 업데이트 하였습니다.
+- React DOM을 조작하는 것은 react의 **상태(state)** 및 **프롭스(props)** 를 사용하여 DOM 요소를 업데이트 하였습니다. 예를 들어 react의 상태를 변경하거나, 이벤트 핸들러를 사용하여 React DOM 요소를 업데이트 하였습니다.
 
 - Canvas를 다룰 때는 우선 r3f는 React 컴포넌트 기반으로 3D Scene을 생성하고 관리합니다. 이러한 컴포넌트는 Three.js를 기반으로 하며, 이를 사용하여 `<Canvas>` 를 조작했습니다.
 
