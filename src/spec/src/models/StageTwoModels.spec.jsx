@@ -101,7 +101,7 @@ describe("StageTwo의 useGLTF로 로드 및 렌더링 하는 컴포넌트", () =
     );
   });
 
-  it("GLTF 모델을 로드하고 Clone 및 CuboidCollider 컴포넌트를 포함한다", async () => {
+  it("BlackColumn 컴포넌트가 useGLTF를 통해 scene을 로드하고 Clone 및 CuboidCollider 컴포넌트를 포함한다", async () => {
     await ReactThreeTestRenderer.act(async () => {
       const renderer = await ReactThreeTestRenderer.create(<BlackColumn />);
 
@@ -115,5 +115,10 @@ describe("StageTwo의 useGLTF로 로드 및 렌더링 하는 컴포넌트", () =
 
       expect(collider).not.toBeNull();
     });
+
+    expect(useGLTF).toHaveBeenCalledWith("/assets/glb/black-column-02.glb");
+    expect(useGLTF.preload).toHaveBeenCalledWith(
+      "/assets/glb/black-column-02.glb",
+    );
   });
 });
