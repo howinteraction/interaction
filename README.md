@@ -65,7 +65,6 @@ Deployed web / frontend repo
 ![](https://img.shields.io/badge/-jest-%23C21325?style=flat-square&logo=jest&logoColor=white)
 
 <br>
-<br>
 
 # Why use those Library ? ❓
 
@@ -103,11 +102,13 @@ WebGL은 대부분 3D API가 아닌 좌표 기반인 저수준의 래스터 (작
 - 또한 라이브러리들을 적재적소에 사용하기 위해 공식문서를 꼼꼼히 서치했고, 결국 필요한 모든 정보들은 공식문서에 있었다는걸 다시 한번 깨닫게 되었던 경험을 하였습니다.
 
 <br>
+<br>
 
 # Gameplay flow 🎮
 
 - 각 스테이지 별 플레이 영상으로 남겨놓기
 
+<br>
 <br>
 
 # Technical Challenges 🏔️
