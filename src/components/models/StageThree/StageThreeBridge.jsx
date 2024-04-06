@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { useGLTF } from "@react-three/drei";
 import { RigidBody } from "@react-three/rapier";
 
-export default function StageThreeShip() {
+export default function StageThreeBridge() {
   const { scene } = useGLTF("/assets/glb/stage3-bridge.glb");
   const isBridgeIllusion = useSelector(
     (state) => state.threeIllusion.is3DBridge,
