@@ -6,6 +6,7 @@ import { useGLTF } from "@react-three/drei";
 import StageThreeBackGround from "../../../components/models/StageThree/StageThreeBackGround";
 import StageThreeSky from "../../../components/models/StageThree/StageThreeSky";
 import StageThreeCloud from "../../../components/models/StageThree/StageThreeCloud";
+import StageThreeShip from "../../../components/models/StageThree/StageThreeShip";
 
 describe("StageThree의 useGLTF로 로드 및 렌더링 하는 컴포넌트", () => {
   beforeEach(() => {
@@ -27,6 +28,7 @@ describe("StageThree의 useGLTF로 로드 및 렌더링 하는 컴포넌트", ()
 
   vi.mock("@react-three/rapier", () => ({
     CuboidCollider: vi.fn(),
+    RigidBody: vi.fn(),
   }));
 
   it("StageThreeBackGround 컴포넌트가 useGLTF를 통해 scene을 로드하고 렌더링해야 함", async () => {
@@ -64,5 +66,20 @@ describe("StageThree의 useGLTF로 로드 및 렌더링 하는 컴포넌트", ()
     expect(useGLTF.preload).toHaveBeenCalledWith(
       "/assets/glb/stage3-cloud.glb",
     );
+  });
+
+  it("StageThreeShip 컴포넌트가 useGLTF를 통해 scene을 로드하고 RigidBody 컴포넌트를 포함한다", async () => {
+    await ReactThreeTestRenderer.act(async () => {
+      const renderer = await ReactThreeTestRenderer.create(<StageThreeShip />);
+
+      expect(vi.mocked(useGLTF).mock.calls.length).toBeGreaterThan(0);
+
+      const RigidBody = renderer.scene.findAllByType("RigidBody");
+
+      expect(RigidBody).not.toBeNull();
+    });
+
+    expect(useGLTF).toHaveBeenCalledWith("/assets/glb/stage3-ship.glb");
+    expect(useGLTF.preload).toHaveBeenCalledWith("/assets/glb/stage3-ship.glb");
   });
 });
