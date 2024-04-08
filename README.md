@@ -1,8 +1,6 @@
 # Interaction 🕹️
 
-<p align="center">
-<img src="../interaction/public/assets/images/tutorial-picture/logo-removebg.png" width="60%" height="60%"/>
-</p>
+![logo-removebg](https://github.com/howinteraction/interaction/assets/126459089/c81a3ce4-f1ee-4e13-959e-94addee50369)
 
 Interaction은 정적인 웹페이지에서 1인칭 시점을 기준으로 키보드로 플레이어를 이동하고 마우스로 물체를 드래그하며 각 스테이지에 스며들어 있는 물체간의 착시를 이용해서 퍼즐로 되어있는 스테이지를 클리어 하는 방식으로 구성된 웹 게임 입니다.
 
@@ -34,6 +32,7 @@ Deployed web / [Frontend repo](https://github.com/howinteraction/interaction)
 
 <br>
 <br>
+
 
 # Motivation 👀
 
@@ -81,13 +80,15 @@ WebGL은 대부분 3D API가 아닌 좌표 기반인 저수준의 래스터 (작
 
 그렇기에 리액트 라이브러리 들을 찾게 되었고, 3D 작업 효율을 높이기 위해 해당 라이브러리 사용을 체택하였습니다.
 
-![threejs-structure.png]();
+<p align="center">
+  <img width="477" alt="threejs-structure" src="https://github.com/howinteraction/interaction/assets/126459089/26299d39-5f72-4fca-b5f2-f4d267e4c4f4">
+</p>
 
 <br>
 
 | R3F                                                                                             | DREI                                                             | RAPIER                                                                                |
 | ----------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| 리액트에서 Three JS를 쉽게 사용할 수 있도록 Thress.js의 클래스들을 컴포넌트화 해놓은 라이브러리 | Three.js의 기능들을 훅을 통해 사용할 수 있게 도와주는 라이브러리 | 3D 물체들에 물리작용을 적용시켜주는 기능을 리액트에서 사용 가능캐 도와주는 라이브러리 |
+| 리액트에서 Three JS를 쉽게 사용할 수 있도록 Three.js의 클래스들을 컴포넌트화 해놓은 라이브러리 | Three.js의 기능들을 훅을 통해 사용할 수 있게 도와주는 라이브러리 | 3D 물체들에 물리작용을 적용시켜주는 기능을 리액트에서 사용 가능캐 도와주는 라이브러리 |
 
 <br>
 
@@ -106,7 +107,25 @@ WebGL은 대부분 3D API가 아닌 좌표 기반인 저수준의 래스터 (작
 
 # Gameplay flow 🎮
 
-- 각 스테이지 별 플레이 영상으로 남겨놓기
+<details><summary>튜토리얼</summary>
+  
+![Monosnap screencast 2024-04-08 18-38-43 (1)](https://github.com/howinteraction/interaction/assets/126459089/f88e64e7-e837-4734-b419-f611a084ae12)
+</details>
+
+<details><summary>스테이지1</summary>
+
+![Monosnap screencast 2024-04-08 18-55-37](https://github.com/howinteraction/interaction/assets/126459089/c6af1632-b16e-4325-a2f4-8a3d9c159dd7)
+</details>
+
+<details><summary>스테이지2</summary>
+
+![Monosnap screencast 2024-04-08 19-18-39 (1)](https://github.com/howinteraction/interaction/assets/126459089/5dec0de9-c355-49cc-abe4-caa4b35bcfac)
+</details>
+
+<details><summary>스테이지3</summary>
+
+![Monosnap screencast 2024-04-08 19-38-00](https://github.com/howinteraction/interaction/assets/126459089/b491c35e-ca7c-4f0e-b39f-fe6a29cce9a4)
+</details>
 
 <br>
 <br>
@@ -115,7 +134,10 @@ WebGL은 대부분 3D API가 아닌 좌표 기반인 저수준의 래스터 (작
 
 ### 어떻게 몰입감을 주기위해 1인칭 시점으로 플레이어 이동을 구현할 수 있을까? ❓
 
-<details><summary>플레이어 이동 영상</summary>영상 첨부하기</details>
+<details><summary>플레이어 이동 영상</summary>
+
+![Monosnap screencast 2024-04-08 19-58-33](https://github.com/howinteraction/interaction/assets/126459089/0f100433-22a8-462e-ad9f-0842d194e33e)
+</details>
 <br>
 
 - 처음 접하는 3D 작업에서 어떻게 플레이어가 키보드로 이동하는 방식을 구현할 수 있을까? 로 접근해보았습니다.
@@ -135,7 +157,10 @@ WebGL은 대부분 3D API가 아닌 좌표 기반인 저수준의 래스터 (작
 
 ### 물체를 이용한 드래그 앤 드롭 기능은 어떻게 구현할 수 있을까? ❓
 
-<details><summary>드래그 앤 드롭 영상</summary>영상 첨부하기</details>
+<details><summary>드래그 앤 드롭 영상</summary>
+
+![Monosnap screencast 2024-04-08 20-10-51](https://github.com/howinteraction/interaction/assets/126459089/a8624c0d-6376-49dd-9572-f6c9b04f823a)
+</details>
 <br>
 
 - 우선 저희 interaction 게임은 현실에선 불가능한 물리법칙이 몇몇 적용되어 있습니다. 첫번째로 Stage1 에서의 드래그 앤 드롭 기능입니다.
@@ -156,17 +181,25 @@ WebGL은 대부분 3D API가 아닌 좌표 기반인 저수준의 래스터 (작
 
 - 드래그 종료 조건으로는 사용자가 한번 더 클릭하여 물체를 놓으면 종료되고, 이때 다시 중력을 적용시켜 물체가 놓아진 위치에서 y축 아래 방향으로 자연스럽게 떨어지도록 구현했습니다.
 
-- 현재 카메라 위치에 카메라 방향 벡터와 초기 거리를 곱한 값을 더하여 계산하는 수식 첨부 (Pnew = PCam + Dcam \* Dinitial)
+<br>
+<br>
+
+<p align="center">
+  <img width="500" alt="스크린샷 2024-04-08 20 41 35" src="https://github.com/howinteraction/interaction/assets/126459089/59754129-34d6-4a78-9bb3-1fe4f8f37902">
+</p>
 
 <br>
 <br>
 
 ### 드래그 앤 드롭 기능이 구현되었다면 물체가 커지고 작아지는 원근법 기능은 어떻게 구현할 수 있을까? ❓
 
-<details><summary>원근법 착시 기능 영상</summary>영상 첨부하기</details>
+<details><summary>원근법 착시 기능 영상</summary>
+  
+![Monosnap screencast 2024-04-08 20-19-26](https://github.com/howinteraction/interaction/assets/126459089/409e3e41-cb15-4ef3-bf21-640398add94a)
+</details>
 <br>
 
-- 플레이어와 물체와의 거리를 통해 물체가 커지고 작아지는 기능을 구현하고자 원근법 착시라는 이름으로 명명하였습니다.
+- 플레이어와 물체와의 그리고 물체와 벽과의 거리를 통해 물체가 커지고 작아지는 기능을 구현하고자 원근법 착시라는 이름으로 명명하였습니다.
 
 - 물체를 선택하고, 사용자의 시점에 따라 물체의 크기를 실시간으로 조절하여 원근감을 제공하는 것을 목표로 하였습니다.
 
@@ -174,14 +207,22 @@ WebGL은 대부분 3D API가 아닌 좌표 기반인 저수준의 래스터 (작
 
 - 카메라에서 물체로의 방향 vector와 사용자가 물체를 드래그 하는 동안의 거리를 사용하여 물체가 떨어질 새 위치를 계산해주고, 물체의 새 스케일은 초기 거리와 현재 거리의 비율에 따라 조정되도록 구현하였습니다.
 
-- 물체의 new Scale은 초기 거리와 현재 거리 비율에 따라 조정하는 수식 첨부 (Snew = Soriginal \* Dcurrent / Dinitial)
+<br>
+<br>
+
+<p align="center">
+  <img width="500" alt="스크린샷 2024-04-08 20 41 44" src="https://github.com/howinteraction/interaction/assets/126459089/015d9a04-2704-4134-87cb-867cf7b3aa66">
+</p>
 
 <br>
 <br>
 
 ### 찢어진 물체를 온전한 3D 물체로 바꾸는 착시 기능은 어떻게 구현할 수 있을까? ❓
 
-<details><summary>찢어져 있는 물체 착시 기능 영상</summary>영상 첨부하기</details>
+<details><summary>찢어져 있는 물체 착시 기능 영상</summary>
+  
+![Monosnap screencast 2024-04-08 19-34-30](https://github.com/howinteraction/interaction/assets/126459089/ea84902c-1a87-47f3-a005-0574b5ded556)
+</details>
 <br>
 
 - 해당 기능은 메인 착시 요소 중 하나인 찢어진 물체를 온전한 3D 물체로 바꾸는 메인 착시 기능 중 하나 입니다. 이 기능 또한 게임을 플레이하고 스테이지를 클리어하는데 핵심적인 요소로 작용되는 기능이며 비쥬얼 착시 라는 이름을 명명 하였습니다.
@@ -200,14 +241,26 @@ WebGL은 대부분 3D API가 아닌 좌표 기반인 저수준의 래스터 (작
 
 - 카메라의 회전은 x, y, z 축에 대한 회전 각도(오일러 각도) 으로 표현
 - 회전값을 라디안(Radian) 값으로 측정 후 카메라의 방향 (플레이어가 보고 있는 시점) 을 정확하게 수치화
-- (오일러각과 Radian각) 사진 첨부
+
+<br>
+<br>
+
+<p align="center">
+  <img width="359" alt="스크린샷 2024-04-08 20 42 05" src="https://github.com/howinteraction/interaction/assets/126459089/8210cf9f-9432-484b-bccb-0305e17da331">
+  <img width="359" alt="스크린샷 2024-04-08 20 42 13" src="https://github.com/howinteraction/interaction/assets/126459089/ea24a568-82bf-4231-8a00-6a8231b29ef0">
+</p>
+
 
 <br>
 <br>
 
 ### 2D 사진을 3D 물체로 바꾸는 착시 기능은 어떻게 구현할 수 있을까? ❓
 
-<details><summary>2D -> 3D 착시기능 영상</summary>영상 첨부하기</details>
+<details><summary>2D -> 3D 착시기능 영상</summary>
+
+![Monosnap screencast 2024-04-08 20-30-30](https://github.com/howinteraction/interaction/assets/126459089/b1b58dae-509f-4363-8a24-f3b3c1b0f2e8)
+![Monosnap screencast 2024-04-08 20-32-05](https://github.com/howinteraction/interaction/assets/126459089/c4874999-5322-4bfa-94ac-8f088add9486)
+</details>
 <br>
 
 - 해당 기능은 앞서 구현한 메인 기능들을 이용한 메인 기능들을 종합해서 물체의 상태를 바꾸는 착시 현상입니다.
@@ -240,14 +293,20 @@ WebGL은 대부분 3D API가 아닌 좌표 기반인 저수준의 래스터 (작
 
 - React 컴포넌트로 3D 객체를 생성하고 조작하며 `<Canvas>` 에 추가할 수 있게 되고, 이를 위해 `<mesh>` 라는 요소를 사용했으며, 이들을 React 컴포넌트로 래핑하며 사용했습니다. 이 작업을 통해 state나 props를 사용하여 3D 객체를 조작할 수 있었습니다.
 
-mesh 컴포넌트화 해놓은 코드 (이미지) 첨부
+<br>
+<br>
+
+<p align="center">
+  <img width="500" alt="스크린샷 2024-04-08 20 49 04" src="https://github.com/howinteraction/interaction/assets/126459089/b42395db-b33c-44d6-a977-aa8ed4e62c6d">
+  <img width="500" alt="스크린샷 2024-04-08 20 48 45" src="https://github.com/howinteraction/interaction/assets/126459089/d034d4ca-b001-4f27-a99c-6afea29d3f9e">
+</p>
 
 <br>
 <br>
 
 # Game Design Challengs ⛰️
 
-피그마 링크 첨부 (게임 시나리오 짰던 flow)
+[FigmaLink](https://www.figma.com/file/Xlwf8I0o8Rwxeqk9aKjGls/Interaction?type=design&node-id=1669%3A162202&mode=design&t=rXddIoh90n0gr2nV-1) 게임 시나리오 flow 기획
 
 ### 게임의 스테이지를 추가하거나 다른 기능들을 추가할 수 있게 확장성을 염두에 놓고 작업을 했을까? ❓
 
@@ -258,7 +317,7 @@ mesh 컴포넌트화 해놓은 코드 (이미지) 첨부
 <br>
 <br>
 
-### 게임을 플레이 하는 시나리오 외에도 랭킹 등의 기능들을 웹/앱에 어떻게 녹이고, 유저가 게임 flow를 어떻게 가져가게 할 것 인가? ❓
+### 게임을 플레이 하는 시나리오 외에도 랭킹 등의 기능들을 웹/앱에 어떻게 녹이고, 유저가 게임 flow를 어떻게 가져가게 할 것 인가?❓
 
 - 웹에서 플레이 하며 어떻게 최대한 자연스럽게 유저가 게임을 플레이하는 것처럼 몰입감을 주고, 웹 게임에서 그치지 않고 하나의 작업물로 평가받을 수 있을까 라는 고민들을 많이 해보았습니다.
 
