@@ -26,7 +26,7 @@ Deployed web / [Frontend repo](https://github.com/howinteraction/interaction)
   - [Canvas는 어떻게 다뤘을까?](#3d-물체와-유저가-상호작용-하는-기능들을-react-dom-조작을-하면서-canvas는-어떻게-다뤘나)
 - [Game Disign Challenges](#game-design-challengs)
   - [게임의 확장성을 염두에 놓고 작업을 했을까?](#게임의-스테이지를-추가하거나-다른-기능들을-추가할-수-있게-확장성을-염두에-놓고-작업을-했을까)
-  - [유저의 게임 플레이 흐름을 생각하며 작업을 했을까?](#게임을-플레이-하는-시나리오-외에도-랭킹-등의-기능들을-웹앱에-어떻게-녹이고-유저가-게임-flow를-어떻게-가져가게-할-것-인가)
+  - [유저의 게임 플레이 흐름을 생각하며 작업을 했을까?](#게임을-플레이-하는-시나리오-외에도-랭킹-등의-기능들을-웹앱에-어떻게-녹이고유저가-게임-flow를-어떻게-가져가게-할-것-인가)
 - [Scehedule](#schedule-🗓️)
 - [Members](#members-🧑🏻‍💻)
 
@@ -136,7 +136,7 @@ WebGL은 대부분 3D API가 아닌 좌표 기반인 저수준의 래스터 (작
 
 <details><summary>플레이어 이동 영상</summary>
 
-![Monosnap screencast 2024-04-08 19-58-33](https://github.com/howinteraction/interaction/assets/126459089/0f100433-22a8-462e-ad9f-0842d194e33e)
+![Monosnap screencast 2024-04-08 20-59-37](https://github.com/howinteraction/interaction/assets/126459089/81e4ac6b-29a1-4680-b6ea-3afd9c6f23a0)
 </details>
 <br>
 
@@ -317,7 +317,7 @@ WebGL은 대부분 3D API가 아닌 좌표 기반인 저수준의 래스터 (작
 <br>
 <br>
 
-### 게임을 플레이 하는 시나리오 외에도 랭킹 등의 기능들을 웹/앱에 어떻게 녹이고, 유저가 게임 flow를 어떻게 가져가게 할 것 인가?❓
+### 게임을 플레이 하는 시나리오 외에도 랭킹 등의 기능들을 웹/앱에 어떻게 녹이고,유저가 게임 flow를 어떻게 가져가게 할 것 인가? ❓
 
 - 웹에서 플레이 하며 어떻게 최대한 자연스럽게 유저가 게임을 플레이하는 것처럼 몰입감을 주고, 웹 게임에서 그치지 않고 하나의 작업물로 평가받을 수 있을까 라는 고민들을 많이 해보았습니다.
 
