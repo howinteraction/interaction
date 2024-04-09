@@ -3,6 +3,7 @@ import { render, fireEvent } from "@testing-library/react";
 import * as THREE from "three";
 import { describe, it, vi, beforeEach } from "vitest";
 import { Provider } from "react-redux";
+import React from "react";
 import DragControl from "../../../../components/DragControl";
 import store from "../../../../redux/store";
 
@@ -32,6 +33,7 @@ describe("DragControl", () => {
             setBodyType: vi.fn(),
             setTranslation: vi.fn(),
             collider: vi.fn(),
+            translation: vi.fn(() => new THREE.Vector3(1, 2, 3)),
           })),
         },
       })),
@@ -57,5 +59,27 @@ describe("DragControl", () => {
         />
       </Provider>,
     );
+  });
+
+  it("클릭 이벤트 시 드래그 시작", () => {
+    render(
+      <Provider store={store}>
+        <DragControl
+          minX={-10}
+          maxX={10}
+          maxY={10}
+          minZ={-10}
+          maxZ={10}
+          controlsRef={controlsRef}
+          selectedHandle={1}
+          isDragging
+          clickedPosition={new THREE.Vector3(0, 1, 2)}
+        />
+      </Provider>,
+    );
+
+    fireEvent.click(document.body);
+
+    global.frameCallback();
   });
 });
