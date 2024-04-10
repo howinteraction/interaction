@@ -29,3 +29,5 @@ export default function StageThreeHayStack() {
 
   return null;
 }
+
+useGLTF.preload("/assets/glb/haystack.glb");
