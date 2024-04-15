@@ -11,4 +11,4 @@ export default function StageThreeStone() {
   return <Clone object={scene} />;
 }
 
-useGLTF.preload("/assets/glb/state3-stone.glb");
+useGLTF.preload("/assets/glb/stage3-stone.glb");
