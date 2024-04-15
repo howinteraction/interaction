@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { Canvas } from "@react-three/fiber";
 import { Physics } from "@react-three/rapier";
+import { useMediaQuery } from "react-responsive";
 
 import * as THREE from "three";
 import { Aim } from "../Styles";
@@ -20,6 +21,7 @@ import TutorialPortal from "../models/Tutorial/TutorialPortal";
 import usePlayerPosition from "../../../hooks/usePlayerPosition";
 
 export default function Tutorial() {
+  const isMobile = useMediaQuery({ query: "(max-width:768px)" });
   const isStageCleared = useSelector(
     (state) => state.stageClear.isStageCleared,
   );
@@ -86,6 +88,22 @@ export default function Tutorial() {
       }
     };
   }, [audioStarted]);
+
+  if (isMobile) {
+    return (
+      <>
+        <div>
+          <p>본 어플리케이션은 PC 환경에 최적화 되어 있습니다.</p>
+          <p>모바일 환경에서는 원활한 사용이 어려우니 PC로 접속 바랍니다.</p>
+        </div>
+        <div>
+          <a href="https://github.com/howinteraction/interaction">
+            리드미 읽으러 가기
+          </a>
+        </div>
+      </>
+    );
+  }
 
   return (
     <>

@@ -45,4 +45,4 @@ export default function StageTwoPortal() {
   return <primitive object={scene} ref={portalRef} />;
 }
 
-useGLTF.preload("/assets/glb/StageTwoPortal.glb");
+useGLTF.preload("/assets/glb/stage2-portal.glb");
