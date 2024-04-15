@@ -33,4 +33,4 @@ export default function BlackPillar() {
   );
 }
 
-useGLTF.preload("assets/blackpillar-image.glb");
+useGLTF.preload("/assets/glb/blackpillar-image.glb");
