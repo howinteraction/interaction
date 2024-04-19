@@ -1,39 +1,37 @@
-# Interaction 🕹️
+# 🕹 Interaction 
 
 ![logo-removebg](https://github.com/howinteraction/interaction/assets/126459089/c81a3ce4-f1ee-4e13-959e-94addee50369)
 
 Interaction은 정적인 웹페이지에서 1인칭 시점을 기준으로 키보드로 플레이어를 이동하고 마우스로 물체를 드래그하며 각 스테이지에 스며들어 있는 물체간의 착시를 이용해서 퍼즐로 되어있는 스테이지를 클리어 하는 방식으로 구성된 웹 게임 입니다.
 
-# Links 🔗
+# 🔗 Links
 
 [Deployed web](https://inter-action.co) / [Frontend repo](https://github.com/howinteraction/interaction)
 
-# Contents 📖
+# 📖 Contents 
 
-- [Inteaction](#interaction-🕹️)
-- [Links](#links-🔗)
-- [Motivation](#motivation-👀)
-- [Tech Stack](#tech-stack-🔨)
-- [Why use those Library](#why-use-those-library--❓)
-- [Game play flow](#gameplay-flow-🎮)
-- [Technial Challenges](#technical-challenges-🏔️)
-  - [플레이어 이동](#어떻게-몰입감을-주기위해-1인칭-시점으로-플레이어-이동을-구현할-수-있을까-❓)
-  - [드래그 앤 드롭 기능](#물체를-이용한-드래그-앤-드롭-기능은-어떻게-구현할-수-있을까-❓)
-  - [원근법 착시 기능](#드래그-앤-드롭-기능이-구현되었다면-물체가-커지고-작아지는-원근법-기능은-어떻게-구현할-수-있을까-❓)
-  - [찢어진 물체 착시 기능](#찢어진-물체를-온전한-3d-물체로-바꾸는-착시-기능은-어떻게-구현할-수-있을까-❓)
-  - [2D -> 3D 착시 기능](#2d-사진을-3d-물체로-바꾸는-착시-기능은-어떻게-구현할-수-있을까-❓)
-  - [물체와의 상호 작용](#라이브러리-사용여부를-어떤-기준으로-판단했고-웹-게임에서의-플레이어와-물체간의-상호작용을-어떤-방식으로-해결했을까-❓)
-  - [Canvas는 어떻게 다뤘을까?](#3d-물체와-유저가-상호작용-하는-기능들을-react-dom-조작을-하면서-canvas는-어떻게-다뤘나-❓)
-- [Game Disign Challenges](#game-design-challengs-⛰️)
-  - [게임의 확장성을 염두에 놓고 작업을 했을까?](#게임의-스테이지를-추가하거나-다른-기능들을-추가할-수-있게-확장성을-염두에-놓고-작업을-했을까-❓)
-  - [유저의 게임 플레이 흐름을 생각하며 작업을 했을까?](#게임을-플레이-하는-시나리오-외에도-랭킹-등의-기능들을-웹앱에-어떻게-녹이고유저가-게임-flow를-어떻게-가져가게-할-것-인가❓)
-- [Scehedule](#schedule-🗓️)
-- [Members](#members-🧑🏻‍💻)
+- [Motivation](#-motivation)
+- [Tech Stack](#-tech-stack)
+- [Why use those Library](#-why-use-those-library)
+- [Game play flow](#-gameplay-flow)
+- [Technial Challenges](#-technical-challenges)
+  - [플레이어 이동](#-어떻게-몰입감을-주기위해-1인칭-시점으로-플레이어-이동을-구현할-수-있을까)
+  - [드래그 앤 드롭 기능](#-물체를-이용한-드래그-앤-드롭-기능은-어떻게-구현할-수-있을까)
+  - [원근법 착시 기능](#-드래그-앤-드롭-기능이-구현되었다면-물체가-커지고-작아지는-원근법-기능은-어떻게-구현할-수-있을까)
+  - [찢어진 물체 착시 기능](#-찢어진-물체를-온전한-3d-물체로-바꾸는-착시-기능은-어떻게-구현할-수-있을까)
+  - [2D -> 3D 착시 기능](#-2d-사진을-3d-물체로-바꾸는-착시-기능은-어떻게-구현할-수-있을까)
+  - [물체와의 상호 작용](#-라이브러리-사용여부를-어떤-기준으로-판단했고-웹에서-플레이어와-물체간의-상호작용을-어떤-방식으로-해결했을까)
+  - [Canvas는 어떻게 다뤘을까?](#-3d-물체와-유저가-상호작용-하는-기능들을-react-dom-조작을-하면서-canvas는-어떻게-다룰-수-있을까)
+- [Game Disign Challenges](#-game-design-challengs)
+  - [게임의 확장성을 염두에 놓고 작업을 했을까?](#-게임의-스테이지를-추가하거나-다른-기능들을-추가할-수-있게-확장성을-염두에-놓고-작업을-했을까)
+  - [유저의 게임 플레이 흐름을 생각하며 작업을 했을까?](#-게임을-플레이-하는-시나리오-외에도-랭킹-등의-기능들을-웹앱에-어떻게-녹이고-유저가-게임-흐름을-어떻게-가져가게-할-것-인가)
+- [Scehedule](#-schedule)
+- [Members](#-members)
 
 <br>
 <br>
 
-# Motivation 👀
+# 👀 Motivation
 
 정적인 웹페이지에서 유저가 간단하고 재미있게 할 수 있는 것들이 무엇이 있을까? 라는 고민을 시작으로 게임이라는 주제를 정해 프로젝트를 시작하게 되었습니다.
 
@@ -43,7 +41,7 @@ Interaction은 정적인 웹페이지에서 1인칭 시점을 기준으로 키�
 
 <br>
 
-# Tech Stack 🔨
+# 🔨 Tech Stack
 
 ![](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=JavaScript&logoColor=white)
 ![](https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=white)
@@ -64,7 +62,7 @@ Interaction은 정적인 웹페이지에서 1인칭 시점을 기준으로 키�
 
 <br>
 
-# Why use those Library ? ❓
+# ❓ Why use those Library?
 
 웹에서 3D를 작업하는 방법을 서치 해보니,
 **WebGL** Web Graphics Library의 약자로 웹에서 2D 및 3D를 렌더링 하기 위한 Javascript API 입니다. OpenGL ES 2.0을 기반으로 브라우저 엔진에 내장된 HTML5 Canvas 요소위에 그리는 방식이 있었습니다.
@@ -104,7 +102,7 @@ WebGL은 대부분 3D API가 아닌 좌표 기반인 저수준의 래스터 (작
 <br>
 <br>
 
-# Gameplay flow 🎮
+# 🎮 Gameplay flow
 
 <details><summary>튜토리얼</summary>
 
@@ -133,9 +131,9 @@ WebGL은 대부분 3D API가 아닌 좌표 기반인 저수준의 래스터 (작
 <br>
 <br>
 
-# Technical Challenges 🏔️
+# 🏔 Technical Challenges
 
-### 어떻게 몰입감을 주기위해 1인칭 시점으로 플레이어 이동을 구현할 수 있을까? ❓
+### ❓ 어떻게 몰입감을 주기위해 1인칭 시점으로 플레이어 이동을 구현할 수 있을까?
 
 <details><summary>플레이어 이동 영상</summary>
 
@@ -159,7 +157,7 @@ WebGL은 대부분 3D API가 아닌 좌표 기반인 저수준의 래스터 (작
 <br>
 <br>
 
-### 물체를 이용한 드래그 앤 드롭 기능은 어떻게 구현할 수 있을까? ❓
+### ❓ 물체를 이용한 드래그 앤 드롭 기능은 어떻게 구현할 수 있을까?
 
 <details><summary>드래그 앤 드롭 영상</summary>
 
@@ -196,7 +194,7 @@ WebGL은 대부분 3D API가 아닌 좌표 기반인 저수준의 래스터 (작
 <br>
 <br>
 
-### 드래그 앤 드롭 기능이 구현되었다면 물체가 커지고 작아지는 원근법 기능은 어떻게 구현할 수 있을까? ❓
+### ❓ 드래그 앤 드롭 기능이 구현되었다면 물체가 커지고 작아지는 원근법 기능은 어떻게 구현할 수 있을까?
 
 <details><summary>원근법 착시 기능 영상</summary>
 
@@ -223,7 +221,7 @@ WebGL은 대부분 3D API가 아닌 좌표 기반인 저수준의 래스터 (작
 <br>
 <br>
 
-### 찢어진 물체를 온전한 3D 물체로 바꾸는 착시 기능은 어떻게 구현할 수 있을까? ❓
+### ❓ 찢어진 물체를 온전한 3D 물체로 바꾸는 착시 기능은 어떻게 구현할 수 있을까?
 
 <details><summary>찢어져 있는 물체 착시 기능 영상</summary>
 
@@ -260,7 +258,7 @@ WebGL은 대부분 3D API가 아닌 좌표 기반인 저수준의 래스터 (작
 <br>
 <br>
 
-### 2D 사진을 3D 물체로 바꾸는 착시 기능은 어떻게 구현할 수 있을까? ❓
+### ❓ 2D 사진을 3D 물체로 바꾸는 착시 기능은 어떻게 구현할 수 있을까?
 
 <details><summary>2D -> 3D 착시기능 영상</summary>
 
@@ -281,7 +279,7 @@ WebGL은 대부분 3D API가 아닌 좌표 기반인 저수준의 래스터 (작
 
 ---
 
-### 라이브러리 사용여부를 어떤 기준으로 판단했고, 웹에서 플레이어와 물체간의 상호작용을 어떤 방식으로 해결했을까? ❓
+### ❓ 라이브러리 사용여부를 어떤 기준으로 판단했고, 웹에서 플레이어와 물체간의 상호작용을 어떤 방식으로 해결했을까?
 
 - 초기 개발 단계에서 드래그를 어떤 방식으로 구현할 수 있을지 여러 방법을 서치 중에 use-gesture 라이브러리의 useDrag 훅을 사용해서 컴포넌트를 드래그 할 수 있는 방식을 서치했습니다. 그러나 useDrag의 드래그 방식은 저희 interaction 게임에서 필요로 하는 드래그 방식과는 다른 메커니즘으로 기능을 제공하고 있었습니다.
 
@@ -290,7 +288,7 @@ WebGL은 대부분 3D API가 아닌 좌표 기반인 저수준의 래스터 (작
 <br>
 <br>
 
-### 3D 물체와 유저가 상호작용 하는 기능들을 React DOM 조작을 하면서 canvas는 어떻게 다룰 수 있을까? ❓
+### ❓ 3D 물체와 유저가 상호작용 하는 기능들을 React DOM 조작을 하면서 canvas는 어떻게 다룰 수 있을까?
 
 - React DOM을 조작하는 것은 react의 **상태(state)** 및 **프롭스(props)** 를 사용하여 DOM 요소를 업데이트 하였습니다. 예를 들어 react의 상태를 변경하거나, 이벤트 핸들러를 사용하여 React DOM 요소를 업데이트 하였습니다.
 
@@ -311,11 +309,11 @@ WebGL은 대부분 3D API가 아닌 좌표 기반인 저수준의 래스터 (작
 <br>
 <br>
 
-# Game Design Challengs ⛰️
+# ⛰ Game Design Challengs
 
 [FigmaLink](https://www.figma.com/file/Xlwf8I0o8Rwxeqk9aKjGls/Interaction?type=design&node-id=1669%3A162202&mode=design&t=rXddIoh90n0gr2nV-1) 게임 시나리오 flow 기획
 
-### 게임의 스테이지를 추가하거나 다른 기능들을 추가할 수 있게 확장성을 염두에 놓고 작업을 했을까? ❓
+### ❓ 게임의 스테이지를 추가하거나 다른 기능들을 추가할 수 있게 확장성을 염두에 놓고 작업을 했을까?
 
 - 현재 구현된 착시 기능 말고도 다른 요소들이 가미된 착시현상들이 떠오르면 그때 그때 스테이지를 추가할 수 있도록 확장성을 염두에 두었습니다.
 
@@ -324,7 +322,7 @@ WebGL은 대부분 3D API가 아닌 좌표 기반인 저수준의 래스터 (작
 <br>
 <br>
 
-### 게임을 플레이 하는 시나리오 외에도 랭킹 등의 기능들을 웹/앱에 어떻게 녹이고, 유저가 게임 flow를 어떻게 가져가게 할 것 인가?❓
+### ❓ 게임을 플레이 하는 시나리오 외에도 랭킹 등의 기능들을 웹/앱에 어떻게 녹이고, 유저가 게임 흐름을 어떻게 가져가게 할 것 인가?
 
 - 웹에서 플레이하며 어떻게 최대한 자연스럽게 유저가 게임을 플레이하는 것처럼 몰입감을 주고, 웹 게임에서 그치지 않고 하나의 작업물로 평가받을 수 있을까 라는 고민들을 많이 해보았습니다.
 
@@ -337,7 +335,7 @@ WebGL은 대부분 3D API가 아닌 좌표 기반인 저수준의 래스터 (작
 <br>
 <br>
 
-# Schedule 🗓️
+# 🗓 Schedule
 
 - 1주차
 
@@ -367,7 +365,7 @@ WebGL은 대부분 3D API가 아닌 좌표 기반인 저수준의 래스터 (작
 
   - 배포
 
-# Members 🧑🏻‍💻
+# 🧑🏻‍💻 Members
 
 금서하 [개인 Github 링크](https://github.com/seohag) <br>
 조양우 [개인 Github 링크](https://github.com/erv2bh) <br>
