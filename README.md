@@ -6,7 +6,7 @@ Interaction은 정적인 웹페이지에서 1인칭 시점을 기준으로 키�
 
 # 🔗 Links
 
-[Deployed web](https://inter-action.co) / [Frontend repo](https://github.com/howinteraction/interaction)
+[Deployed web](https://inter-action.co)
 
 # 📖 Contents 
 
