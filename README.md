@@ -1,4 +1,4 @@
-# 🕹 Interaction 
+# 🕹 Interaction
 
 ![logo-removebg](https://github.com/howinteraction/interaction/assets/126459089/c81a3ce4-f1ee-4e13-959e-94addee50369)
 
@@ -8,7 +8,7 @@ Interaction은 정적인 웹페이지에서 1인칭 시점을 기준으로 키�
 
 [Deployed web](https://inter-action.co)
 
-# 📖 Contents 
+# 📖 Contents
 
 - [Motivation](#-motivation)
 - [Tech Stack](#-tech-stack)
@@ -69,13 +69,13 @@ Interaction은 정적인 웹페이지에서 1인칭 시점을 기준으로 키�
 
 WebGL은 대부분 3D API가 아닌 좌표 기반인 저수준의 래스터 (작은 점을 무수히 여러번 찍어 만들어낸 이미지) API 입니다. 그래서 canvas에 물체들을 그려넣는데에는 좌표 시스템을 이용해야 했고, 그러기 위해 **x, y, z** 축들을 사용한 작업들이 굉장히 많았습니다.
 
-대표적으로 바닐라 자바스크립트 만을 이용한 Vanilla Threejs, 그리고 React를 이용한 React Three Fiber(r3f) 를 사용하여 3D 작업을 할 수 있다는 것을 알게 되었습니다.
+대표적으로 바닐라 자바스크립트 만을 이용한 Vanilla Threejs, 그리고 React를 이용한 React Three Fiber(R3F)를 사용하여 3D 작업을 할 수 있다는 것을 알게 되었습니다.
 
 저희 프로젝트의 초기 작업 방향은 **“threeJS 만을 이용해서 게임을 구현하자”** 였습니다.
 
 그러나 기능 구현을 제외하고도 물체를 만들고, 화면에 만든 물체들을 세팅할 때 적절한 조명과 카메라 각도를 세팅하지 않거나 리사이즈 로직을 적절한 곳에 추가하지 않는 등 세세한 작업까지 직접 해주지 않으면 화면 및 물체들이 깨지는 일이 빈번하게 발생했습니다.
 
-그렇기에 리액트 라이브러리들을 찾게 되었고, 3D 작업 효율을 높이기 위해 해당 라이브러리 사용을 채택하였습니다.
+이러한 이유들로 인해 React3D 라이브러리들을 찾게 되었고, 3D 작업 효율을 높이기 위해 해당 라이브러리 사용을 채택하였습니다.
 
 <p align="center">
   <img width="477" alt="threejs-structure" src="https://github.com/howinteraction/interaction/assets/126459089/26299d39-5f72-4fca-b5f2-f4d267e4c4f4">
@@ -95,38 +95,65 @@ WebGL은 대부분 3D API가 아닌 좌표 기반인 저수준의 래스터 (작
 
 - 그리고 재사용 가능한 컴포넌트를 사용하여 동적인 장면들을 구축할 수 있습니다. 이 컴포넌트들은 상태 변화에 반응하며, 상호 작용이 가능합니다.
 
-- 저희는 3주라는 시간 안에 작업물을 완성해야 했기에 순수 바닐라 자바스크립트와 Threejs 만을 이용해 작업하는 게 아닌 리액트를 이용해서 작업을 하는 방향으로 선회했고, 컴포넌트화된 코드들을 재사용하며 게임에 적용하기 위해 해당 라이브러리들 사용을 결정하였습니다.
+- 저희는 3주라는 시간 안에 작업물을 완성해야 했기에 순수 바닐라 자바스크립트와 Threejs 만을 이용해 작업하는 것이 아닌 리액트를 이용해서 작업을 하는 방향으로 선회했고, 컴포넌트화된 코드들을 재사용하며 게임에 적용하기 위해 해당 라이브러리들 사용을 결정하였습니다.
 
 - 또한 라이브러리들을 적재적소에 사용하기 위해 공식 문서를 꼼꼼히 검색했고, 결국 필요한 모든 정보들은 공식 문서에 있었다는 걸 다시 한번 깨닫게 되었던 경험을 하였습니다.
 
 <br>
 <br>
 
-# 🎮 Gameplay flow
+# Gameplay flow 🎮
 
-<details><summary>튜토리얼</summary>
+### 튜토리얼
 
-![Monosnap screencast 2024-04-08 18-38-43 (1)](https://github.com/howinteraction/interaction/assets/126459089/f88e64e7-e837-4734-b419-f611a084ae12)
+<p align="center">
+  <img width="700" alt="threejs-structure" src="https://github.com/howinteraction/interaction/assets/126459089/f88e64e7-e837-4734-b419-f611a084ae12">
+</p>
 
-</details>
+- 튜토리얼에 들어가게 되면 플레이어는 W A S D 스페이스바를 사용하여 포탈로 이동할 수 있습니다.
+- 포탈로 이동하면 로그인을 통해 게임을 시작할 수 있습니다.
 
-<details><summary>스테이지1</summary>
+<br>
 
-![Monosnap screencast 2024-04-08 18-55-37](https://github.com/howinteraction/interaction/assets/126459089/c6af1632-b16e-4325-a2f4-8a3d9c159dd7)
+### 스테이지1
 
-</details>
+<p align="center">
+  <img width="700" alt="threejs-structure" src="https://github.com/howinteraction/interaction/assets/126459089/c6af1632-b16e-4325-a2f4-8a3d9c159dd7">
+</p>
 
-<details><summary>스테이지2</summary>
+- 원근법 착시 기능을 이용하여 포탈로 이동합니다.
+  - 플레이어가 물체를 드래그한 후 벽으로 이동하면 물체의 크기가 작아집니다.
+  - 플레이어가 물체를 드래그한 후 마우스 커서를 위로 이동하면 물체의 크기가 커집니다.
+- 물체의 크기를 키운 후 점프 기능으로 스테이지를 클리어합니다.
 
-![Monosnap screencast 2024-04-08 19-18-39 (1)](https://github.com/howinteraction/interaction/assets/126459089/5dec0de9-c355-49cc-abe4-caa4b35bcfac)
+일반 점프 거리로는 포탈에 도달할수 없기 때문에 물체의 크기를 키운 후 점프 기능으로 스테이지를 클리어합니다.
 
-</details>
+<br>
 
-<details><summary>스테이지3</summary>
+### 스테이지2
 
-![Monosnap screencast 2024-04-08 19-38-00](https://github.com/howinteraction/interaction/assets/126459089/b491c35e-ca7c-4f0e-b39f-fe6a29cce9a4)
+<p align="center">
+  <img width="700" alt="threejs-structure" src="https://github.com/howinteraction/interaction/assets/126459089/5dec0de9-c355-49cc-abe4-caa4b35bcfac">
+</p>
 
-</details>
+- 스테이지2에 들어가게 되면 플레이어는 제공된 힌트를 통해 퍼즐을 풀게 됩니다.
+  - 스크린에 나오는 힌트를 통해, 플레이어는 삼각형 물체를 찾아야 합니다.
+  - 기둥에 분리된 물체들을 보고, 플레이어는 이동과 카메라의 시점 이동을 통한 착시로, 3d 물체를 획득하게 됩니다.
+  - 획득한 3d 물체를 드래그 하고, "attached" 라는 문구가 써져 있는 올바른 위치에 드롭해서 해당 스테이지를 클리어 합니다.
+
+<br>
+
+### 스테이지3
+
+<p align="center">
+  <img width="700" alt="threejs-structure" src="https://github.com/howinteraction/interaction/assets/126459089/b491c35e-ca7c-4f0e-b39f-fe6a29cce9a4">
+</p>
+
+- 스테이지3에 들어가게 되면 플레이어는 여러가지 2D 사진들을 볼 수 있습니다.
+  - 2D사진을 드래그 앤 드롭 하면 3D 물체로 바뀌는 기능을 가진 사진이 있습니다.
+  - 플레이어는 해당 기능을 가진 사진을 이용해 스테이지를 클리어 할 수 있습니다.
+
+스테이지3을 클리어하면 클리어시간이 기록된 랭킹 페이지를 볼 수 있습니다.
 
 <br>
 <br>
