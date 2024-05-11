@@ -10,11 +10,11 @@ Interaction은 정적인 웹페이지에서 1인칭 시점을 기준으로 키�
 
 # 📖 Contents
 
-- [Motivation](#-motivation)
-- [Tech Stack](#-tech-stack)
-- [Why use those Library](#-why-use-those-library)
-- [Game play flow](#-gameplay-flow)
-- [Technial Challenges](#-technical-challenges)
+- [Motivation](#👀-motivation)
+- [Tech Stack](#🔨-tech-stack)
+- [Why use those Library](#why-use-those-library)
+- [Game play flow](#🎮-gameplay-flow)
+- [Technial Challenges](#🏔️-technical-challenges)
   - [1. 모든 스테이지 공통 기능](#1-모든-스테이지-공통-기능)
     - [1-1 어떻게 몰입감을 주기 위해 1인칭 시점으로 플레이어 이동을 구현할 수 있을까?](#1-1-어떻게-몰입감을-주기위해-1인칭-시점으로-플레이어-이동을-구현할-수-있을까)
     - [1-2 물체를 이용한 드래그 앤 드롭 기능은 어떻게 구현할 수 있을까?](#1-2-물체를-이용한-드래그-앤-드롭-기능은-어떻게-구현할-수-있을까)
@@ -25,8 +25,8 @@ Interaction은 정적인 웹페이지에서 1인칭 시점을 기준으로 키�
   - [3. 게임 기획적 요소](#3-게임-기획적-요소)
     - [3-1 게임의 확장성을 염두에 두고 작업을 할 수 있을까?](#3-1-게임의-스테이지를-추가하거나-다른-기능들을-추가할-수-있게-확장성을-염두에-놓고-작업을-했을까)
     - [3-2 유저의 게임 플레이 흐름을 생각하며 작업을 할 수 있을까?](#3-2-게임을-플레이-하는-시나리오-외에도-랭킹-등의-기능들을-웹앱에-어떻게-녹이고-유저가-게임-흐름을-어떻게-가져가게-할-것-인가)
-- [Scehedule](#-schedule)
-- [Members](#-members)
+- [Scehedule](#🗓-schedule)
+- [Members](#🧑🏻‍💻-members)
 
 <br>
 <br>
@@ -102,7 +102,7 @@ R3F는 react의 생태계와 통합되어 있어, 기존의 상태 관리 라이
 <br>
 <br>
 
-# Gameplay flow 🎮
+# 🎮 Gameplay flow
 
 ### 튜토리얼
 
@@ -176,16 +176,79 @@ R3F는 react의 생태계와 통합되어 있어, 기존의 상태 관리 라이
 </details>
 <br>
 
+#### 1. 플레이어 초기 설정과 카메라 배치
+
 먼저 3D 환경에서 플레이어가 키보드로 이동하는 방식을 구현하는 과정을 살펴보겠습니다. 저희는 3D 공간 내에서 플레이어의 시점과 이동을 제어하기 위해 물체(mesh)를 생성하고 그 안에 카메라를 배치했습니다. 이렇게 함으로써, 카메라의 위치와 방향에 따라 플레이어가 보는 시점이 결정됩니다.
 
-특히, 1인칭 플레이 방식을 선택함에 따라 플레이어가 이동하는 방식도 이에 맞추어 설계되었습니다. 플레이어의 이동은 키보드 입력을 통해 결정됩니다. 이를 구현하기 위해 앞으로 이동(forward), 뒤로 이동(backward), 왼쪽으로 이동(left), 오른쪽으로 이동(right) 등의 방향을 나타내는 변수들을 설정하고, 이를 벡터(Vector)로 변환하여 사용했습니다.
+```jsx
+import { useRef } from "react";
+import { useFrame } from "@react-three/fiber";
+import * as THREE from "three";
+
+const direction = new THREE.Vector3();
+const Player = ({ position }) => {
+  const playerRef = useRef();
+
+  // 프레임 업데이트마다 카메라 위치를 플레이어의 현재 위치로 업데이트
+  useFrame((state) => {
+    const { x, y, z } = playerRef.current.translation();
+    state.camera.position.set(x, y, z);
+  });
+
+  return (
+    <RigidBody ref={playerRef} position={position}>
+      <mesh>
+        <capsuleGeometry args={[1, 1]} />
+      </mesh>
+    </RigidBody>
+  );
+};
+```
+
+</br>
+</br>
+
+#### 2. 플레이어 이동과 점프
+
+특히, 1인칭 플레이 방식을 선택함에 따라 플레이어가 이동하는 방식도 이에 맞추어 설계되었습니다. 저희는 플레이어를 구현 후, 아래의 다이어그램과 같은 이동방식을 세우고 접근해봤습니다.
+
+- **플레이어 이동을 도식화한 다이어그램**
+<p align="center">
+<img width="700" alt="스크린샷 2024-05-10 오후 4 35 03" src="https://github.com/howinteraction/interaction/assets/116258834/ca948c1e-fb62-4f18-99a6-b14466dff879">
+</p>
+
+플레이어의 이동은 키보드 입력을 통해 결정됩니다. 이를 구현하기 위해 앞으로 이동(forward), 뒤로 이동(backward), 왼쪽으로 이동(left), 오른쪽으로 이동(right) 등의 방향을 나타내는 변수들을 설정하고, 이를 벡터(Vector)로 변환하여 사용했습니다. 
 
 이동에 사용된 주요 벡터는 frontVector와 sideVector입니다. frontVector는 앞뒤 이동을 담당하고, sideVector는 좌우 이동을 담당합니다. 최종 이동 방향인 direction은 frontVector와 sideVector를 합친 후, 이를 정규화(normalize)하여 주어진 이동 속도와 카메라의 회전 방향을 반영하여 계산됩니다.
 
+- 플레이어 이동 계산
+```jsx
+import { MOVE_SPEED } from "../../utils/constants";
+
+// 프레임 업데이트마다 플레이어의 위치와 이동 방향을 계산
+useFrame((state) => {
+  const { forward, backward, left, right } = usePlayerControl();
+
+  const frontVector = new THREE.Vector3(0, 0, backward - forward);
+  const sideVector = new THREE.Vector3(left - right, 0, 0);
+  direction.subVectors(frontVector, sideVector).normalize().multiplyScalar(MOVE_SPEED).applyEuler(state.camera.rotation);
+
+  playerRef.current.setLinvel({
+    x: direction.x,
+    y: velocity.y,
+    z: direction.z,
+  });
+});
+```
+
+</br>
+
 점프 기능은 플레이어가 땅에 닿아 있는 ‘grounded’ 상태일 때만 가능하도록 설정했습니다. 이 상태는 Rapier 물리 엔진의 CastRay 함수를 사용하여 확인합니다. 플레이어가 점프를 시도할 때, 수직 속도(y축)가 점프 속도로 설정되어, 플레이어가 위로 점프하게 됩니다.
+
 이와 같은 방식으로 키보드 입력에 따른 플레이어의 3D 이동 및 점프가 구현되었으며, 이를 통해 플레이어에게 보다 몰입감 있는 게임 경험을 제공하였습니다.
 
-<br>
+</br>
+</br>
 
 ## 1-2 물체를 이용한 드래그 앤 드롭 기능은 어떻게 구현할 수 있을까?
 
