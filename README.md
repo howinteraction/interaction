@@ -10,11 +10,11 @@ Interaction은 정적인 웹페이지에서 1인칭 시점을 기준으로 키�
 
 # 📖 Contents
 
-- [Motivation](#👀-motivation)
-- [Tech Stack](#🔨-tech-stack)
+- [Motivation](#-motivation)
+- [Tech Stack](#-tech-stack)
 - [Why use those Library](#why-use-those-library)
-- [Game play flow](#🎮-gameplay-flow)
-- [Technial Challenges](#🏔️-technical-challenges)
+- [Game play flow](#-gameplay-flow)
+- [Technial Challenges](#-technical-challenges)
   - [1. 모든 스테이지 공통 기능](#1-모든-스테이지-공통-기능)
     - [1-1 어떻게 몰입감을 주기 위해 1인칭 시점으로 플레이어 이동을 구현할 수 있을까?](#1-1-어떻게-몰입감을-주기위해-1인칭-시점으로-플레이어-이동을-구현할-수-있을까)
     - [1-2 물체를 이용한 드래그 앤 드롭 기능은 어떻게 구현할 수 있을까?](#1-2-물체를-이용한-드래그-앤-드롭-기능은-어떻게-구현할-수-있을까)
@@ -37,7 +37,7 @@ Interaction은 정적인 웹페이지에서 1인칭 시점을 기준으로 키�
 
 게임에도 여러 종류가 있지만 가장 몰입도가 높고 재미있게 플레이 할 수 있는 방식은 1인칭 시점으로 플레이하는 방식이 가장 적합하다 생각해서 해당 방식을 선택하고 진행하였습니다.
 
-또한 1인칭 시점을 이용하면서 착시를 이용한 퍼즐 방식의 스테이지들을 클리어하는 방식은 플레이어에게 매력적일 수도 있다는 생각과 관심을 끌 수 있을 좋은 주제라고 판단하여 Interaction 게임을 기획하고 개발하게 되었습니다.
+또한, 1인칭 시점을 이용하면서 착시를 이용한 퍼즐 방식의 스테이지들을 클리어하는 방식은 플레이어에게 매력적일 수도 있다는 생각과 관심을 끌 수 있을 좋은 주제라고 판단하여 Interaction 게임을 기획하고 개발하게 되었습니다.
 
 <br>
 
@@ -176,6 +176,26 @@ R3F는 react의 생태계와 통합되어 있어, 기존의 상태 관리 라이
 </details>
 <br>
 
+게임 내 플레이어 및 물체들의 이동을 구현하기 위해서는 우선, `useFrame` 에 대해 이해하고 적용해야 했습니다.
+
+`useFrame` 훅은 매 프레임마다 실행되어야 하는 로직을 처리하는 데 사용됩니다. 이는 일반적으로 애니메이션 효과, 물리적 계산, 또는 사용자 입력에 응답하는 동적인 상호작용을 구현할 때 필요합니다.
+
+작동방식은 첫 번째 인자로 콜백 함수를 받습니다. 이 콜백 함수는 렌더링 루프의 일부로 호출되며, 렌더링이 발생하는 매 프레임마다 실행됩니다. 콜백 함수는 두 가지 매개변수를 받을 수 있습니다.
+1. `state`: 현재 렌더링 상태에 대한 정보를 포함하고 있는 객체입니다. 이 객체는 camera, scene, size, viewport 등과 같은 속성들을 포함할 수 있습니다.
+2. `delta`: 마지막 프레임 이후 경과한 시간(초)입니다. 이 값은 프레임 간 지연을 처리하거나 프레임 속도와 독립적인 애니메이션을 구현할 때 유용하게 사용됩니다.
+
+- 이해를 위한 예시 코드
+```jsx
+useFrame((state, delta) => {
+  // 매 프레임마다 실행되는 로직
+  meshRef.current.rotation.y += 0.01; // 매 프레임마다 메쉬를 y축으로 약간씩 회전
+});
+```
+
+이 코드는 3D 객체인 메쉬를 y축으로 매 프레임마다 약간씩 회전시키는 간단한 예시입니다. 이와 같이 `useFrame`을 사용하면 실시간으로 3D 씬을 업데이트하면서 동적인 효과를 만들 수 있습니다.
+
+</br>
+
 #### 1. 플레이어 초기 설정과 카메라 배치
 
 먼저 3D 환경에서 플레이어가 키보드로 이동하는 방식을 구현하는 과정을 살펴보겠습니다. 저희는 3D 공간 내에서 플레이어의 시점과 이동을 제어하기 위해 물체(mesh)를 생성하고 그 안에 카메라를 배치했습니다. 이렇게 함으로써, 카메라의 위치와 방향에 따라 플레이어가 보는 시점이 결정됩니다.
@@ -253,44 +273,119 @@ useFrame((state) => {
 ## 1-2 물체를 이용한 드래그 앤 드롭 기능은 어떻게 구현할 수 있을까?
 
 <details><summary>드래그 앤 드롭 영상</summary>
+<p align="center"> 
+<img width="700" alt="drag-drop" src="https://github.com/howinteraction/interaction/assets/126459089/a8624c0d-6376-49dd-9572-f6c9b04f823a">
+</p>
+</details>
+</br>
 
-<p align="center"> <img width="700" alt="drag-drop" src="https://github.com/howinteraction/interaction/assets/126459089/a8624c0d-6376-49dd-9572-f6c9b04f823a">
+#### 1. 초기 드래그 구현 시행착오
+- 초기 드래그 테스트 영상
+<p align="center">
+<img width="700" alt="first-drag-drop" src="https://github.com/howinteraction/interaction/assets/116258834/784150ac-e339-423b-8a51-ccde25335210">
 </p>
 
-</details>
-<br>
+초기 개발 단계에서 드래그를 어떤 방식으로 구현할 수 있을지 여러 방법을 모색해 보았고, 그 중 "use-gesture" 라이브러리의 `useDrag` 훅을 사용해서 컴포넌트를 드래그 할 수 있는 방식을 채택했었습니다.
 
-### 드래그 할때의 라이브러리 사용여부를 어떤 기준으로 판단했고, 어떻게 구현했을까?
+`useDrag`으로 물체를 드래그 하고, 물체 드롭 시 `useFrame` 훅을 이용하여 초기 y축 좌표에서 동일한 상수 값 만큼 빼주면서 매 프레임마다 변하는 오브젝트의 위치를 볼 수 있게 구현하였습니다.
 
-초기 개발 단계에서 드래그를 어떤 방식으로 구현할 수 있을지 여러 방법을 서치 중에 use-gesture 라이브러리의 useDrag 훅을 사용해서 컴포넌트를 드래그 할 수 있는 방식을 서치했습니다.
+그러나 `useDrag`의 드래그 방식은 저희 interaction 게임에서 필요로 하는 드래그 방식과는 다른 메커니즘으로 기능을 제공하고 있었습니다.
 
-그러나 useDrag의 드래그 방식은 저희 interaction 게임에서 필요로 하는 드래그 방식과는 다른 메커니즘으로 기능을 제공하고 있었습니다.
+`useDrag` 훅은 드래그 시, 마우스 포인터의 좌표들이 x, y축 2D 평면 상에서의 좌표만 제공해주고 있었습니다.
 
-useDrag hook은 드래그 되서 찍히는 마우스 포인터의 좌표들이 x, y축. 측 2D 평면 상에서의 좌표만 제공해주고 있었습니다.
-그러나 Interaction 게임은 3D 상에서의 드래그 좌표들 x, y축 그리고 z축 까지 필요했기 때문에 rapier 물리엔진을 이용한 드래그 기능을 직접 구현하기로 결정 후 개발하였습니다.
+하지만 Interaction 게임은 3D 상에서의 드래그 좌표들 x, y축 그리고 z축 까지 필요했기 때문에 rapier 물리엔진을 이용한 드래그 기능을 **직접 구현**하기로 결정 후 개발하였습니다.
 
-<br>
+</br>
+
+#### 2. 드래그 직접 구현
 
 드래그 앤 드롭 기능은 게임에서 물체를 마우스로 클릭하고 움직일 수 있게 해주는 게임 플레이에 매우 중요한 기능입니다. 저희는 여러 단계를 통해 이 기능을 구현하였습니다.
 
+- **드래그 앤 드롭을 도식화한 다이어그램**
+<p align="center">
+<img width="300" height="600" alt="스크린샷 2024-05-10 오후 4 35 28" src="https://github.com/howinteraction/interaction/assets/116258834/ed40d2a0-1aed-4412-9e00-93163e05dfb6">
+</p>
+
 1. **물리 엔진 사용**: 게임에서 물체가 어떻게 움직이고 상호작용할지 계산하는 것은 매우 복잡했습니다. 이를 위해, 저희는 처음부터 물리 법칙을 다시 만드는 대신 이미 만들어진 ‘rapier’라는 물리엔진 라이브러리를 사용하기로 결정했습니다. 이 라이브러리는 물체의 움직임을 자연스럽게 계산해줍니다.
 
-2. **가상의 선을 사용해 물체 잡기**: 플레이어가 게임 내에서 마우스로 물체를 클릭하면, 게임은 카메라에서 마우스 커서가 가리키는 방향으로 가상의 선을 그립니다. 이 선이 물체와 만나면, 플레이어는 그 물체를 잡은 것으로 간주됩니다. 이 과정을 ‘raycasting’이라고 합니다.
+</br>
+
+2. **가상의 선을 사용해 물체 잡기**: 플레이어가 게임 내에서 마우스로 물체를 클릭하면,카메라 위치에서 마우스 커서가 가리키는 방향으로 가상의 선(ray)을 발사합니다. 이 선이 게임 내의 물체와 교차하면 해당 물체를 선택할 수 있습니다. 이 과정을 ‘raycasting’이라고 합니다.
+
+- 설명을 위한 예시 코드
+```jsx
+import * as THREE from 'three';
+
+// 마우스 클릭 시 raycasting을 사용해 물체를 선택하는 이벤트 핸들러입니다.
+useEffect(() => {
+  const handleClick = () => {
+    const origin = new THREE.Vector3().copy(camera.position);
+    const direction = new THREE.Vector3();
+
+    camera.getWorldDirection(direction);
+
+    const originOffset = 2;
+    const maxToi = 100;
+    const ray = new RAPIER.Ray(origin.add(direction.multiplyScalar(originOffset)), direction);
+    const castRay = world.castRay(ray, maxToi, true);
+
+    if (castRay) {
+      const selectedRigidBody = world.getRigidBody(castRay.collider.parent().handle);
+      setSelectedHandle(selectedRigidBody.handle);
+    }
+  };
+
+  document.addEventListener("click", handleClick);
+  return () => document.removeEventListener("click", handleClick);
+}, [camera, isDragging, world]);
+```
+
+</br>
 
 3. **물체 드래그하기**: 물체를 잡은 후, 플레이어가 마우스를 움직이면 물체도 함께 움직입니다. 드래그하는 동안 물체는 카메라로부터 일정한 거리를 유지하면서 마우스를 따라 이동합니다. 이 거리는 플레이어가 처음 물체를 클릭했을 때의 위치에 따라 결정됩니다.
-
-4. **드래그 종료 및 물체 놓기**: 플레이어가 마우스로 물체를 한번 더 클릭하면, 드래그가 종료됩니다. 이때, 물체는 다시 중력의 영향을 받아 자연스럽게 바닥으로 떨어집니다.
-
-<br>
-
-이렇게 드래그 앤 드롭 기능은 게임 내에서 물체를 손쉽게 움직이고 조작할 수 있게해서 게임의 재미와 몰입감을 향상시켰습니다. 이 기능을 통해 플레이어는 게임 세계와의 상호작용을 더욱 직관적으로 경험할 수 있습니다.
-
-<br>
 
 <p align="center">
   <img width="500" alt="스크린샷 2024-04-08 20 41 35" src="https://github.com/howinteraction/interaction/assets/126459089/59754129-34d6-4a78-9bb3-1fe4f8f37902">
 </p>
 
+드래그 중 물체의 위치를 계속 업데이트 해주기 위한 새로운 위치는 위의 수식처럼 현재 카메라 위치에 카메라 방향 벡터와 초기 거리를 곱한 값을 더하여 계산합니다. 이동중에는 잠시 중력의 영향을 받지 않도록 해주어 자연스럽게 이동하도록 했습니다.
+
+- 설명을 위한 예시 코드
+```jsx
+// 선택된 물체를 마우스 이동에 따라 드래그하는 로직입니다.
+useFrame(() => {
+  if (selectedHandle && isDragging) {
+    const direction = new THREE.Vector3();
+
+    camera.getWorldDirection(direction);
+
+    const newPosition = direction.multiplyScalar(initialDistance).add(camera.position);
+    const adjustedPosition = restrictPosition(newPosition, minX, maxX, clickedPosition.y, maxY, minZ, maxZ);
+
+    world.getRigidBody(selectedHandle).setTranslation(adjustedPosition, true);
+  }
+});
+```
+</br>
+
+4. **드래그 종료 및 물체 놓기**: 플레이어가 마우스로 물체를 한번 더 클릭하면, 드래그가 종료됩니다. 이때, 물체는 다시 중력의 영향을 받아 자연스럽게 바닥으로 떨어집니다.
+
+- 설명을 위한 예시 코드
+```jsx
+// 드래그를 종료하고 물체를 놓는 로직입니다.
+if (selectedHandle && isDragging) {
+  world.getRigidBody(selectedHandle).setBodyType(RAPIER.RigidBodyType(0);
+  setIsDragging(false);
+  setSelectedHandle(null);
+  setInitialDistance(null);
+}
+```
+
+</br>
+
+이렇게 드래그 앤 드롭 기능은 게임 내에서 물체를 손쉽게 움직이고 조작할 수 있게해서 게임의 재미와 몰입감을 향상시켰습니다. 이 기능을 통해 플레이어는 게임 세계와의 상호작용을 더욱 직관적으로 경험할 수 있습니다.
+
+<br>
 <br>
 
 ## 1-3 React DOM 조작과 함께 Canvas를 어떻게 효과적으로 다룰 수 있을까?
