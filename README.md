@@ -9,17 +9,19 @@ Interaction은 정적인 웹페이지에서 1인칭 시점을 기준으로 키�
 [Deployed web](https://inter-action.co)
 
 # 📖 Contents
-- [동기](#-동기)
+
+- [개발 동기](#-개발-동기)
 - [기술 스택](#-기술-스택)
 - [게임 소개](#-게임-소개)
 - [기술적 챌린지](#-기술적-챌린지)
   - [모든 스테이지 공통 기능](#모든-스테이지-공통-기능)
-    - [1. 어떻게 몰입감을 주기 위해 1인칭 시점으로 플레이어 이동을 구현할 수 있을까?](#1-어떻게-몰입감을-주기위해-1인칭-시점으로-플레이어-이동을-구현할-수-있을까)
+    - [1. 몰입감을 위한 1인칭 시점 이동은 어떻게 구현할까?](#1-몰입감을-위한-1인칭-시점-이동은-어떻게-구현할까)
       - [1-1 플레이어 초기 설정과 카메라 배치](#1-1-플레이어-초기-설정과-카메라-배치)
       - [1-2 플레이어 이동과 점프](#1-2-플레이어-이동과-점프)
-    - [2. 물체를 이용한 드래그 앤 드롭 기능은 어떻게 구현할 수 있을까?](#2-물체를-이용한-드래그-앤-드롭-기능은-어떻게-구현할-수-있을까)
-      - [2-1 초기 드래그 구현 시행착오](#2-1-초기-드래그-구현-시행착오)
-      - [2-2 드래그 직접 구현](#2-2-드래그-직접-구현)
+    - [2. 3D 드래그 앤 드롭은 어떻게 구현할 수 있을까?](#2-3d-드래그-앤-드롭은-어떻게-구현할-수-있을까)
+      - [2-1 문제: 라이브러리를 사용한 드래그 앤 드롭의 한계](#2-1-문제-라이브러리를-사용한-드래그-앤-드롭의-한계)
+      - [2-2 해결: 드래그 앤 드롭 직접 구현하기](#2-2-해결-드래그-앤-드롭-직접-구현하기)
+      - [2-3 트러블슈팅: 드래그 중 물체가 벽을 통과한다?](#2-3-트러블슈팅-드래그-중-물체가-벽을-통과한다)
   - [각 스테이지별 기능](#각-스테이지-별-기능)
     - [3. 물체가 커지고 작아지는 원근법 기능은 어떻게 구현할 수 있을까?](#3-물체가-커지고-작아지는-원근법-기능은-어떻게-구현할-수-있을까)
     - [4. 물체들이 바뀌는 착시 기능은 어떻게 구현할 수 있을까?](#4-물체들이-바뀌는-착시-기능은-어떻게-구현할-수-있을까)
@@ -34,7 +36,7 @@ Interaction은 정적인 웹페이지에서 1인칭 시점을 기준으로 키�
 <br>
 <br>
 
-# 👀 동기
+# 👀 개발 동기
 
 정적인 웹페이지에서 유저가 간단하고 재미있게 할 수 있는 것들이 무엇이 있을까? 라는 고민을 시작으로 게임이라는 주제를 정해 프로젝트를 시작하게 되었습니다.
 
@@ -47,6 +49,7 @@ Interaction은 정적인 웹페이지에서 1인칭 시점을 기준으로 키�
 <br>
 
 # 🔨 기술 스택
+
 ![](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=JavaScript&logoColor=white)
 ![](https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=white)
 ![](https://img.shields.io/badge/Three.js-000000?style=flat-square&logo=threedotjs&logoColor=white)
@@ -164,7 +167,7 @@ R3F는 react의 생태계와 통합되어 있어, 기존의 상태 관리 라이
 <br>
 <br>
 
-## 1 어떻게 몰입감을 주기위해 1인칭 시점으로 플레이어 이동을 구현할 수 있을까?
+## 1. 몰입감을 위한 1인칭 시점 이동은 어떻게 구현할까?
 
 <details><summary>플레이어 이동 영상</summary>
 
@@ -278,7 +281,37 @@ useFrame((state) => {
 </br>
 </br>
 
-## 2 물체를 이용한 드래그 앤 드롭 기능은 어떻게 구현할 수 있을까?
+## 2. 3D 드래그 앤 드롭은 어떻게 구현할 수 있을까?
+
+### 2-1 문제: 라이브러리를 사용한 드래그 앤 드롭의 한계
+
+---
+
+초기 개발 단계에서 3D 환경에서의 드래그를 어떤 방식으로 구현할 수 있을지 여러 방법을 모색해 보았고, 기존에 있는 라이브러리를 최대한 활용해보려 하였습니다. 그에따라, HTML5 Drag and Drop API, React DnD, use-gesture 의 장단점을 비교해 보았습니다.
+| 방법 | 장점 | 단점 |
+|---------------------------------|----------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------|
+| _HTML5 Drag and Drop API_ | - 브라우저에 기본적으로 내장되어 있어 추가 라이브러리나 프레임워크 없이 사용할 수 있었습니다.<br>- HTML 요소의 드래그 앤 드롭을 쉽게 구현할 수 있었습니다. | - 2D 평면 상에서의 드래그 앤 드롭 기능만 제공하여 3D 드래그에는 적합하지 않았습니다.<br>- 커스터마이징이 제한적이며 복잡한 상호작용을 구현하기 어려웠습니다. |
+| _React DnD (Drag and Drop) 라이브러리_ | - React와 잘 통합되며, 다양한 드래그 앤 드롭 시나리오를 쉽게 구현할 수 있었습니다.<br>- 커스터마이징 가능성이 높고, 드래그 소스와 드롭 타겟을 정의하기 쉬웠습니다. | - 주로 2D 드래그 앤 드롭을 지원하며, 3D 공간에서의 드래그 구현에는 추가 작업이 필요했습니다. |
+| _use-gesture 라이브러리의 useDrag 훅_ | - React Hook 형태로 제공되어 React와 쉽게 통합할 수 있었습니다.<br>- 사용이 간편하며, 직관적인 API를 제공했습니다. | - 주로 2D 평면 상의 좌표를 제공하여 3D 드래그 구현에는 제한이 있었습니다.<br>- 3D 드래그 앤 드롭 기능을 완전히 지원하지 않으므로 추가 구현이 필요했습니다. |
+
+그 중 React Hook 형태로 제공되고 사용이 간편하고 직관적인 API를 제공하는 `use-gesture` 라이브러리의 `useDrag` 훅을 사용해서 컴포넌트를 드래그 할 수 있는 방식으로, 해당 라이브러리와 훅을 커스터마이징 하여 3D 상에서의 드래그 앤 드롭을 구현하려 했습니다.
+
+- `useDrag`를 사용한 드래그 테스트 영상
+<p align="center">
+<img width="700" alt="first-drag-drop" src="https://github.com/howinteraction/interaction/assets/116258834/784150ac-e339-423b-8a51-ccde25335210">
+</p>
+
+하지만 `useDrag`의 드래그 방식은 Interaction 게임에서 필요로 하는 3D 드래그를 구현하는데 제약사항이 있었습니다.
+
+`useDrag` 훅은 드래그 시, 마우스 포인터의 좌표들이 x, y축 2D 평면 상에서의 좌표만 제공해주었습니다. 하지만 Interaction 게임은 3D 상에서의 드래그 좌표들(x, y축 그리고 z축)이 필요했습니다.
+
+이에 한계를 느껴, rapier 물리 엔진과 Three.js 및 R3F를 사용하여 3D 드래그 기능을 구현하기로 결정했습니다.
+
+</br>
+
+### 2-2 해결: 드래그 앤 드롭 직접 구현하기
+
+---
 
 <details><summary>드래그 앤 드롭 영상</summary>
 <p align="center">
@@ -288,38 +321,6 @@ useFrame((state) => {
 
 </br>
 
-#### 2-1. 초기 드래그 구현 시행착오
-
-초기 개발 단계에서 드래그를 어떤 방식으로 구현할 수 있을지 여러 방법을 직접 비교해가며 결정했습니다.
-| 방법 | 장점 | 단점 |
-|---------------------------------|----------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------|
-| _HTML5 Drag and Drop API_ | - 브라우저에 기본적으로 내장되어 있어 추가 라이브러리나 프레임워크 없이 사용할 수 있었습니다.<br>- HTML 요소의 드래그 앤 드롭을 쉽게 구현할 수 있었습니다. | - 2D 평면 상에서의 드래그 앤 드롭 기능만 제공하여 3D 드래그에는 적합하지 않았습니다.<br>- 커스터마이징이 제한적이며 복잡한 상호작용을 구현하기 어려웠습니다. |
-| _React DnD (Drag and Drop) 라이브러리_ | - React와 잘 통합되며, 다양한 드래그 앤 드롭 시나리오를 쉽게 구현할 수 있었습니다.<br>- 커스터마이징 가능성이 높고, 드래그 소스와 드롭 타겟을 정의하기 쉬웠습니다. | - 주로 2D 드래그 앤 드롭을 지원하며, 3D 공간에서의 드래그 구현에는 추가 작업이 필요했습니다. |
-| _use-gesture 라이브러리의 useDrag 훅_ | - React Hook 형태로 제공되어 React와 쉽게 통합할 수 있었습니다.<br>- 사용이 간편하며, 직관적인 API를 제공했습니다. | - 주로 2D 평면 상의 좌표를 제공하여 3D 드래그 구현에는 제한이 있었습니다.<br>- 3D 드래그 앤 드롭 기능을 완전히 지원하지 않으므로 추가 구현이 필요했습니다. |
-
-그 중 `use-gesture` 라이브러리의 `useDrag` 훅을 사용해서 컴포넌트를 드래그 할 수 있는 방식을 채택했습니다.
-
-- useDrag를 사용한 드래그 테스트 영상
-<p align="center">
-<img width="700" alt="first-drag-drop" src="https://github.com/howinteraction/interaction/assets/116258834/784150ac-e339-423b-8a51-ccde25335210">
-</p>
-
-##### 문제점
-
-초기 개발 단계에서 드래그를 어떤 방식으로 구현할 수 있을지 여러 방법을 모색해 보았고, 그 중 "use-gesture" 라이브러리의 useDrag 훅을 사용해서 컴포넌트를 드래그 할 수 있는 방식을 채택했었습니다. 그러나 useDrag의 드래그 방식은 Interaction 게임에서 필요로 하는 3D 드래그를 구현하는데 제약사항이 있었습니다.
-
-##### 원인
-
-useDrag 훅은 드래그 시, 마우스 포인터의 좌표들이 x, y축 2D 평면 상에서의 좌표만 제공해주었습니다. 하지만 Interaction 게임은 3D 상에서의 드래그 좌표들(x, y축 그리고 z축)이 필요했습니다.
-
-##### 해결방법
-
-rapier 물리엔진을 이용하여 드래그 기능을 직접 구현하기로 결정했습니다. 물리 엔진과 Three.js를 사용하여 3D 드래그 기능을 구현했습니다.
-
-</br>
-
-#### 2-2 드래그 직접 구현
-
 드래그 앤 드롭 기능은 게임에서 물체를 마우스로 클릭하고 움직일 수 있게 해주는 게임 플레이에 매우 중요한 기능입니다. 저희는 여러 단계를 통해 이 기능을 구현하였습니다.
 
 - **드래그 앤 드롭을 도식화한 다이어그램**
@@ -327,13 +328,11 @@ rapier 물리엔진을 이용하여 드래그 기능을 직접 구현하기로 �
 <img width="300" height="600" alt="스크린샷 2024-05-10 오후 4 35 28" src="https://github.com/howinteraction/interaction/assets/116258834/ed40d2a0-1aed-4412-9e00-93163e05dfb6">
 </p>
 
-1. **물리 엔진 사용**: 게임에서 물체가 어떻게 움직이고 상호작용할지 계산하는 것은 매우 복잡했습니다. 이를 위해, 저희는 처음부터 물리 법칙을 다시 만드는 대신 이미 만들어진 ‘rapier’라는 물리엔진 라이브러리를 사용하기로 결정했습니다. 이 라이브러리는 물체의 움직임을 자연스럽게 계산해줍니다.
+1. **물리 엔진 사용**: 게임에서 물체가 어떻게 움직이고 상호작용할지 계산하는 것은 매우 복잡했습니다. 이를 위해, 저희는 처음부터 물리 법칙을 다시 만드는 대신 ‘rapier’라는 물리엔진 라이브러리를 사용하기로 결정했습니다. 이 라이브러리는 물체의 움직임을 자연스럽게 계산해줍니다.
 
 </br>
 
 2. **가상의 선을 사용해 물체 잡기**: 플레이어가 게임 내에서 마우스로 물체를 클릭하면,카메라 위치에서 마우스 커서가 가리키는 방향으로 가상의 선(ray)을 발사합니다. 이 선이 게임 내의 물체와 교차하면 해당 물체를 선택할 수 있습니다. 이 과정을 ‘raycasting’이라고 합니다.
-
-- 설명을 위한 예시 코드
 
 ```jsx
 import * as THREE from "three";
@@ -372,19 +371,19 @@ useEffect(() => {
 3. **물체 드래그하기**: 물체를 잡은 후, 플레이어가 마우스를 움직이면 물체도 함께 움직입니다. 드래그하는 동안 물체는 카메라로부터 일정한 거리를 유지하면서 마우스를 따라 이동합니다. 이 거리는 플레이어가 처음 물체를 클릭했을 때의 위치에 따라 결정됩니다.
 
 <p align="center">
-  <img width="500" alt="스크린샷 2024-04-08 20 41 35" src="https://github.com/howinteraction/interaction/assets/126459089/59754129-34d6-4a78-9bb3-1fe4f8f37902">
+  <img width="500" alt="스크린샷 2024-04-08 20 41 35" src="https://github.com/howinteraction/interaction/assets/116258834/e62abedd-25ae-4bc1-8265-5d6fb27c0d71">
 </p>
 
-</br>
-
-드래그 중 물체의 위치를 계속 업데이트 해주기 위한 새로운 위치는 위의 수식처럼 현재 카메라 위치에 카메라 방향 벡터와 초기 거리를 곱한 값을 더하여 계산합니다. 이동 중에는 잠시 중력의 영향을 받지 않도록 해주어 자연스럽게 이동하도록 했습니다.
-
-- 설명을 위한 예시 코드
+드래그 중 물체의 위치를 계속 업데이트 해주기 위한 새로운 위치는 위의 수식처럼 현재 카메라 위치에 카메라 방향 벡터와 초기 거리를 곱한 값을 더하여 계산합니다. 이동중에는 잠시 중력의 영향을 받지 않도록 해주어 자연스럽게 이동하도록 했습니다.
 
 ```jsx
 // 선택된 물체를 마우스 이동에 따라 드래그하는 로직입니다.
 useFrame(() => {
-  if (selectedHandle && isDragging) {
+  if (
+    selectedHandle &&
+    isDragging &&
+    world.getRigidBody(selectedHandle).userData?.isDraggable
+  ) {
     const direction = new THREE.Vector3();
 
     camera.getWorldDirection(direction);
@@ -392,17 +391,10 @@ useFrame(() => {
     const newPosition = direction
       .multiplyScalar(initialDistance)
       .add(camera.position);
-    const adjustedPosition = restrictPosition(
-      newPosition,
-      minX,
-      maxX,
-      clickedPosition.y,
-      maxY,
-      minZ,
-      maxZ,
-    );
+    const selectedRigidBody = world.getRigidBody(selectedHandle);
 
-    world.getRigidBody(selectedHandle).setTranslation(adjustedPosition, true);
+    selectedRigidBody.setTranslation(newPosition, true);
+    selectedRigidBody.setBodyType(2);
   }
 });
 ```
@@ -410,8 +402,6 @@ useFrame(() => {
 </br>
 
 4. **드래그 종료 및 물체 놓기**: 플레이어가 마우스로 물체를 한번 더 클릭하면, 드래그가 종료됩니다. 이때, 물체는 다시 중력의 영향을 받아 자연스럽게 바닥으로 떨어집니다.
-
-- 설명을 위한 예시 코드
 
 ```jsx
 // 드래그를 종료하고 물체를 놓는 로직입니다.
@@ -425,15 +415,101 @@ if (selectedHandle && isDragging) {
 
 </br>
 
+### 2-3 트러블슈팅: 드래그 중 물체가 벽을 통과한다?
+
+---
+
+드래그 앤 드롭 로직 구현 후 테스트를 해보니, 물체 드래그 시 배경모델의 벽을 뚫는 현상이 발생했습니다.
+
+<img width="895" alt="image" src="https://github.com/howinteraction/interaction/assets/116258834/7b33b7e6-4e57-4d94-99e1-74a4a0e2b722"></br>_🔺 드래그 중 벽을 뚫는 현상_
+
+해당 문제에 대해 분석해 보았고 아래와 같은 문제가 있었습니다.
+
+- 물체를 클릭하고 드래그 할 때에는 벽을 뚫는 현상이 발생한다.
+- 물체를 다시 클릭하여 드롭할 때에는 벽 안으로 물체가 돌아온다.
+
+</br>
+
+위의 문제를 해결하기 위해 드래그 시 물체가 이동하는 위치의 제한이 필요했습니다. 따라서 해당 드래그 로직에 사용할 util 함수를 작성해 보았습니다.
+
+```jsx
+export default function restrictPosition(value, min, max) {
+  return Math.max(min, Math.min(value, max));
+}
+```
+
+위의 `restrictPosition` 함수는 x, y, z 위치 값을 연산하여 물체의 현재 위치값(value)이 min 미만의 값 또는 max를 초과하는 값을 갖지 않도록, 물체의 위치를 제한할 수 있도록 작성해 보았습니다.
+
+</br>
+
+<details>
+<summary>restrictPosition을 적용한 드래그 컨트롤 코드</summary>
+
+```jsx
+// minX, maxX, maxY, minZ, maxZ 지정하여 각 스테이지마다 DragControl의 prop으로 넣어준다.
+export default function DragControl({ minX, maxX, maxY, minZ, maxZ }) {
+  // 중간 생략..
+
+  useFrame(() => {
+    if (
+      selectedHandle &&
+      isDragging &&
+      world.getRigidBody(selectedHandle).userData?.isDraggable
+    ) {
+      const direction = new THREE.Vector3();
+
+      camera.getWorldDirection(direction);
+
+      const newPosition = direction
+        .multiplyScalar(initialDistance)
+        .add(camera.position);
+      const selectedRigidBody = world.getRigidBody(selectedHandle);
+      // 물체 위치 제한, 각 (X, Y, Z) 를 제한한다.
+      const adjustedPositionX = restrictPosition(newPosition.x, minX, maxX);
+      const adjustedPositionY = restrictPosition(
+        newPosition.y,
+        clickedPosition.y,
+        maxY,
+      );
+      const adjustedPositionZ = restrictPosition(newPosition.z, minZ, maxZ);
+      // 선택된 물체는 useFrame 내부에서 벽을 통과할 수 없게 된다.
+      selectedRigidBody.setTranslation(
+        new THREE.Vector3(
+          adjustedPositionX,
+          adjustedPositionY,
+          adjustedPositionZ,
+        ),
+        true,
+      );
+
+      selectedRigidBody.setBodyType(2);
+    }
+  });
+}
+```
+
+</details>
+
+</br>
+
+그리고 위의 함수를 기존의 드래그 로직에 적용함으로써, 각 Stage에서 호출 시 props로 max, min 값을 넘겨주도록 하였습니다. 따라서 물체의 위치가 지정한 값을 초과하지 않게 되어 드래그 시 벽을 뚫는 현상을 막을 수 있었습니다.
+
+</br>
+
+- 물체가 벽을 뚫는 현상 해결
+
+  ![벽 뚫기 및 드랍 해결](https://github.com/howinteraction/interaction/assets/116258834/c90f8e88-cbb2-47b5-af0b-38cf8da8d3d5)
+
+</br>
+
 이렇게 드래그 앤 드롭 기능은 게임 내에서 물체를 손쉽게 움직이고 조작할 수 있게해서 게임의 재미와 몰입감을 향상시켰습니다. 이 기능을 통해 플레이어는 게임 세계와의 상호작용을 더욱 직관적으로 경험할 수 있습니다.
 
+</br>
 </br>
 
 ## 각 스테이지 별 기능
 
 각 스테이지에 들어가는 기능들에 대한 기술적 챌린지 입니다.
-
-<br>
 
 ## 3 물체가 커지고 작아지는 원근법 기능은 어떻게 구현할 수 있을까?
 
@@ -544,9 +620,11 @@ export default function VisualIllusion() {
   );
 }
 ```
+
 <br>
 
 #### 4-4 3D 물체에 2D 이미지 파일 부착
+
 초기에는 스테이지2 에서 착시를 구현하는 작업이나 스테이지3 에서 2D 사진을 만드는 작업은, 블렌더를 이용해 직접 3D 물체들을 만드는 방향으로 시도 했었습니다. 그러나 외부 툴에 의존하는 것보다 직접 코드로 문제해결을 하는 것이 맞다는 판단을 하였습니다.
 
 블렌더를 이용하는 작업은 3D 물체나 맵을 만드는 작업까지만 하고, Three.js의 `textureLoader` 메서드를 통해 이미지 파일들을 3D 물체에 부착하는 방법을 택했습니다. 따라서 이미지 파일을 3D mesh에 부착할 알맞는 좌표값을 찾아서 조정해주는 방식으로 해결하였습니다.
@@ -555,8 +633,8 @@ export default function VisualIllusion() {
 <img width="430" alt="스크린샷 2024-05-16 20 48 04" src="https://github.com/howinteraction/interaction/assets/126459089/df371f29-a6fb-4833-a4f1-e5955688b8e0">
 </p>
 
- - 설명을 위한 예시 코드
-    
+- 설명을 위한 예시 코드
+
 ```jsx
 import { CuboidCollider, RigidBody } from "@react-three/rapier";
 import * as THREE from "three";
@@ -569,21 +647,20 @@ export default function StageThreeColumn2d() {
 
   return (
     <RigidBody
-        position={[-35.8, -10, -20.6]}
-        rotation={[0, 11.5, 0]}
-        userData={{ isDraggable: true }}
-        lockRotations
-      >
-        <mesh>
-          <planeGeometry args={[3.5, 3.5]} />
-          <meshBasicMaterial map={texture} side={THREE.DoubleSide} />
-          <CuboidCollider args={[1.8, 1.8, 0.05]} />
-        </mesh>
-      </RigidBody>
+      position={[-35.8, -10, -20.6]}
+      rotation={[0, 11.5, 0]}
+      userData={{ isDraggable: true }}
+      lockRotations
+    >
+      <mesh>
+        <planeGeometry args={[3.5, 3.5]} />
+        <meshBasicMaterial map={texture} side={THREE.DoubleSide} />
+        <CuboidCollider args={[1.8, 1.8, 0.05]} />
+      </mesh>
+    </RigidBody>
   );
 }
 ```
-
 
 <br>
 
@@ -644,4 +721,3 @@ export default function StageThreeColumn2d() {
 금서하 [개인 Github 링크](https://github.com/seohag) <br>
 조양우 [개인 Github 링크](https://github.com/erv2bh) <br>
 최기원 [개인 Github 링크](https://github.com/originchoi)
-
