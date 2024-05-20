@@ -31,10 +31,9 @@ Interaction은 정적인 웹페이지에서 1인칭 시점을 기준으로 키�
       - [3-2 구현 과정: 드래그 앤 드롭 로직에 원근법 착시 기능을 입혀보자](#3-2-구현-과정-드래그-앤-드롭-로직에-원근법-착시-기능을-입혀보자)
       - [3-3 결과: 원근법 착시 기능의 구현과 한계점](#3-3-결과-원근법-착시-기능의-구현과-한계점)
     - [4. 물체들이 바뀌는 착시 기능은 어떻게 구현할 수 있을까?](#4-물체들이-바뀌는-착시-기능은-어떻게-구현할-수-있을까)
-      - [4-1 비주얼 착시](#4-1-비주얼-착시)
-      - [4-2 카메라 회전의 이해](#4-2-카메라-회전의-이해)
-      - [4-3 완벽한 맞물림 찾기](#4-3-완벽한-맞물림-찾기)
-      - [4-4 3D 물체에 2D 이미지 파일 부착](#4-4-3d-물체에-2d-이미지-파일-부착)
+      - [4-1 가설: 플레이어가 이동시키는 카메라 시점(마우스 커서)의 좌표를 이용해보자](#4-1-가설-플레이어가-이동시키는-카메라-시점마우스-커서의-좌표를-이용해보자)
+      - [4-2 구현 과정: 카메라 회전각도 수치화, 물체의 상태변화 이용 ](#4-2-구현-과정-카메라-회전각도-수치화--물체의-상태변화-이용)
+      - [4-3 결과: 물체 변화 착시 기능의 구현과 한계점](#4-3-결과-물체-변화-착시-기능의-구현과-한계점)
   - [유저 경험 개선](#유저-경험-개선)
 - [일정](#-일정)
 - [팀원](#-팀원)
@@ -676,6 +675,7 @@ export default function DragControl({ minX, maxX, maxY, minZ, maxZ }) {
 물체가 커지거나 작아지는 경우를 나누어 가설을 세웠습니다. 이 가설은 플레이어와 물체 간의 상호 작용이 물체의 크기를 어떻게 변화시킬 수 있는지를 설명합니다. 슈퍼리미널 게임의 사례를 참고하여, 다음과 같은 상호 작용에 따른 크기 변화를 가정했습니다:
 
 - **물체가 커지는 경우**:
+
   - 플레이어가 물체를 잡고 벽을 보면서 뒤로 가는 경우: 이 상황에서는 물체가 멀어지면서 더 커보이게 됩니다. 이는 원근법의 원리에 따라, 동일한 크기의 물체가 멀어질수록 더 크게 보이기 때문입니다.
   - 플레이어가 물체를 잡고 천장을 바라보는 경우: 이 경우, 물체가 플레이어의 시야에서 위쪽으로 멀어지며 더 커보이게 됩니다. 이는 천장이 멀리 있을 때 물체가 상대적으로 더 큰 크기로 인식되기 때문입니다.
 
@@ -687,7 +687,7 @@ export default function DragControl({ minX, maxX, maxY, minZ, maxZ }) {
 
 ---
 
-1. **원근법 착시의 개요**:  스테이지1에서는 원근법 착시 기능이 플레이어, 물체, 그리고 물체와 벽 사이의 거리를 고려하여 물체의 크기 조절 기능을 구현하였습니다. 이를 **원근법 착시**라는 이름으로 명명했습니다. 이 기능은 플레이어가 물체를 드래그하고 이동시킬 때, 물체의 크기와 위치가 원근법에 따라 변하는 착시 효과를 제공합니다.
+1. **원근법 착시의 개요**: 스테이지1에서는 원근법 착시 기능이 플레이어, 물체, 그리고 물체와 벽 사이의 거리를 고려하여 물체의 크기 조절 기능을 구현하였습니다. 이를 **원근법 착시**라는 이름으로 명명했습니다. 이 기능은 플레이어가 물체를 드래그하고 이동시킬 때, 물체의 크기와 위치가 원근법에 따라 변하는 착시 효과를 제공합니다.
 
 2. **초기 거리 및 크기 기록**: 플레이어가 물체를 선택하면, 먼저 카메라와 물체 사이의 초기 거리와 초기 크기를 기록합니다. 이를 위해 카메라의 위치와 물체의 위치를 이용하여 초기 거리를 계산하고, 물체의 초기 크기를 저장합니다. 물체를 선택했을 때, 카메라와 물체 사이의 초기 거리(initialDistance)를 계산하여 상태로 저장합니다.
 
@@ -722,97 +722,74 @@ export default function DragControl({ minX, maxX, maxY, minZ, maxZ }) {
 <br>
 <br>
 
-## 4 물체들이 바뀌는 착시 기능은 어떻게 구현할 수 있을까?
+## 4. 물체들이 바뀌는 착시 기능은 어떻게 구현할 수 있을까?
 
-<details><summary>분리된 물체 착시 기능 영상(비주얼 착시)</summary>
+[슈퍼리미널 게임을 참고하여](https://www.youtube.com/watch?v=Jv-yXlqsbJc&t=17s) 분리된 물체를 온전한 물체로 바꾸는 착시 기능을 구현하고자 했고, 물체가 맞물리는 시점을 코드를 통해 찾을 수 있는 방법에 대한 가설을 세워보았습니다.
 
-<p align="center">
-<img width="700" alt="separate-illusion" src="https://github.com/howinteraction/interaction/assets/126459089/ea84902c-1a87-47f3-a005-0574b5ded556">
-</p>
+### 4-1 가설: 플레이어가 이동시키는 카메라 시점(마우스 커서)의 좌표를 이용해보자
 
-</details>
+---
 
-<br>
+- 플레이어의 카메라 시점 좌표를 이용
+  - 만약 플레이어가 보고 있는 카메라의 시점을 이용해서 분리된 물체가 맞물려지는 시점과 보고 있는 시점이 같다면, 물체가 맞물려지는 상황이 나오게 되는 것이니 "맞물리는 특정 시점 대한 좌표(position)를 이용해보자" 에 주안점을 두었습니다.
 
-<details><summary>2D사진 -> 3D물체 착시기능 영상</summary>
+### 4-2 구현 과정: 카메라 회전각도 수치화 / 물체의 상태변화 이용
 
-<p align="center">
-<img width="700" alt="2d-3d-illusion" src="https://github.com/howinteraction/interaction/assets/126459089/b1b58dae-509f-4363-8a24-f3b3c1b0f2e8">
-</p>
-<p align="center">
-<img width="700" alt="2d-3d-illusion" src="https://github.com/howinteraction/interaction/assets/126459089/c4874999-5322-4bfa-94ac-8f088add9486">
-</p>
+---
 
-</details>
-
-<br>
-<br>
-
-#### 4-1 비주얼 착시
-
-게임 내에서 **비주얼 착시**라는 독특한 기능은 플레이어가 스테이지2를 클리어하는 데에 핵심적인 역할을 합니다.
-
-이 기능을 통해 플레이어는 분리된 물체의 조각들을 하나의 완전한 3D 물체로 복원할 수 있습니다. 이 과정은 카메라의 시점과 회전 각도를 조절하여, 물체가 온전하게 맞물리는 특정 시점을 찾는 것에 주안점을 두었습니다.
-
-먼저 react-three/fiber 라이브러리의 useThree 훅을 사용하여 camera 객체를 생성하였습니다. camera 객체의 특성중 **position**은 카메라의 위치, **rotation**은 카메라가 바라보는 방향과 관련이 있다는 것을 알게 되었습니다. 그리고 분리된 지점을 연결하여 얻은 벡터값을 camera 객체처럼 표현할 수 있다면 분리된 지점의 좌표 정보만으로도 착시효과를 일으키는 시야각을 계산해 낼 수 있다는 결론을 도출하였습니다.
-
-#### 4-2 카메라 회전의 이해
-
-게임 내에서 카메라의 회전은 플레이어가 바라보는 방향을 결정합니다. 이 회전은 x, y, z축을 따라 설정되며, 각 축에 대한 회전 각도를 오일러 각도라고 합니다. 오일러 각도는 카메라가 어떻게 기울어져 있는지를 나타내는 각도입니다. 카메라의 회전 각도는 라디안이라는 단위로 측정됩니다. 라디안은 각도를 수치화하는 방법 중 하나로, 플레이어가 카메라를 정확한 방향으로 조정할 수 있도록 도와줍니다.
+1. **카메라 회전의 이해**: 먼저 react-three/fiber 라이브러리의 useThree 훅을 사용하여 camera 객체를 생성하였습니다. camera 객체의 특성중 **position**은 카메라의 위치, **rotation**은 카메라가 바라보는 방향과 관련이 있다는 것을 알게 되었습니다. <br><br> 그리고 분리된 지점을 연결하여 얻은 벡터값을 camera 객체처럼 표현할 수 있다면 분리된 지점의 좌표 정보만으로도 착시효과를 일으키는 시야각을 계산해 낼 수 있다는 결론을 도출 하였습니다. <br><br> 게임 내에서 카메라의 회전은 플레이어가 바라보는 방향을 결정합니다. 이 회전은 x, y, z축을 따라 설정되며, 각 축에 대한 회전 각도를 오일러 각도라고 합니다. <br><br> 오일러 각도는 카메라가 어떻게 기울어져 있는지를 나타내는 각도입니다. 카메라의 회전 각도는 라디안이라는 단위로 측정됩니다. <br><br>라디안은 각도를 수치화하는 방법 중 하나로, 플레이어가 카메라를 정확한 방향으로 조정할 수 있도록 도와줍니다.
 
 <p align="center">
   <img width="360" alt="스크린샷 2024-04-08 20 42 05" src="https://github.com/howinteraction/interaction/assets/126459089/8210cf9f-9432-484b-bccb-0305e17da331">
   <img width="360" alt="스크린샷 2024-04-08 20 42 13" src="https://github.com/howinteraction/interaction/assets/126459089/ea24a568-82bf-4231-8a00-6a8231b29ef0">
 </p>
 
-#### 4-3 완벽한 맞물림 찾기
+<br>
 
-플레이어는 게임에서 특정 위치에서 카메라를 조작하여, 분리된 물체 조각들이 완벽하게 맞물리는 시점을 찾아야 합니다. 이는 카메라를 조금씩 회전시키며, 조각들이 하나의 완전한 물체로 보이는 순간을 포착하는 것을 의미합니다. 물체의 조각들이 완전히 일치하도록, 카메라의 위치와 각도에 따른 오차 범위를 조정합니다. 오차 범위는 `_CAMERA_POSITION`, `_CAMERA_ROTATION` 라는 변수명으로 분리된 지점의 좌표에 대한 최소값, 최대값을 상수화하였습니다. 이를 통해 플레이어는 물체를 정확히 맞추고, 온전한 3D 물체로 바꿀 수 있습니다.
-
-- 설명을 위한 예시 코드
-
-```js
-// 비주얼 착시 함수입니다.
-export default function VisualIllusion() {
-  // ...
-
-  const isCombined = useSelector((state) => state.twoIllusion.isCombined);
-
-  // 카메라의 시점과 회전 각도가 오차 범위에 있는지 확인합니다.
-  function checkCameraRange() {
-    const isInRange =
-      camera.position.x > MIN_CAMERA_POSITION_X &&
-      camera.position.x < MAX_CAMERA_POSITION_X &&
-      // ...
-
-      camera.rotation.x > MIN_CAMERA_ROTATION_X &&
-      camera.rotation.x < MAX_CAMERA_ROTATION_X &&
-      // ...
-
-    // 오차 범위에 있다면 전역 상태를 업데이트 합니다.
-    if (isInRange) {
-      dispatch(setIsCombined(true));
-    }
-  }
-
-  // 온전한 3D 물체를 렌더링합니다.
-  return (
-    isCombined && (
-      <RigidBody>
-        <TetrahedronCube />
-      </RigidBody>
-    )
-  );
-}
-```
+2. **물체의 맞물리는 지점 찾기**: 플레이어는 게임에서 특정 위치에서 카메라를 조작하여, 분리된 물체 조각들이 완벽하게 맞물리는 지점을 찾아야 합니다. 이는 카메라를 조금씩 회전시키며, 조각들이 하나의 완전한 물체로 보이는 순간을 포착하는 것을 의미합니다. <br><br> 물체의 조각들이 완전히 일치하도록, 카메라의 위치와 각도에 따른 오차 범위를 조정합니다. 오차 범위는 `_CAMERA_POSITION`, `_CAMERA_ROTATION` 라는 변수명으로 분리된 지점의 좌표에 대한 최소값, 최대값을 상수화하였습니다. 이를 통해 플레이어는 물체를 정확히 맞추고, 온전한 3D 물체로 바꿀 수 있습니다.
 
 <br>
 
-#### 4-4 3D 물체에 2D 이미지 파일 부착
+- 설명을 위한 예시 코드
 
-초기에는 스테이지2 에서 착시를 구현하는 작업이나 스테이지3 에서 2D 사진을 만드는 작업은, 블렌더를 이용해 직접 3D 물체들을 만드는 방향으로 시도 했었습니다. 그러나 외부 툴에 의존하는 것보다 직접 코드로 문제해결을 하는 것이 맞다는 판단을 하였습니다.
+  ```js
+  // 비주얼 착시 함수입니다.
+  export default function VisualIllusion() {
+    // ...
 
-블렌더를 이용하는 작업은 3D 물체나 맵을 만드는 작업까지만 하고, Three.js의 `textureLoader` 메서드를 통해 이미지 파일들을 3D 물체에 부착하는 방법을 택했습니다. 따라서 이미지 파일을 3D mesh에 부착할 알맞는 좌표값을 찾아서 조정해주는 방식으로 해결하였습니다.
+    const isCombined = useSelector((state) => state.twoIllusion.isCombined);
+
+    // 카메라의 시점과 회전 각도가 오차 범위에 있는지 확인합니다.
+    function checkCameraRange() {
+      const isInRange =
+        camera.position.x > MIN_CAMERA_POSITION_X &&
+        camera.position.x < MAX_CAMERA_POSITION_X &&
+        // ...
+
+        camera.rotation.x > MIN_CAMERA_ROTATION_X &&
+        camera.rotation.x < MAX_CAMERA_ROTATION_X &&
+        // ...
+
+      // 오차 범위에 있다면 전역 상태를 업데이트 합니다.
+      if (isInRange) {
+        dispatch(setIsCombined(true));
+      }
+    }
+
+    // 온전한 3D 물체를 렌더링합니다.
+    return (
+      isCombined && (
+        <RigidBody>
+          <TetrahedronCube />
+        </RigidBody>
+      )
+    );
+  }
+  ```
+
+<br>
+
+3. **물체의 상태 변화를 이용한 2D사진 -> 3D물체 변화**: 스테이지3 에서 이용할 2D사진들은 플레이어가 어떤 구간에 어떤 물체가 필요한지 찾아서 해당하는 물체에 대한 2D사진을 적절한 곳에 드래그 앤 드롭 하며 스테이지를 클리어 하게끔 개발해야 했습니다. <br><br> 스테이지를 클리어 하는데 있어서 사진을 드래그 했을 때 상태 변화를 일으키기 위해 해당하는 물체들에 boolean 값으로 상태를 설정 해둔 뒤, 적합한 물체라면 드롭했을 때 상태를 바꿔서 2D사진을 3D물체로의 변화를 일으켰습니다. <br><br> 2D 사진을 만드는 작업은, 블렌더를 이용해 직접 3D 물체들에 이미지를 입히는 방향으로 시도 했었습니다. 그러나 외부 툴에 의존하는 것보다 직접 코드로 문제해결을 하는 것이 맞다는 판단을 하였습니다.<br><br> 블렌더를 이용하는 작업은 3D 물체나 맵을 만드는 작업까지만 하고, Three.js의 `textureLoader` 메서드를 통해 이미지 파일들을 3D 물체에 부착하는 방법을 택했습니다. 이미지 파일을 3D mesh에 부착할 알맞는 좌표값을 찾아서 직접 조정해주는 방식으로 해결하였습니다.
 
 <p align="center">
 <img width="430" alt="스크린샷 2024-05-16 20 48 04" src="https://github.com/howinteraction/interaction/assets/126459089/df371f29-a6fb-4833-a4f1-e5955688b8e0">
@@ -820,34 +797,66 @@ export default function VisualIllusion() {
 
 - 설명을 위한 예시 코드
 
-```jsx
-import { CuboidCollider, RigidBody } from "@react-three/rapier";
-import * as THREE from "three";
+  ```jsx
+  import { CuboidCollider, RigidBody } from "@react-three/rapier";
+  import * as THREE from "three";
 
-export default function StageThreeColumn2d() {
-  const textureLoader = new THREE.TextureLoader();
-  const texture = textureLoader.load(
-    "assets/images/stage3-picture/column-2d.png",
-  );
+  export default function StageThreeColumn2d() {
+    const textureLoader = new THREE.TextureLoader();
+    const texture = textureLoader.load(
+      "assets/images/stage3-picture/column-2d.png",
+    );
 
-  return (
-    <RigidBody
-      position={[-35.8, -10, -20.6]}
-      rotation={[0, 11.5, 0]}
-      userData={{ isDraggable: true }}
-      lockRotations
-    >
-      <mesh>
-        <planeGeometry args={[3.5, 3.5]} />
-        <meshBasicMaterial map={texture} side={THREE.DoubleSide} />
-        <CuboidCollider args={[1.8, 1.8, 0.05]} />
-      </mesh>
-    </RigidBody>
-  );
-}
-```
+    return (
+      <RigidBody
+        position={[-35.8, -10, -20.6]}
+        rotation={[0, 11.5, 0]}
+        userData={{ isDraggable: true }}
+        lockRotations
+      >
+        <mesh>
+          <planeGeometry args={[3.5, 3.5]} />
+          <meshBasicMaterial map={texture} side={THREE.DoubleSide} />
+          <CuboidCollider args={[1.8, 1.8, 0.05]} />
+        </mesh>
+      </RigidBody>
+    );
+  }
+  ```
 
 <br>
+<br>
+
+---
+
+<br>
+
+<p align="center">
+<img width="700" alt="separate-illusion" src="https://github.com/howinteraction/interaction/assets/126459089/ea84902c-1a87-47f3-a005-0574b5ded556">
+<br>
+🔺 분리된 물체 -> 온전한 물체 착시 기능 영상
+</p>
+
+<br>
+
+<p align="center">
+<img width="700" alt="2d-3d-illusion" src="https://github.com/howinteraction/interaction/assets/126459089/c4874999-5322-4bfa-94ac-8f088add9486">
+<br>
+🔺 2D사진 -> 3D물체 착시 기능 영상
+</p>
+
+<br>
+
+### 4-3 결과: 물체 변화 착시 기능의 구현과 한계점
+
+물체 변화 착시 기능을 구현하면서 카메라의 좌표값과 상태들을 이용한 결과, 다음과 같은 주요 성과와 개선 사항을 도출할 수 있었습니다.
+
+- **향상된 사용자 경험 (UX)**: 플레이어는 게임 내에서 물체 변화 착시 기능들을 사용하면서 게임에 대한 재미요소가 크게 향상 되었다는 피드백을 동기분들께 받았습니다.
+- **문제 해결 능력 강화**: 플레이어의 시점을 이용하기 위한 카메라의 프로퍼티들을 찾아가며 3D 환경에서의 카메라 객체를 사용하는 방법을 익히게 되었고, 카메라 객체 내부의 오일러 각도와 같은 프로퍼티를 이용하여 유저와 물체간의 원할한 상호작용을 구현해야만 하는 문제를 해결할 수 있었습니다.
+
+아쉬운 점은 스테이지3 에서 2D 사진을 드래그 앤 드롭할 때 3D 물체로 변하는 과정에서 적절한 물체를 선택하고 드롭했을 때의 상태변화는 올바르게 동작하지만, 정확한 위치(좌표)에 놓았을 때 까지의 조건이 포함된 물체변화는 이루어지지 않고 있습니다. 추후 해당 개선사항을 반영한 기능으로 변경 예정입니다.
+
+---
 
 ## 유저 경험 개선
 
